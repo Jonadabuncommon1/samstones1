@@ -36,9 +36,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       className="group cursor-pointer h-full border border-white/5 bg-white/5 rounded-xl overflow-hidden glass-card shadow-none transition-all duration-300 hover:border-purple-500/30"
       onClick={handleView}
     >
-      <div className="relative aspect-[4/5] overflow-hidden bg-black">
+      <div className="relative aspect-[4/5] overflow-hidden bg-white">
         {product.isNew && (
-          <span className="absolute top-4 left-4 z-10 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 shadow-lg rounded-full">
+          <span className="absolute top-4 left-4 z-10 bg-[#109121] text-gray-900 text-[10px] font-bold tracking-widest uppercase px-3 py-1 shadow-lg rounded-full">
             New
           </span>
         )}
@@ -53,7 +53,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="absolute bottom-4 left-0 right-0 px-4 flex space-x-2 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-20">
           <button 
             onClick={handleQuickAdd}
-            className="flex-1 glass text-white py-3 px-4 flex items-center justify-center space-x-2 text-xs font-bold uppercase tracking-wide hover:bg-white hover:text-black transition-colors rounded-xl shadow-lg border border-white/20"
+            className="flex-1 glass text-gray-900 py-3 px-4 flex items-center justify-center space-x-2 text-xs font-bold uppercase tracking-wide hover:bg-white hover:text-black transition-colors rounded-xl shadow-lg border border-white/20"
           >
             <ShoppingBag size={14} />
             <span>Add</span>
@@ -70,7 +70,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
       <div className="p-5">
-        <h3 className="font-serif text-lg font-bold tracking-wide text-white mb-2 group-hover:text-pink-400 transition-colors truncate">{product.name}</h3>
+        <h3 className="font-serif text-lg font-bold tracking-wide text-gray-900 mb-2 group-hover:text-[#109121] transition-colors truncate">{product.name}</h3>
         
         {product.location && (
           <p className="text-xs text-gray-400 mb-2 flex items-center">
@@ -87,7 +87,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </p>
         )}
 
-        <p className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mt-2">{formatPrice(product.price)}</p>
+        <p className="text-lg font-bold text-[#109121] mt-2">{formatPrice(product.price)}</p>
       </div>
     </motion.div>
   );

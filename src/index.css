@@ -7,21 +7,17 @@
   --color-white: #FFFFFF;
   --color-gold: #C8A96B;
   --color-offblack: #0a0a0a;
-  
-  --color-purple: #8B5CF6;
-  --color-pink: #EC4899;
-  --color-violet: #6D28D9;
-  
-  --color-redwine: #722F37;
-  --color-warmbeige: #E8DED1;
+  --color-brand: #109121;
+  --color-brand-dark: #0a5f15;
+  --color-brand-light: #e6f4e8;
 
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  background-color: var(--color-black);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  color: var(--color-black);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -32,26 +28,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .glass-card {
-  background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);
+  background: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
 }
 
 .neon-glow {
-  box-shadow: 0 0 30px rgba(139, 92, 246, 0.3), inset 0 0 20px rgba(236, 72, 153, 0.1);
+  box-shadow: 0 0 30px rgba(16, 145, 33, 0.3), inset 0 0 20px rgba(16, 145, 33, 0.1);
 }
 
 .text-gradient {
-  background: linear-gradient(to right, #fff, #a78bfa, #f472b6);
+  background: linear-gradient(to right, #109121, #0a5f15);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -81,11 +77,10 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(-50%); }
 }
 
-/* Hide scrollbar for clean horizontal scrolls */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

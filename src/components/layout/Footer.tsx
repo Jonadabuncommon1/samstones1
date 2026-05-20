@@ -17,52 +17,52 @@ export const Footer = () => {
               The premier luxury marketplace converging fashion, real estate, automotive, and lifestyle in one seamless digital vault.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-colors shadow-none"><Instagram size={18} /></a>
-              <a href="#" className="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-colors shadow-none"><Facebook size={18} /></a>
-              <a href="#" className="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-colors shadow-none"><Twitter size={18} /></a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:text-[#109121] hover:bg-white transition-colors shadow-none"><Instagram size={18} /></a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:text-[#109121] hover:bg-white transition-colors shadow-none"><Facebook size={18} /></a>
+              <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:text-[#109121] hover:bg-white transition-colors shadow-none"><Twitter size={18} /></a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-purple-400">Universes</h3>
+            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-green-100">Universes</h3>
             <ul className="space-y-4 text-sm font-medium">
-              <li><a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">Fashion & Apparel</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">Automobiles</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">Real Estate</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-pink-400 transition-colors">Jewelry & Watches</a></li>
+              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Fashion & Apparel</a></li>
+              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Automobiles</a></li>
+              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Real Estate</a></li>
+              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Jewelry & Watches</a></li>
             </ul>
           </div>
 
           {/* Client Care */}
           <div>
-            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-purple-400">Concierge</h3>
+            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-green-100">Concierge</h3>
             <ul className="space-y-4 text-sm font-medium">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">WhatsApp Support</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Secure Shipping</a></li>
-              <li><button onClick={() => setCurrentView('admin')} className="text-gray-400 hover:text-white transition-colors">Admin Dashboard</button></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Global Network</a></li>
+              <li><a href="#" className="text-white/80 hover:text-white transition-colors">WhatsApp Support</a></li>
+              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Secure Shipping</a></li>
+              <li><button onClick={() => setCurrentView('admin')} className="text-white/80 hover:text-white transition-colors">Admin Dashboard</button></li>
+              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Global Network</a></li>
             </ul>
           </div>
 
           {/* Newsletter */}
           <div>
-            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-purple-400">The Vault</h3>
-            <p className="text-gray-400 text-sm mb-6 font-medium">Subscribe for exclusive access to rare drops and private listings.</p>
-            <form className="flex bg-white/5 rounded-xl border border-white/10 shadow-none p-1 overflow-hidden">
+            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-green-100">The Vault</h3>
+            <p className="text-white/80 text-sm mb-6 font-medium">Subscribe for exclusive access to rare drops and private listings.</p>
+            <form className="flex bg-white/10 rounded-xl border border-white/20 shadow-none p-1 overflow-hidden">
               <input 
                 type="email" 
                 placeholder="Enter email address" 
-                className="bg-transparent border-none outline-none text-sm text-white px-4 w-full placeholder-gray-500"
+                className="bg-transparent border-none outline-none text-sm text-white px-4 w-full placeholder-white/50"
               />
-              <button type="button" className="bg-white text-black px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wide hover:bg-gray-200 transition-colors">
+              <button type="button" className="bg-white text-[#109121] px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors">
                 Join
               </button>
             </form>
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs font-medium text-gray-500">
+        <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center text-xs font-medium text-white/60">
           <p>&copy; {new Date().getFullYear()} Samstones International Resources Ltd.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-white transition-colors">Privacy</a>

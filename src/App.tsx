@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AppProvider, useAppContext } from './store/AppContext';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
@@ -15,7 +15,6 @@ import { WishlistView } from './components/shop/WishlistView';
 import { AboutView } from './components/home/AboutView';
 import { ContactView } from './components/home/ContactView';
 import { AdminLayout } from './components/admin/AdminLayout';
-
 import { CategoriesView } from './components/shop/CategoriesView';
 import { CategoryView } from './components/shop/CategoryView';
 
@@ -27,9 +26,9 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col font-sans text-white bg-black overflow-x-hidden selection:bg-purple-500/30 transition-colors duration-500">
+    <div className="min-h-screen flex flex-col font-sans text-gray-900 bg-white overflow-x-hidden selection:bg-[#109121]/10 transition-colors duration-500">
       <Navbar />
-      
+
       <main className="flex-grow w-full">
         {currentView === 'home' && <HomeView />}
         {currentView === 'shop' && <CategoryView />}

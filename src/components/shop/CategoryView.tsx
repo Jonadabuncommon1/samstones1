@@ -11,7 +11,9 @@ export const CategoryView = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortMode, setSortMode] = useState<string>('default');
 
-  const categoryData = marketplaceCategories.find(c => c.id === activeCategory);
+  const categoryData = marketplaceCategories.find(
+    c => c.id === activeCategory || c.name === activeCategory
+  );
   const categoryName = categoryData?.name || 'All Vaults';
   
   let categoryProducts = products;
@@ -39,9 +41,8 @@ export const CategoryView = () => {
   const trendingProducts = categoryProducts.filter(p => p.isTrending);
 
   return (
-    <div className="pt-24 pb-24 min-h-screen bg-black text-white relative transition-colors duration-500">
-       {/* Background ambient glow */}
-       <div className="fixed top-0 left-0 w-[50%] h-[50%] bg-purple-900/10 blur-[150px] pointer-events-none transition-colors" />
+    <div className="pt-24 pb-24 min-h-screen bg-white text-gray-900 relative transition-colors duration-500">
+       <div className="fixed top-0 left-0 w-[50%] h-[50%] bg-[#e6f4e8] blur-[150px] pointer-events-none transition-colors" />
        
       {/* Category Hero */}
       <div className="relative h-[40vh] md:h-[50vh] w-full mb-12 border-b border-white/5">
@@ -55,7 +56,7 @@ export const CategoryView = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-serif text-white mb-4 tracking-tight"
+            className="text-5xl md:text-7xl font-serif text-gray-900 mb-4 tracking-tight"
           >
             {categoryName}
           </motion.h1>
@@ -63,7 +64,7 @@ export const CategoryView = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-gray-300 max-w-2xl mx-auto md:text-lg font-medium"
+            className="text-gray-600 max-w-2xl mx-auto md:text-lg font-medium"
           >
             {categoryData?.description || 'Explore our comprehensive collection of luxury assets.'}
           </motion.p>
