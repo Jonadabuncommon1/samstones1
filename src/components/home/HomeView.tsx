@@ -179,11 +179,11 @@ export const HomeView = () => {
             <div className="bg-white/5 border border-white/10 p-8 rounded-3xl">
                <div className="flex justify-between items-center mb-6">
                  <h2 className="text-2xl font-serif font-bold text-white">Featured <span className="text-blue-400">Motors</span></h2>
-                 <button onClick={() => { setActiveCategory('Cars'); setCurrentView('category'); window.scrollTo(0,0); }} className="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">View All</button>
+                 <button onClick={() => { setActiveCategory('cars'); setCurrentView('category'); window.scrollTo(0,0); }} className="text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium">View All</button>
                </div>
                <div className="space-y-4">
                  {featuredCars.map(car => (
-                   <div key={car.id} className="flex gap-4 bg-black/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5" onClick={() => { setActiveCategory('Cars'); setCurrentView('category'); window.scrollTo(0,0); }}>
+                   <div key={car.id} className="flex gap-4 bg-black/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5" onClick={() => { setActiveCategory('cars'); setCurrentView('category'); window.scrollTo(0,0); }}>
                      <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
                        <img src={car.images[0]} className="w-full h-full object-cover" />
                      </div>
@@ -205,11 +205,11 @@ export const HomeView = () => {
             <div className="bg-white/5 border border-white/10 p-8 rounded-3xl">
                <div className="flex justify-between items-center mb-6">
                  <h2 className="text-2xl font-serif font-bold text-white">Prime <span className="text-green-400">Estates</span></h2>
-                 <button onClick={() => { setActiveCategory('Real Estates'); setCurrentView('category'); window.scrollTo(0,0); }} className="text-green-400 hover:text-green-300 transition-colors text-sm font-medium">View All</button>
+                 <button onClick={() => { setActiveCategory('real-estates'); setCurrentView('category'); window.scrollTo(0,0); }} className="text-green-400 hover:text-green-300 transition-colors text-sm font-medium">View All</button>
                </div>
                <div className="space-y-4">
                  {featuredRealEstate.map(estate => (
-                   <div key={estate.id} className="flex gap-4 bg-black/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5" onClick={() => { setActiveCategory('Real Estates'); setCurrentView('category'); window.scrollTo(0,0); }}>
+                   <div key={estate.id} className="flex gap-4 bg-black/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5" onClick={() => { setActiveCategory('real-estates'); setCurrentView('category'); window.scrollTo(0,0); }}>
                      <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
                        <img src={estate.images[0]} className="w-full h-full object-cover" />
                      </div>

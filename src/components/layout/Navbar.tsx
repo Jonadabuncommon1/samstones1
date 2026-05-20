@@ -69,8 +69,8 @@ export const Navbar = () => {
             <div className="flex flex-col justify-center">
               <h1 className="font-sans text-xl md:text-2xl font-bold tracking-tight text-white transition-colors duration-300 drop-shadow-sm group-hover:drop-shadow-md flex items-center">
                 <img 
-                  src="/header-image.jpg" 
-                  alt="Feature" 
+                  src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=200" 
+                  alt="Samstones" 
                   className="h-7 md:h-8 w-auto mr-2 md:mr-3 object-contain rounded" 
                 />
                 <span>Samstones <span className="font-light">Marketplace</span></span>
