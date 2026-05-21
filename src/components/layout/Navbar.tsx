@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Heart, Menu, X, Search } from 'lucide-react';
 import { useAppContext } from '../../store/AppContext';
 import { motion, AnimatePresence } from 'motion/react';
@@ -52,9 +52,9 @@ export const Navbar = () => {
             <div className="flex flex-col justify-center">
               <h1 className="font-sans text-xl md:text-2xl font-bold tracking-tight text-gray-900 transition-colors duration-300 drop-shadow-sm group-hover:drop-shadow-md flex items-center">
                 <img
-                  src="/header-image.jpg"
-                  alt="Feature"
-                  className="h-7 md:h-8 w-auto mr-2 md:mr-3 object-contain rounded"
+                  src="/samstones-logo.jpg"
+                  alt="Samstones Logo"
+                  className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded"
                 />
                 <span>
                   Samstones <span className="font-light">Marketplace</span>
