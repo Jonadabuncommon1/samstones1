@@ -90,7 +90,7 @@ export const HomeView = () => {
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
             <img
-              src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1000"
+              src="/store_collage_green.png"
               alt="Premium Groceries & Assets"
               className="w-full h-full object-cover"
             />
