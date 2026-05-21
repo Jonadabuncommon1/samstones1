@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { useAppContext } from '../../store/AppContext';
-import { products, marketplaceCategories } from '../../data';
+import { marketplaceCategories, formatPrice } from '../../data';
 import { ProductCard } from '../shop/ProductCard';
 import { Search, ArrowRight, ShieldCheck, Zap, Globe, ShoppingBag } from 'lucide-react';
 
 export const HomeView = () => {
-  const { setCurrentView, setActiveCategory } = useAppContext();
+  const { setCurrentView, setActiveCategory, products, submitSearch } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
 
   const trendingProducts = products.filter(p => p.isTrending).slice(0, 4);
@@ -16,7 +16,7 @@ export const HomeView = () => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      setCurrentView('category');
+      submitSearch(searchQuery);
     }
   };
 
@@ -53,7 +53,7 @@ export const HomeView = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-white/90 text-lg mb-10 max-w-lg"
             >
-              Shop premium groceries, luxury vehicles, high-end real estate, and exclusive fashion—all sourced for quality and directly delivered.
+              Shop premium groceries, luxury vehicles, high-end real estate, and exclusive fashion, all sourced for quality and directly delivered.
             </motion.p>
 
             <motion.form
@@ -140,9 +140,9 @@ export const HomeView = () => {
       </section>
 
       <section className="py-8 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="w-full bg-[#109121] rounded-3xl p-8 md:p-12 border border-purple-500/30 flex flex-col md:flex-row items-center justify-between shadow-2xl">
+        <div className="w-full bg-[#109121] rounded-3xl p-8 md:p-12 border border-[#109121]/30 flex flex-col md:flex-row items-center justify-between shadow-2xl">
           <div className="mb-6 md:mb-0">
-            <span className="bg-[#109121]/10 text-[#109121] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block border border-pink-500/30">
+            <span className="bg-[#109121]/10 text-[#109121] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block border border-[#109121]/30">
               Limited Offer
             </span>
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-2">Fresh Assets & Provisions</h2>
@@ -196,9 +196,9 @@ export const HomeView = () => {
                     <img src={car.images[0]} alt={car.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex flex-col justify-center">
-                    <h4 className="font-bold text-gray-900 text-sm md:text-base">{car.name}</h4>
-                    <p className="font-bold text-[#109121] mb-2">
-                      {car.price.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}
+                    <h4 className="font-bold text-[#16C72E] text-sm md:text-base">{car.name}</h4>
+                    <p className="font-bold text-[#000000] mb-2">
+                      {formatPrice(car.price)}
                     </p>
                     <div className="flex items-center space-x-2 text-[10px] uppercase tracking-widest text-gray-500">
                       {car.year && <span>{car.year}</span>}
@@ -234,9 +234,9 @@ export const HomeView = () => {
                     <img src={estate.images[0]} alt={estate.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex flex-col justify-center">
-                    <h4 className="font-bold text-gray-900 text-sm md:text-base">{estate.name}</h4>
-                    <p className="font-bold text-[#109121] mb-2">
-                      {estate.price.toLocaleString('en-NG', { style: 'currency', currency: 'NGN' })}
+                    <h4 className="font-bold text-[#16C72E] text-sm md:text-base">{estate.name}</h4>
+                    <p className="font-bold text-[#000000] mb-2">
+                      {formatPrice(estate.price)}
                     </p>
                     <div className="flex items-center space-x-2 text-[10px] uppercase tracking-widest text-gray-500">
                       {estate.location && <span>{estate.location}</span>}

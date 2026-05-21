@@ -21,4 +21,4 @@ export interface CartItem {
   selectedColor?: string;
 }
 
-export type ViewState = 'home' | 'shop' | 'categories' | 'category' | 'product' | 'cart' | 'wishlist' | 'about' | 'contact' | 'admin';
+export type ViewState = 'home' | 'shop' | 'categories' | 'category' | 'product' | 'cart' | 'wishlist' | 'about' | 'contact' | 'admin' | 'terms' | 'privacy';

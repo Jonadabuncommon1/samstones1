@@ -1,74 +1,92 @@
-import React from 'react';
-import { ShoppingBag, Users, DollarSign, Activity } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { ShoppingBag, Package, TrendingUp, Layers } from 'lucide-react';
+import { useAppContext } from '../../store/AppContext';
+import { formatPrice } from '../../data';
 import { AdminView } from './AdminLayout';
 
 export const DashboardHome = ({ onChangeView }: { onChangeView: (view: AdminView) => void }) => {
+  const { products } = useAppContext();
+
+  const overview = useMemo(() => {
+    const totalValue = products.reduce((sum, p) => sum + p.price, 0);
+    const categories = new Set(products.map((p) => p.category));
+    const trending = products.filter((p) => p.isTrending).length;
+    const newItems = products.filter((p) => p.isNew).length;
+    return { totalValue, categories: categories.size, trending, newItems };
+  }, [products]);
+
   const stats = [
-    { title: 'Total Revenue', value: '₦45.2M', icon: DollarSign, trend: '+12.5%' },
-    { title: 'Active Products', value: '1,245', icon: ShoppingBag, trend: '+3.2%' },
-    { title: 'New Visitors', value: '8,409', icon: Users, trend: '+14.1%' },
-    { title: 'Active Inquiries', value: '42', icon: Activity, trend: '+5.0%' },
+    { title: 'Active Products', value: String(products.length), icon: ShoppingBag, sub: 'Live catalog count' },
+    { title: 'Catalog Value', value: formatPrice(overview.totalValue), icon: TrendingUp, sub: 'Sum of listed prices' },
+    { title: 'Categories', value: String(overview.categories), icon: Layers, sub: 'Unique product categories' },
+    { title: 'New Listings', value: String(overview.newItems), icon: Package, sub: `${overview.trending} trending` },
   ];
+
+  const recent = products.slice(0, 5);
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold mb-2">Platform Overview</h1>
-        <p className="text-gray-500">Welcome back. Here's what's happening today.</p>
+        <p className="text-gray-500">Analytics update instantly when products are added, edited, or removed.</p>
       </div>
 
-      {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, i) => (
           <div key={i} className="bg-white p-6 rounded-2xl border shadow-sm">
             <div className="flex justify-between items-start mb-4">
-              <div className="p-3 bg-purple-50 rounded-xl">
-                <stat.icon size={20} className="text-purple-600" />
+              <div className="p-3 bg-[#e6f4e8] rounded-xl">
+                <stat.icon size={20} className="text-[#109121]" />
               </div>
-              <span className="text-xs font-bold text-green-500 bg-green-50 px-2 py-1 rounded-full">
-                {stat.trend}
-              </span>
             </div>
             <h3 className="text-gray-500 text-sm font-medium mb-1">{stat.title}</h3>
-            <p className="text-2xl font-bold">{stat.value}</p>
+            <p className="text-2xl font-bold text-[#000000]">{stat.value}</p>
+            <p className="text-xs text-gray-400 mt-1">{stat.sub}</p>
           </div>
         ))}
       </div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4">
-        <div className="bg-white p-6 rounded-2xl border shadow-sm">
-          <h2 className="text-lg font-bold mb-4">Recent Activity</h2>
-          <div className="space-y-4">
-            {[1,2,3].map(i => (
-              <div key={i} className="flex items-center space-x-4 border-b pb-4 last:border-0 last:pb-0">
-                <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-                <div>
-                  <p className="text-sm font-medium">New WhatsApp Inquiry for "Phantom 2024"</p>
-                  <p className="text-xs text-gray-500">2 minutes ago</p>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="bg-white p-6 rounded-2xl border shadow-sm">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-bold">Products Overview</h2>
+          <button
+            type="button"
+            onClick={() => onChangeView('products')}
+            className="text-sm font-semibold text-[#109121] hover:text-[#0a5f15]"
+          >
+            Manage products →
+          </button>
         </div>
-
-        <div className="bg-white p-6 rounded-2xl border shadow-sm">
-          <h2 className="text-lg font-bold mb-4">System Health</h2>
-          <div className="space-y-4 text-sm">
-             <div className="flex justify-between items-center">
-               <span className="text-gray-500">Image CDN</span>
-               <span className="text-green-500 font-medium">Operational</span>
-             </div>
-             <div className="flex justify-between items-center">
-               <span className="text-gray-500">Database Connection</span>
-               <span className="text-green-500 font-medium">Stable</span>
-             </div>
-             <div className="flex justify-between items-center">
-               <span className="text-gray-500">API Latency</span>
-               <span className="text-gray-900 font-medium">24ms</span>
-             </div>
+        {recent.length === 0 ? (
+          <p className="text-gray-500 text-sm">No products yet. Add your first listing from Products.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="text-xs uppercase text-gray-500 border-b">
+                <tr>
+                  <th className="py-3 pr-4">Product</th>
+                  <th className="py-3 pr-4">Category</th>
+                  <th className="py-3 pr-4">Price</th>
+                  <th className="py-3">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recent.map((p) => (
+                  <tr key={p.id} className="border-b last:border-0">
+                    <td className="py-3 pr-4 font-bold text-[#16C72E]">{p.name}</td>
+                    <td className="py-3 pr-4 text-gray-600">{p.category}</td>
+                    <td className="py-3 pr-4 font-bold text-[#000000]">{formatPrice(p.price)}</td>
+                    <td className="py-3">
+                      <span className="text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200">
+                        Active
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

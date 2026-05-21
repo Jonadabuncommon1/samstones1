@@ -33,7 +33,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      className="group cursor-pointer h-full border border-white/5 bg-white/5 rounded-xl overflow-hidden glass-card shadow-none transition-all duration-300 hover:border-purple-500/30"
+      className="group cursor-pointer h-full border border-gray-200 bg-white rounded-xl overflow-hidden glass-card shadow-none transition-all duration-300 hover:border-[#109121]/30"
       onClick={handleView}
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-white">
@@ -70,11 +70,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
       <div className="p-5">
-        <h3 className="font-serif text-lg font-bold tracking-wide text-gray-900 mb-2 group-hover:text-[#109121] transition-colors truncate">{product.name}</h3>
+        <h3 className="font-serif text-lg font-bold tracking-wide text-[#16C72E] mb-2 transition-colors truncate">{product.name}</h3>
         
         {product.location && (
           <p className="text-xs text-gray-400 mb-2 flex items-center">
-            <span className="inline-block w-1.5 h-1.5 bg-purple-500 rounded-full mr-2"></span>
+            <span className="inline-block w-1.5 h-1.5 bg-[#109121] rounded-full mr-2"></span>
             {product.location}
           </p>
         )}
@@ -87,7 +87,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </p>
         )}
 
-        <p className="text-lg font-bold text-[#109121] mt-2">{formatPrice(product.price)}</p>
+        <p className="text-lg font-bold text-[#000000] mt-2">{formatPrice(product.price)}</p>
       </div>
     </motion.div>
   );

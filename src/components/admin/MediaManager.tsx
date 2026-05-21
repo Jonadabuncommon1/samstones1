@@ -1,13 +1,14 @@
 import React from 'react';
 import { UploadCloud, Image as ImageIcon, Search, Folder } from 'lucide-react';
-import { products as initialProducts, marketplaceCategories } from '../../data';
+import { marketplaceCategories } from '../../data';
+import { useAppContext } from '../../store/AppContext';
 
 export const MediaManager = () => {
-  // Aggregate all images simply for display
+  const { products } = useAppContext();
   const allImages = [
     ...marketplaceCategories.map(c => c.image),
-    ...initialProducts.flatMap(p => p.images)
-  ].slice(0, 16); // Take just a sample
+    ...products.flatMap(p => p.images)
+  ].slice(0, 16);
 
   return (
     <div className="space-y-6">
@@ -16,7 +17,7 @@ export const MediaManager = () => {
           <h1 className="text-2xl font-bold mb-1">Media Library</h1>
           <p className="text-gray-500 text-sm">Manage infinite uploads synced to Cloudinary/AWS S3.</p>
         </div>
-        <button className="flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+        <button className="flex items-center space-x-2 bg-[#109121] hover:bg-[#0a5f15] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
           <UploadCloud size={16} />
           <span>Upload Media</span>
         </button>
@@ -29,7 +30,7 @@ export const MediaManager = () => {
             <input 
               type="text" 
               placeholder="Search images..." 
-              className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-purple-500 rounded-lg"
+              className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#109121] rounded-lg"
             />
           </div>
           <button className="flex items-center space-x-2 px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium text-gray-700">
@@ -43,7 +44,7 @@ export const MediaManager = () => {
             <div key={i} className="aspect-square bg-gray-100 rounded-lg border overflow-hidden relative group">
               <img src={img} alt={`Media ${i}`} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
-                <button className="bg-white/20 p-2 rounded-full text-white hover:bg-purple-500"><ImageIcon size={16} /></button>
+                <button className="bg-white/20 p-2 rounded-full text-white hover:bg-[#109121]"><ImageIcon size={16} /></button>
               </div>
             </div>
           ))}

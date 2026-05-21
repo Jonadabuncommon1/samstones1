@@ -1,29 +1,44 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { products, marketplaceCategories } from '../../data';
+import { marketplaceCategories } from '../../data';
 import { ProductCard } from './ProductCard';
 import { useAppContext } from '../../store/AppContext';
+import { searchProducts } from '../../utils/searchProducts';
 import { Search, SlidersHorizontal, ChevronDown } from 'lucide-react';
 
 export const CategoryView = () => {
-  const { activeCategory, setCurrentView, setActiveCategory } = useAppContext();
-  
-  const [searchQuery, setSearchQuery] = useState('');
+  const {
+    products,
+    activeCategory,
+    setCurrentView,
+    setActiveCategory,
+    searchQuery,
+    setSearchQuery,
+    searchSubmitted,
+    submitSearch,
+    clearSearch,
+    searchProductsGlobally,
+  } = useAppContext();
+
   const [sortMode, setSortMode] = useState<string>('default');
 
   const categoryData = marketplaceCategories.find(
     c => c.id === activeCategory || c.name === activeCategory
   );
-  const categoryName = categoryData?.name || 'All Vaults';
-  
+  const isGlobalSearch = searchSubmitted && searchQuery.trim().length > 0;
+  const categoryName = isGlobalSearch
+    ? `Search: "${searchQuery}"`
+    : categoryData?.name || 'All Vaults';
+
   let categoryProducts = products;
-  if (categoryData) {
-    categoryProducts = products.filter(p => p.category === categoryData.name);
+  if (isGlobalSearch) {
+    categoryProducts = searchProductsGlobally(searchQuery);
+  } else if (categoryData) {
+    categoryProducts = products.filter((p) => p.category === categoryData.name);
   }
 
-  // Filter & Search Logic
-  if (searchQuery) {
-    categoryProducts = categoryProducts.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.description.toLowerCase().includes(searchQuery.toLowerCase()));
+  if (searchQuery.trim() && !isGlobalSearch) {
+    categoryProducts = searchProducts(categoryProducts, searchQuery);
   }
 
   let displayProducts = [...categoryProducts];
@@ -56,7 +71,7 @@ export const CategoryView = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-serif text-gray-900 mb-4 tracking-tight"
+            className="text-5xl md:text-7xl font-serif text-white mb-4 tracking-tight"
           >
             {categoryName}
           </motion.h1>
@@ -64,7 +79,7 @@ export const CategoryView = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-gray-600 max-w-2xl mx-auto md:text-lg font-medium"
+            className="text-white/90 max-w-2xl mx-auto md:text-lg font-medium"
           >
             {categoryData?.description || 'Explore our comprehensive collection of luxury assets.'}
           </motion.p>
@@ -76,11 +91,11 @@ export const CategoryView = () => {
         {/* Breadcrumb & Navigation */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 pb-4">
           <div className="flex space-x-2 text-xs uppercase tracking-widest font-semibold text-gray-500">
-            <button onClick={() => setCurrentView('home')} className="hover:text-white transition-colors">Home</button>
+            <button onClick={() => setCurrentView('home')} className="hover:text-[#109121] transition-colors">Home</button>
             <span>/</span>
-            <button onClick={() => { setActiveCategory(null); setCurrentView('categories'); }} className="hover:text-white transition-colors">Explore</button>
+            <button onClick={() => { setActiveCategory(null); setCurrentView('categories'); }} className="hover:text-[#109121] transition-colors">Explore</button>
             <span>/</span>
-            <span className="text-white">{categoryName}</span>
+            <span className="text-[#109121] font-bold">{categoryName}</span>
           </div>
 
           <div className="flex items-center w-full md:w-auto space-x-4">
@@ -90,30 +105,33 @@ export const CategoryView = () => {
                 placeholder="Search vault..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-purple-500 rounded-xl glass shadow-none placeholder-gray-500 transition-colors"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') submitSearch(searchQuery);
+                }}
+                className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#109121] rounded-xl shadow-none placeholder-gray-400 transition-colors"
               />
               <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             </div>
             
             <div className="relative group">
-              <button className="glass flex items-center justify-between space-x-2 px-4 py-2 rounded-xl text-sm uppercase tracking-widest font-semibold text-gray-300 hover:text-white hover:border-purple-500 transition-colors h-full">
+              <button className="flex items-center justify-between space-x-2 px-4 py-2 rounded-xl text-sm uppercase tracking-widest font-semibold text-gray-600 hover:text-[#109121] border border-gray-200 bg-white hover:border-[#109121] transition-colors h-full">
                 <span>{sortMode === 'default' ? 'Sort' : sortMode === 'price-asc' ? 'Low to High' : sortMode === 'price-desc' ? 'High to Low' : sortMode === 'popularity' ? 'Popularity' : 'New Arrivals'}</span>
                 <ChevronDown size={14} />
               </button>
               <div className="glass-card absolute right-0 top-full mt-2 w-48 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-20 overflow-hidden border border-white/10 shadow-none">
-                <button onClick={() => setSortMode('default')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-white/10 ${sortMode === 'default' ? 'font-bold text-white' : 'text-gray-400'}`}>Default</button>
+                <button onClick={() => setSortMode('default')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] ${sortMode === 'default' ? 'font-bold text-[#109121]' : 'text-gray-600'}`}>Default</button>
                 <div className="h-px w-full bg-white/5" />
-                <button onClick={() => setSortMode('price-asc')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-white/10 ${sortMode === 'price-asc' ? 'font-bold text-white' : 'text-gray-400'}`}>Price: Low to High</button>
+                <button onClick={() => setSortMode('price-asc')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] ${sortMode === 'price-asc' ? 'font-bold text-[#109121]' : 'text-gray-600'}`}>Price: Low to High</button>
                 <div className="h-px w-full bg-white/5" />
-                <button onClick={() => setSortMode('price-desc')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-white/10 ${sortMode === 'price-desc' ? 'font-bold text-white' : 'text-gray-400'}`}>Price: High to Low</button>
+                <button onClick={() => setSortMode('price-desc')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] ${sortMode === 'price-desc' ? 'font-bold text-[#109121]' : 'text-gray-600'}`}>Price: High to Low</button>
                 <div className="h-px w-full bg-white/5" />
-                <button onClick={() => setSortMode('popularity')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-white/10 ${sortMode === 'popularity' ? 'font-bold text-white' : 'text-gray-400'}`}>Popularity</button>
+                <button onClick={() => setSortMode('popularity')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] ${sortMode === 'popularity' ? 'font-bold text-[#109121]' : 'text-gray-600'}`}>Popularity</button>
                 <div className="h-px w-full bg-white/5" />
-                <button onClick={() => setSortMode('new')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-white/10 ${sortMode === 'new' ? 'font-bold text-white' : 'text-gray-400'}`}>New Arrivals</button>
+                <button onClick={() => setSortMode('new')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] ${sortMode === 'new' ? 'font-bold text-[#109121]' : 'text-gray-600'}`}>New Arrivals</button>
               </div>
             </div>
             
-            <button className="glass flex items-center space-x-2 p-2 bg-white/5 border border-white/10 rounded-xl hover:border-purple-500 transition-colors md:hidden shadow-none">
+            <button className="glass flex items-center space-x-2 p-2 bg-white/5 border border-white/10 rounded-xl hover:border-[#109121] transition-colors md:hidden shadow-none">
               <SlidersHorizontal size={18} className="text-gray-300" />
             </button>
           </div>
@@ -123,16 +141,16 @@ export const CategoryView = () => {
         <div className="flex flex-col md:flex-row gap-8 mt-8">
           {/* Filters */}
           <div className="hidden md:block w-64 flex-shrink-0">
-            <h3 className="font-serif text-2xl font-bold mb-6 text-white">Vaults</h3>
+            <h3 className="font-serif text-2xl font-bold mb-6 text-gray-900">Vaults</h3>
             
-            <div className="space-y-8 glass p-6 rounded-2xl border border-white/5 shadow-none">
+            <div className="space-y-8 p-6 rounded-2xl border border-gray-200 bg-[#e6f4e8]/50 shadow-none">
               <div>
                 <ul className="space-y-3">
                   {marketplaceCategories.map(cat => (
                     <li key={cat.id}>
                       <button 
                         onClick={() => setActiveCategory(cat.id)}
-                        className={`text-sm tracking-wide transition-colors ${activeCategory === cat.id ? 'text-pink-400 font-bold' : 'text-gray-400 hover:text-white'}`}
+                        className={`text-sm tracking-wide transition-colors ${activeCategory === cat.id ? 'text-[#109121] font-bold' : 'text-gray-400 hover:text-[#109121]'}`}
                       >
                         {cat.name}
                       </button>
@@ -141,7 +159,7 @@ export const CategoryView = () => {
                   <li>
                     <button 
                       onClick={() => setActiveCategory(null)}
-                      className={`text-sm tracking-wide transition-colors block mt-4 pt-4 border-t border-white/10 w-full text-left ${!activeCategory ? 'text-pink-400 font-bold' : 'text-gray-400 hover:text-white'}`}
+                      className={`text-sm tracking-wide transition-colors block mt-4 pt-4 border-t border-white/10 w-full text-left ${!activeCategory ? 'text-[#109121] font-bold' : 'text-gray-400 hover:text-[#109121]'}`}
                     >
                       All Vaults
                     </button>
@@ -164,9 +182,30 @@ export const CategoryView = () => {
                 ))}
               </motion.div>
             ) : (
-              <div className="text-center py-32 glass rounded-3xl border border-white/5 shadow-none">
-                <h3 className="text-2xl font-serif text-white mb-2">No selections found.</h3>
-                <p className="text-gray-400 font-medium">Try adjusting your filters or search query.</p>
+              <div className="text-center py-32 rounded-3xl border border-gray-200 bg-[#e6f4e8]/40 shadow-none px-6">
+                {searchQuery.trim() ? (
+                  <>
+                    <h3 className="text-2xl font-serif text-gray-900 mb-2">Not available at this moment</h3>
+                    <p className="text-gray-600 font-medium max-w-md mx-auto">
+                      We could not find &ldquo;{searchQuery}&rdquo; in our catalog right now. Try another search or browse categories.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        clearSearch();
+                        setActiveCategory(null);
+                      }}
+                      className="mt-6 text-sm font-bold uppercase tracking-widest text-[#109121] hover:text-[#0a5f15]"
+                    >
+                      Clear search
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="text-2xl font-serif text-gray-900 mb-2">No selections found.</h3>
+                    <p className="text-gray-400 font-medium">Try adjusting your filters.</p>
+                  </>
+                )}
               </div>
             )}
           </div>

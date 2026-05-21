@@ -13,13 +13,13 @@ export const CategoriesManager = () => {
           <h1 className="text-2xl font-bold mb-1">Categories / Vaults</h1>
           <p className="text-gray-500 text-sm">Create and organize unlimited categories.</p>
         </div>
-        <button className="flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+        <button className="flex items-center space-x-2 bg-[#109121] hover:bg-[#0a5f15] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
           <Plus size={16} />
           <span>New Category</span>
         </button>
       </div>
 
-      <div className="bg-white p-4 text-white rounded-2xl border shadow-sm space-y-4">
+      <div className="bg-white p-4 text-gray-900 rounded-2xl border shadow-sm space-y-4">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b">
@@ -47,7 +47,7 @@ export const CategoriesManager = () => {
                     <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded border border-green-200">Featured</span>
                   </td>
                   <td className="px-6 py-4 text-right space-x-2">
-                    <button className="text-gray-400 hover:text-purple-500"><Edit size={16} /></button>
+                    <button className="text-gray-400 hover:text-[#109121]"><Edit size={16} /></button>
                     <button className="text-gray-400 hover:text-red-500"><Trash2 size={16} /></button>
                   </td>
                 </tr>

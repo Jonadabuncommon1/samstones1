@@ -10,7 +10,7 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ currentView, onChangeView, closeSidebar }: SidebarProps) => {
-  const { setCurrentView } = useAppContext();
+  const { logoutAdmin } = useAppContext();
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -39,7 +39,7 @@ export const Sidebar = ({ currentView, onChangeView, closeSidebar }: SidebarProp
             }}
             className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
               currentView === item.id 
-                ? 'bg-purple-50 text-purple-600' 
+                ? 'bg-[#e6f4e8] text-[#109121]' 
                 : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
             }`}
           >
@@ -51,7 +51,7 @@ export const Sidebar = ({ currentView, onChangeView, closeSidebar }: SidebarProp
 
       <div className="p-4 border-t">
         <button 
-          onClick={() => setCurrentView('home')}
+          onClick={() => logoutAdmin()}
           className="w-full flex items-center space-x-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
         >
           <LogOut size={18} />

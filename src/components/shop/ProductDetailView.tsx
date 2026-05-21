@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAppContext } from '../../store/AppContext';
-import { products, formatPrice } from '../../data';
+import { formatPrice } from '../../data';
 import { Heart, ChevronRight, MessageCircle, Star, ShoppingBag, ShieldCheck, Truck, Minus, Plus, ArrowLeft } from 'lucide-react';
 
 export const ProductDetailView = () => {
-  const { activeProductId, setCurrentView, addToCart, wishlist, toggleWishlist } = useAppContext();
-  const product = products.find(p => p.id === activeProductId);
+  const { activeProductId, setCurrentView, addToCart, wishlist, toggleWishlist, getProductById } = useAppContext();
+  const product = activeProductId ? getProductById(activeProductId) : undefined;
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState('');
@@ -25,11 +25,11 @@ export const ProductDetailView = () => {
 
   if (!product) {
     return (
-      <div className="pt-32 pb-24 text-center min-h-[60vh] flex flex-col justify-center items-center bg-black text-white transition-colors duration-500">
+      <div className="pt-32 pb-24 text-center min-h-[60vh] flex flex-col justify-center items-center bg-white text-gray-900 transition-colors duration-500">
         <h2 className="text-2xl font-serif mb-4">Vault Item Not Found</h2>
         <button 
           onClick={() => setCurrentView('category')}
-          className="border-b-2 border-pink-500 pb-1 uppercase tracking-widest text-xs font-bold hover:text-pink-400 transition-colors"
+          className="border-b-2 border-[#109121] pb-1 uppercase tracking-widest text-xs font-bold hover:text-[#109121] transition-colors"
         >
           Return to Vaults
         </button>
@@ -62,17 +62,17 @@ export const ProductDetailView = () => {
   };
 
   return (
-    <div className="pt-24 pb-24 min-h-screen bg-black text-white relative transition-colors duration-500">
-      <div className="fixed top-0 right-0 w-[50%] h-[50%] bg-purple-900/10 blur-[150px] pointer-events-none transition-colors" />
+    <div className="pt-24 pb-24 min-h-screen bg-white text-gray-900 relative transition-colors duration-500">
+      <div className="fixed top-0 right-0 w-[50%] h-[50%] bg-[#e6f4e8] blur-[150px] pointer-events-none transition-colors" />
 
       {/* Breadcrumbs */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 relative z-10">
         <div className="flex items-center space-x-2 text-xs uppercase tracking-widest text-gray-500 font-bold">
-          <button onClick={() => setCurrentView('home')} className="hover:text-white transition-colors">Home</button>
+          <button onClick={() => setCurrentView('home')} className="hover:text-[#109121] transition-colors">Home</button>
           <ChevronRight size={12} />
-          <button onClick={() => setCurrentView('category')} className="hover:text-white transition-colors">Vaults</button>
+          <button onClick={() => setCurrentView('category')} className="hover:text-[#109121] transition-colors">Vaults</button>
           <ChevronRight size={12} />
-          <span className="text-pink-400">{product.name}</span>
+          <span className="text-[#109121]">{product.name}</span>
         </div>
       </div>
 
@@ -87,14 +87,14 @@ export const ProductDetailView = () => {
                 <button 
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
-                  className={`relative aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-xl bg-white/5 border transition-all duration-300 ${selectedImage === idx ? 'border-purple-500 opacity-100' : 'border-white/10 opacity-50 hover:opacity-100'}`}
+                  className={`relative aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-xl bg-[#e6f4e8]/50 border transition-all duration-300 ${selectedImage === idx ? 'border-[#109121] opacity-100' : 'border-gray-200 opacity-50 hover:opacity-100'}`}
                 >
                   <img src={img} alt={`${product.name} ${idx + 1}`} className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>
             {/* Main Image */}
-            <div className="flex-1 bg-white/5 aspect-[4/5] md:aspect-[3/4] relative overflow-hidden rounded-2xl glass-card border border-white/10">
+            <div className="flex-1 bg-[#e6f4e8]/50 aspect-[4/5] md:aspect-[3/4] relative overflow-hidden rounded-2xl glass-card border border-gray-200">
               <AnimatePresence mode="wait">
                 <motion.img 
                   initial={{ opacity: 0 }}
@@ -113,14 +113,14 @@ export const ProductDetailView = () => {
           {/* Product Details */}
           <div className="w-full lg:w-1/2 lg:py-8 flex flex-col">
             <div className="mb-2 flex items-center space-x-3">
-               <span className="text-xs tracking-widest uppercase font-bold text-pink-400">{product.category}</span>
-               {product.isNew && <span className="text-[10px] uppercase font-bold bg-purple-500/20 text-purple-300 px-2 py-1 rounded border border-purple-500/30 shadow-[0_0_10px_rgba(168,85,247,0.2)]">New Arrival</span>}
+               <span className="text-xs tracking-widest uppercase font-bold text-[#109121]">{product.category}</span>
+               {product.isNew && <span className="text-[10px] uppercase font-bold bg-[#109121]/20 text-[#109121] px-2 py-1 rounded border border-[#109121]/30 shadow-[0_0_10px_rgba(168,85,247,0.2)]">New Arrival</span>}
             </div>
             
-            <h1 className="text-3xl lg:text-5xl font-serif text-white mb-4 font-bold tracking-tight">{product.name}</h1>
+            <h1 className="text-3xl lg:text-5xl font-serif text-[#16C72E] mb-4 font-bold tracking-tight">{product.name}</h1>
             
             <div className="flex items-center space-x-4 mb-8">
-              <p className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">{formatPrice(product.price)}</p>
+              <p className="text-3xl font-bold text-[#000000]">{formatPrice(product.price)}</p>
               <div className="flex items-center space-x-1 border-l border-white/20 pl-4">
                  <Star size={14} className="text-yellow-500 fill-current" />
                  <Star size={14} className="text-yellow-500 fill-current" />
@@ -135,23 +135,23 @@ export const ProductDetailView = () => {
               <p>{product.description}</p>
               
               {(product.location || product.year || product.mileage) && (
-                <ul className="mt-6 mb-4 space-y-3 border-t border-white/10 pt-6">
+                <ul className="mt-6 mb-4 space-y-3 border-t border-gray-200 pt-6">
                   {product.location && (
                     <li className="flex items-center justify-between glass p-3 rounded-lg shadow-none">
                       <span className="text-xs uppercase tracking-widest font-bold text-gray-400">Location</span>
-                      <span className="font-semibold text-white">{product.location}</span>
+                      <span className="font-semibold text-gray-900">{product.location}</span>
                     </li>
                   )}
                   {product.year && (
                     <li className="flex items-center justify-between glass p-3 rounded-lg shadow-none">
                       <span className="text-xs uppercase tracking-widest font-bold text-gray-400">Model Year</span>
-                      <span className="font-semibold text-white">{product.year}</span>
+                      <span className="font-semibold text-gray-900">{product.year}</span>
                     </li>
                   )}
                   {product.mileage && (
                     <li className="flex items-center justify-between glass p-3 rounded-lg shadow-none">
                       <span className="text-xs uppercase tracking-widest font-bold text-gray-400">Mileage</span>
-                      <span className="font-semibold text-white">{product.mileage}</span>
+                      <span className="font-semibold text-gray-900">{product.mileage}</span>
                     </li>
                   )}
                 </ul>
@@ -162,14 +162,14 @@ export const ProductDetailView = () => {
               {/* Colors */}
               {product.colors && product.colors.length > 0 && (
               <div>
-                <h3 className="text-xs uppercase tracking-widest font-bold text-white mb-4">Color: <span className="text-gray-400">{selectedColor}</span></h3>
+                <h3 className="text-xs uppercase tracking-widest font-bold text-gray-900 mb-4">Color: <span className="text-gray-400">{selectedColor}</span></h3>
                 <div className="flex flex-wrap gap-3">
                   {product.colors.map(color => (
                     <button
                       key={color}
                       onClick={() => setSelectedColor(color)}
                       className={`px-4 py-2 text-sm border rounded-lg font-semibold transition-all duration-300 ${
-                        selectedColor === color ? 'border-purple-500 bg-purple-500/10 text-white shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'border-white/10 text-gray-400 hover:border-white/30 hover:text-white'
+                        selectedColor === color ? 'border-[#109121] bg-[#109121]/10 text-white shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'border-gray-200 text-gray-400 hover:border-[#109121]/50 hover:text-[#109121]'
                       }`}
                     >
                       {color}
@@ -183,9 +183,9 @@ export const ProductDetailView = () => {
               {product.sizes && product.sizes.length > 0 && (
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xs uppercase tracking-widest font-bold text-white">Size: <span className="text-gray-400">{selectedSize}</span></h3>
+                  <h3 className="text-xs uppercase tracking-widest font-bold text-gray-900">Size: <span className="text-gray-400">{selectedSize}</span></h3>
                   {(product.category === "Shoes" || product.category === "Clothes") && (
-                    <button className="text-xs uppercase font-bold tracking-widest text-pink-400 border-b border-pink-400/30 hover:border-pink-400 transition-colors">Size Guide</button>
+                    <button className="text-xs uppercase font-bold tracking-widest text-[#109121] border-b border-[#109121]/30 hover:border-[#109121] transition-colors">Size Guide</button>
                   )}
                 </div>
                 <div className="flex flex-wrap gap-3">
@@ -194,7 +194,7 @@ export const ProductDetailView = () => {
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={`min-w-[3rem] h-12 flex items-center justify-center text-sm border font-semibold rounded-lg transition-all duration-300 px-3 ${
-                        selectedSize === size ? 'border-pink-500 bg-pink-500/10 text-white shadow-[0_0_15px_rgba(236,72,153,0.2)]' : 'border-white/10 text-gray-400 hover:border-white/30 hover:text-white'
+                        selectedSize === size ? 'border-[#109121] bg-[#109121]/10 text-white shadow-[0_0_15px_rgba(236,72,153,0.2)]' : 'border-gray-200 text-gray-400 hover:border-[#109121]/50 hover:text-[#109121]'
                       }`}
                     >
                       {size}
@@ -206,18 +206,18 @@ export const ProductDetailView = () => {
 
               {/* Quantity */}
               <div>
-                <h3 className="text-xs uppercase tracking-widest font-bold text-white mb-4">Quantity</h3>
+                <h3 className="text-xs uppercase tracking-widest font-bold text-gray-900 mb-4">Quantity</h3>
                 <div className="flex items-center space-x-6 glass border border-white/5 p-2 rounded-xl inline-flex shadow-none">
                   <button 
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors text-white"
+                    className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#e6f4e8] transition-colors text-gray-900"
                   >
                     <Minus size={16} />
                   </button>
-                  <span className="font-bold text-lg w-8 text-center text-white">{quantity}</span>
+                  <span className="font-bold text-lg w-8 text-center text-gray-900">{quantity}</span>
                   <button 
                     onClick={() => setQuantity(quantity + 1)}
-                    className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors text-white"
+                    className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#e6f4e8] transition-colors text-gray-900"
                   >
                     <Plus size={16} />
                   </button>
@@ -230,7 +230,7 @@ export const ProductDetailView = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <button 
                   onClick={handleAddToCart}
-                  className="flex-1 bg-white text-black py-4 px-8 rounded-xl flex items-center justify-center space-x-2 uppercase text-sm tracking-widest font-bold hover:bg-gray-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                  className="flex-1 bg-[#109121] text-white py-4 px-8 rounded-xl flex items-center justify-center space-x-2 uppercase text-sm tracking-widest font-bold hover:bg-[#0a5f15] transition-colors"
                 >
                   <ShoppingBag size={18} />
                   <span>Add to Vault</span>
@@ -238,7 +238,7 @@ export const ProductDetailView = () => {
                 <button 
                   onClick={() => toggleWishlist(product.id)}
                   className={`h-14 w-full sm:w-16 rounded-xl border flex items-center justify-center transition-colors ${
-                    isWishlisted ? 'border-pink-500 text-pink-400 bg-pink-500/10 shadow-[0_0_15px_rgba(236,72,153,0.2)]' : 'border-white/10 text-gray-400 hover:border-white/30 hover:text-white glass'
+                    isWishlisted ? 'border-[#109121] text-[#109121] bg-[#109121]/10 shadow-[0_0_15px_rgba(236,72,153,0.2)]' : 'border-gray-200 text-gray-400 hover:border-[#109121]/50 hover:text-[#109121] glass'
                   }`}
                 >
                   <Heart size={20} className={isWishlisted ? "fill-current" : ""} />
@@ -255,18 +255,18 @@ export const ProductDetailView = () => {
             </div>
 
             {/* Guarantees Accordion Info */}
-            <div className="mt-auto border-t border-white/10 pt-8 grid grid-cols-2 gap-4">
+            <div className="mt-auto border-t border-gray-200 pt-8 grid grid-cols-2 gap-4">
                <div className="flex items-center space-x-3 glass border border-white/5 p-4 rounded-xl shadow-none">
-                 <ShieldCheck size={24} className="text-purple-400" />
+                 <ShieldCheck size={24} className="text-[#109121]" />
                  <div>
-                    <h4 className="text-sm font-bold text-white">Genuine Quality</h4>
+                    <h4 className="text-sm font-bold text-gray-900">Genuine Quality</h4>
                     <p className="text-xs text-gray-400">100% Authenticity</p>
                  </div>
               </div>
               <div className="flex items-center space-x-3 glass border border-white/5 p-4 rounded-xl shadow-none">
-                 <Truck size={24} className="text-pink-400" />
+                 <Truck size={24} className="text-[#109121]" />
                  <div>
-                    <h4 className="text-sm font-bold text-white">Fast Delivery</h4>
+                    <h4 className="text-sm font-bold text-gray-900">Fast Delivery</h4>
                     <p className="text-xs text-gray-400">Secure shipping</p>
                  </div>
               </div>

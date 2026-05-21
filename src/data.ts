@@ -185,10 +185,7 @@ export const products: Product[] = [
   }
 ];
 
+/** Formatted Naira amount (symbol + number). Apply `font-bold text-[#000000]` on the element. */
 export const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('en-NG', {
-    style: 'currency',
-    currency: 'NGN',
-    minimumFractionDigits: 0,
-  }).format(price);
+  return `₦${price.toLocaleString('en-NG', { maximumFractionDigits: 0 })}`;
 };

@@ -4,9 +4,11 @@ import { useAppContext } from '../../store/AppContext';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const Navbar = () => {
-  const { cart, wishlist, setCurrentView, setCartOpen } = useAppContext();
+  const { cart, wishlist, setCurrentView, setCartOpen, submitSearch } = useAppContext();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [navSearch, setNavSearch] = useState('');
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -76,9 +78,42 @@ export const Navbar = () => {
 
           {/* Desktop Links Right & Icons */}
           <div className="flex items-center space-x-5 md:space-x-6 ml-auto lg:ml-0">
-            <button className="hidden sm:block text-gray-600 hover:text-gray-900 transition-colors">
-              <Search size={20} />
-            </button>
+            <div className="hidden sm:block relative">
+              {searchOpen ? (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (navSearch.trim()) {
+                      submitSearch(navSearch);
+                      setSearchOpen(false);
+                      setNavSearch('');
+                    }
+                  }}
+                  className="flex items-center bg-white border border-gray-200 rounded-full pl-3 pr-1 py-1 shadow-sm"
+                >
+                  <input
+                    type="text"
+                    autoFocus
+                    value={navSearch}
+                    onChange={(e) => setNavSearch(e.target.value)}
+                    placeholder="Search products..."
+                    className="w-40 md:w-52 text-sm outline-none text-gray-900"
+                  />
+                  <button type="submit" className="bg-[#109121] text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                    Go
+                  </button>
+                </form>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => setSearchOpen(true)}
+                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  aria-label="Search"
+                >
+                  <Search size={20} />
+                </button>
+              )}
+            </div>
             <button 
               onClick={() => handleNavClick('wishlist')}
               className="text-gray-600 hover:text-gray-900 transition-colors relative"
@@ -117,7 +152,7 @@ export const Navbar = () => {
             <div className="p-6 flex flex-col h-full text-gray-900">
               <div className="flex justify-between items-center mb-12">
                 <h1 className="font-serif text-2xl font-bold tracking-tight text-gradient">SAMSTONES</h1>
-                <button onClick={() => setMobileMenuOpen(false)} className="text-gray-400 hover:text-white">
+                <button onClick={() => setMobileMenuOpen(false)} className="text-gray-400 hover:text-[#109121]">
                   <X size={28} />
                 </button>
               </div>
@@ -132,7 +167,7 @@ export const Navbar = () => {
                   </button>
                 ))}
               </div>
-              <div className="mt-8 border-t border-gray-800 pt-8">
+              <div className="mt-8 border-t border-gray-200 pt-8">
                 <a
                   href="https://wa.me/2348065179554"
                   target="_blank"

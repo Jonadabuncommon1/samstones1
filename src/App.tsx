@@ -14,14 +14,20 @@ import { ProductDetailView } from './components/shop/ProductDetailView';
 import { WishlistView } from './components/shop/WishlistView';
 import { AboutView } from './components/home/AboutView';
 import { ContactView } from './components/home/ContactView';
+import { TermsView } from './components/home/TermsView';
+import { PrivacyView } from './components/home/PrivacyView';
 import { AdminLayout } from './components/admin/AdminLayout';
+import { AdminLogin } from './components/admin/AdminLogin';
 import { CategoriesView } from './components/shop/CategoriesView';
 import { CategoryView } from './components/shop/CategoryView';
 
 function AppContent() {
-  const { currentView } = useAppContext();
+  const { currentView, isAdminAuthenticated } = useAppContext();
 
   if (currentView === 'admin') {
+    if (!isAdminAuthenticated) {
+      return <AdminLogin />;
+    }
     return <AdminLayout />;
   }
 
@@ -38,6 +44,8 @@ function AppContent() {
         {currentView === 'wishlist' && <WishlistView />}
         {currentView === 'about' && <AboutView />}
         {currentView === 'contact' && <ContactView />}
+        {currentView === 'terms' && <TermsView />}
+        {currentView === 'privacy' && <PrivacyView />}
       </main>
 
       <Footer />
