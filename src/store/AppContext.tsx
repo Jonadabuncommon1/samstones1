@@ -3,6 +3,8 @@ import { Product, CartItem, ViewState } from '../types';
 import { fetchProductsFromDB, addProductToDB, updateProductInDB, deleteProductFromDB, createProductId } from './productStorage';
 import { isAdminSessionActive, setAdminSession, verifyAdminLogin } from './adminAuth';
 import { searchProducts } from '../utils/searchProducts';
+import { supabase } from '../lib/supabase';
+import type { User } from '@supabase/supabase-js';
 
 interface AppContextProps {
   currentView: ViewState;
@@ -35,6 +37,8 @@ interface AppContextProps {
   loginAdmin: (email: string, password: string) => { ok: boolean; error?: string };
   logoutAdmin: () => void;
   openAdminPortal: () => void;
+  user: User | null;
+  loadingAuth: boolean;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -70,6 +74,26 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchSubmitted, setSearchSubmitted] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => isAdminSessionActive());
+  const [user, setUser] = useState<User | null>(null);
+  const [loadingAuth, setLoadingAuth] = useState(true);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoadingAuth(false);
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setLoadingAuth(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   useEffect(() => {
     fetchProductsFromDB().then((data) => setProducts(data));
@@ -218,6 +242,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         loginAdmin,
         logoutAdmin,
         openAdminPortal,
+        user,
+        loadingAuth,
       }}
     >
       {children}

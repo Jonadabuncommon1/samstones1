@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Heart, Menu, X, Search } from 'lucide-react';
+import { ShoppingBag, Heart, Menu, X, Search, LogOut } from 'lucide-react';
+import { supabase } from '../../lib/supabase';
 import { useAppContext } from '../../store/AppContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { ThemeToggle } from '../ThemeToggle';
@@ -137,6 +138,13 @@ export const Navbar = () => {
                 </span>
               )}
             </button>
+            <button
+              onClick={() => supabase.auth.signOut()}
+              className="text-gray-600 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative ml-2"
+              title="Sign Out"
+            >
+              <LogOut size={20} />
+            </button>
           </div>
         </div>
       </nav>
@@ -177,6 +185,12 @@ export const Navbar = () => {
                 >
                   Contact Support
                 </a>
+                <button
+                  onClick={() => supabase.auth.signOut()}
+                  className="w-full mt-4 bg-transparent border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white dark:border-red-600 dark:text-red-600 dark:hover:bg-red-600 dark:hover:text-white text-center py-4 rounded-xl uppercase text-sm tracking-widest font-bold block transition-all"
+                >
+                  Sign Out
+                </button>
               </div>
             </div>
           </motion.div>

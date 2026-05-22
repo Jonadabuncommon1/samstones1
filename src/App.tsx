@@ -20,17 +20,26 @@ import { AdminLayout } from './components/admin/AdminLayout';
 import { AdminLogin } from './components/admin/AdminLogin';
 import { CategoriesView } from './components/shop/CategoriesView';
 import { CategoryView } from './components/shop/CategoryView';
+import { AuthView } from './components/auth/AuthView';
 
 import { ThemeProvider } from './components/ThemeContext';
 
 function AppContent() {
-  const { currentView, isAdminAuthenticated } = useAppContext();
+  const { currentView, isAdminAuthenticated, user, loadingAuth } = useAppContext();
+
+  if (loadingAuth) {
+    return <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#109121]"></div></div>;
+  }
 
   if (currentView === 'admin') {
     if (!isAdminAuthenticated) {
       return <AdminLogin />;
     }
     return <AdminLayout />;
+  }
+
+  if (!user) {
+    return <AuthView />;
   }
 
   return (
