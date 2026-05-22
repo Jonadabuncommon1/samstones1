@@ -259,7 +259,7 @@ export const ProductDetailView = () => {
                <div className="flex items-center space-x-3 glass border border-white/5 p-4 rounded-xl shadow-none">
                  <ShieldCheck size={24} className="text-[#109121]" />
                  <div>
-                    <h4 className="text-sm font-bold text-gray-900">Genuine <span className="text-[#DFB722]">Quality</span></h4>
+                    <h4 className="text-sm font-bold text-gray-900">Genuine <span className="text-[#DFB722] font-black">Quality</span></h4>
                     <p className="text-xs text-gray-400">100% Authenticity</p>
                  </div>
               </div>
