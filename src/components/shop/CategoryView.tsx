@@ -28,7 +28,7 @@ export const CategoryView = () => {
   const isGlobalSearch = searchSubmitted && searchQuery.trim().length > 0;
   const categoryName = isGlobalSearch
     ? `Search: "${searchQuery}"`
-    : categoryData?.name || 'All Vaults';
+    : categoryData?.name || 'All Categories';
 
   let categoryProducts = products;
   if (isGlobalSearch) {
@@ -141,7 +141,7 @@ export const CategoryView = () => {
         <div className="flex flex-col md:flex-row gap-8 mt-8">
           {/* Filters */}
           <div className="hidden md:block w-64 flex-shrink-0">
-            <h3 className="font-serif text-2xl font-bold mb-6 text-gray-900">Vaults</h3>
+            <h3 className="font-serif text-2xl font-bold mb-6 text-gray-900">Shop Categories</h3>
             
             <div className="space-y-8 p-6 rounded-2xl border border-gray-200 bg-[#e6f4e8]/50 shadow-none">
               <div>
@@ -161,7 +161,7 @@ export const CategoryView = () => {
                       onClick={() => setActiveCategory(null)}
                       className={`text-sm tracking-wide transition-colors block mt-4 pt-4 border-t border-white/10 w-full text-left ${!activeCategory ? 'text-[#109121] font-bold' : 'text-gray-400 hover:text-[#109121]'}`}
                     >
-                      All Vaults
+                      All Categories
                     </button>
                   </li>
                 </ul>

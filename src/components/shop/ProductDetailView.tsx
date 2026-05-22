@@ -26,12 +26,12 @@ export const ProductDetailView = () => {
   if (!product) {
     return (
       <div className="pt-32 pb-24 text-center min-h-[60vh] flex flex-col justify-center items-center bg-white text-gray-900 transition-colors duration-500">
-        <h2 className="text-2xl font-serif mb-4">Vault Item Not Found</h2>
+        <h2 className="text-2xl font-serif mb-4">Product Not Found</h2>
         <button 
           onClick={() => setCurrentView('category')}
           className="border-b-2 border-[#109121] pb-1 uppercase tracking-widest text-xs font-bold hover:text-[#109121] transition-colors"
         >
-          Return to Vaults
+          Return to Shop Categories
         </button>
       </div>
     );
@@ -49,7 +49,7 @@ export const ProductDetailView = () => {
   };
 
   const handleDirectWhatsApp = () => {
-    let message = `Hello, I want to order this product from the vault:\n\n`;
+    let message = `Hello, I want to order this product from the shop:\n\n`;
     message += `*Product Name*: ${product.name}\n`;
     if (selectedSize) message += `*Size*: ${selectedSize}\n`;
     if (selectedColor) message += `*Color*: ${selectedColor}\n`;
@@ -70,7 +70,7 @@ export const ProductDetailView = () => {
         <div className="flex items-center space-x-2 text-xs uppercase tracking-widest text-gray-500 font-bold">
           <button onClick={() => setCurrentView('home')} className="hover:text-[#109121] transition-colors">Home</button>
           <ChevronRight size={12} />
-          <button onClick={() => setCurrentView('category')} className="hover:text-[#109121] transition-colors">Vaults</button>
+          <button onClick={() => setCurrentView('category')} className="hover:text-[#109121] transition-colors">Shop Categories</button>
           <ChevronRight size={12} />
           <span className="text-[#109121]">{product.name}</span>
         </div>
@@ -233,7 +233,7 @@ export const ProductDetailView = () => {
                   className="flex-1 bg-[#109121] text-white py-4 px-8 rounded-xl flex items-center justify-center space-x-2 uppercase text-sm tracking-widest font-bold hover:bg-[#0a5f15] transition-colors"
                 >
                   <ShoppingBag size={18} />
-                  <span>Add to Vault</span>
+                  <span>Add to Cart</span>
                 </button>
                 <button 
                   onClick={() => toggleWishlist(product.id)}

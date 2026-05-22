@@ -10,7 +10,7 @@ export const CategoriesManager = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold mb-1">Categories / Vaults</h1>
+          <h1 className="text-2xl font-bold mb-1">Shop Categories</h1>
           <p className="text-gray-500 text-sm">Create and organize unlimited categories.</p>
         </div>
         <button className="flex items-center space-x-2 bg-[#109121] hover:bg-[#0a5f15] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
