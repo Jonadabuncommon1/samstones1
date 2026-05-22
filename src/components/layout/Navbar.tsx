@@ -57,7 +57,7 @@ export const Navbar = () => {
                   className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded"
                 />
                 <span>
-                  Samstones <span className="font-light">Marketplace</span>
+                  <span className="text-[#DFB722]">Samstones</span> <span className="font-light text-black">Marketplace</span>
                 </span>
               </h1>
             </div>
