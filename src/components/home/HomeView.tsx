@@ -130,10 +130,10 @@ export const HomeView = () => {
               onClick={() => { setActiveCategory(category.id); setCurrentView('category'); window.scrollTo(0, 0); }}
               className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center cursor-pointer hover:bg-white/10 transition-all group"
             >
-              <div className="w-16 h-16 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <img src={category.image} alt={category.name} className="w-12 h-12 rounded-full object-cover" />
+              <div className="w-24 h-24 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg border border-[#109121]/20">
+                <img src={category.image} alt={category.name} className="w-20 h-20 rounded-full object-cover shadow-sm" />
               </div>
-              <h3 className="font-bold text-gray-900 text-sm group-hover:text-[#109121] transition-colors">{category.name}</h3>
+              <h3 className="font-black text-[#109121] text-base group-hover:text-green-700 group-hover:underline transition-colors">{category.name}</h3>
             </div>
           ))}
         </div>
