@@ -50,14 +50,14 @@ export const Navbar = () => {
 
           <div className="flex items-center space-x-4 cursor-pointer group relative" onClick={() => handleNavClick('home')}>
             <div className="flex flex-col justify-center">
-              <h1 className="font-sans text-xl md:text-2xl font-bold tracking-tight text-gray-900 transition-colors duration-300 drop-shadow-sm group-hover:drop-shadow-md flex items-center">
+              <h1 className="font-sans text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white transition-colors duration-300 drop-shadow-sm group-hover:drop-shadow-md flex items-center">
                 <img
                   src="/samstones-logo.jpg"
                   alt="Samstones Logo"
                   className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded"
                 />
                 <span>
-                  <span className="text-[#DFB722]">Samstones</span> <span className="font-light text-black">Marketplace</span>
+                  <span className="text-[#DFB722]">Samstones</span> <span className="font-light text-black dark:text-white">Marketplace</span>
                 </span>
               </h1>
             </div>
@@ -68,7 +68,7 @@ export const Navbar = () => {
               <button
                 key={link.name}
                 onClick={() => handleNavClick(link.view)}
-                className="text-xs font-semibold tracking-widest uppercase text-gray-600 hover:text-gray-900 transition-colors relative group"
+                className="text-xs font-semibold tracking-widest uppercase text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors relative group"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
@@ -108,7 +108,7 @@ export const Navbar = () => {
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                   aria-label="Search"
                 >
                   <Search size={20} />
@@ -117,7 +117,7 @@ export const Navbar = () => {
             </div>
             <button 
               onClick={() => handleNavClick('wishlist')}
-              className="text-gray-600 hover:text-gray-900 transition-colors relative"
+              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors relative"
             >
               <Heart size={20} />
               {wishlist.length > 0 && (
@@ -128,7 +128,7 @@ export const Navbar = () => {
             </button>
             <button
               onClick={() => setCartOpen(true)}
-              className="text-gray-600 hover:text-gray-900 transition-colors relative"
+              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors relative"
             >
               <ShoppingBag size={20} />
               {cartItemsCount > 0 && (
@@ -148,9 +148,9 @@ export const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-100"
+            className="fixed inset-0 z-50 bg-white/95 dark:bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800"
           >
-            <div className="p-6 flex flex-col h-full text-gray-900">
+            <div className="p-6 flex flex-col h-full text-gray-900 dark:text-gray-100">
               <div className="flex justify-between items-center mb-12">
                 <h1 className="font-serif text-2xl font-bold tracking-tight text-gradient">SAMSTONES</h1>
                 <button onClick={() => setMobileMenuOpen(false)} className="text-gray-400 hover:text-[#109121]">
@@ -162,13 +162,13 @@ export const Navbar = () => {
                   <button
                     key={link.name}
                     onClick={() => handleNavClick(link.view)}
-                    className="text-center text-4xl font-serif font-bold text-gray-600 hover:text-gray-900 transition-colors"
+                    className="text-center text-4xl font-serif font-bold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
                     {link.name}
                   </button>
                 ))}
               </div>
-              <div className="mt-8 border-t border-gray-200 pt-8">
+              <div className="mt-8 border-t border-gray-200 dark:border-gray-800 pt-8">
                 <a
                   href="https://wa.me/2348065179554"
                   target="_blank"
