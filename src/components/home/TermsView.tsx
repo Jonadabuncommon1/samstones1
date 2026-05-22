@@ -7,7 +7,7 @@ export const TermsView = () => {
   const { setCurrentView } = useAppContext();
 
   return (
-    <div className="min-h-screen bg-white text-gray-900">
+    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100">
 
       {/* Hero Banner */}
       <div className="relative w-full bg-[#109121] flex flex-col items-center justify-center text-center px-4 py-20 overflow-hidden">

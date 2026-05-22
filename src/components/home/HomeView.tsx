@@ -21,9 +21,9 @@ export const HomeView = () => {
   };
 
   return (
-    <div className="w-full bg-white text-gray-900 selection:bg-[#109121]/10 overflow-hidden">
-      <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-[#e6f4e8] blur-[150px] rounded-full pointer-events-none -z-10" />
-      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-[#e6f4e8] blur-[150px] rounded-full pointer-events-none -z-10" />
+    <div className="w-full bg-white dark:bg-black text-gray-900 dark:text-gray-100 selection:bg-[#109121]/10 overflow-hidden transition-colors duration-500">
+      <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-[#e6f4e8] dark:bg-[#109121]/10 blur-[150px] rounded-full pointer-events-none -z-10 transition-colors" />
+      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-[#e6f4e8] dark:bg-[#109121]/10 blur-[150px] rounded-full pointer-events-none -z-10 transition-colors" />
 
       <section className="relative pt-24 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-center bg-[#109121] rounded-3xl p-8 lg:p-12 shadow-2xl">

@@ -8,7 +8,7 @@ export const WishlistView = () => {
   const wishlistedProducts = products.filter(p => wishlist.includes(p.id));
 
   return (
-    <div className="pt-32 pb-24 min-h-screen bg-white text-gray-900 transition-colors duration-500 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-32 pb-24 min-h-screen bg-white dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100 transition-colors duration-500 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-serif text-gray-900 mb-4">Your Wishlist</h1>
         <p className="text-gray-500 uppercase tracking-widest text-xs font-semibold">
