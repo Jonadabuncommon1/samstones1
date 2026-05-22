@@ -13,7 +13,7 @@ export const CategoriesView = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-gray-900 mb-4">
-            Discover <span className="text-[#109121]">Universes</span>
+            Discover the best <span className="text-[#109121]">Product Collections!</span>
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg">
             Explore our diverse collection of premium offerings curated for the modern luxury lifestyle.
