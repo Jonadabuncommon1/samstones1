@@ -1,26 +1,44 @@
-import React from 'react';
-import { UploadCloud, Image as ImageIcon, Search, Folder } from 'lucide-react';
+import React, { useState } from 'react';
+import { UploadCloud, Image as ImageIcon, Search, Folder, Loader2 } from 'lucide-react';
 import { marketplaceCategories } from '../../data';
 import { useAppContext } from '../../store/AppContext';
+import { uploadImage } from '../../lib/supabase';
 
 export const MediaManager = () => {
   const { products } = useAppContext();
+  const [uploadedMedia, setUploadedMedia] = useState<string[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+
   const allImages = [
+    ...uploadedMedia,
     ...marketplaceCategories.map(c => c.image),
     ...products.flatMap(p => p.images)
-  ].slice(0, 16);
+  ].slice(0, 24);
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    const url = await uploadImage(file);
+    if (url) {
+      setUploadedMedia(prev => [url, ...prev]);
+    }
+    setIsUploading(false);
+  };
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold mb-1">Media Library</h1>
-          <p className="text-gray-500 text-sm">Manage infinite uploads synced to Cloudinary/AWS S3.</p>
+          <p className="text-gray-500 text-sm">Manage infinite uploads synced to your Supabase Cloud Storage.</p>
         </div>
-        <button className="flex items-center space-x-2 bg-[#109121] hover:bg-[#0a5f15] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-          <UploadCloud size={16} />
-          <span>Upload Media</span>
-        </button>
+        <label className="flex items-center space-x-2 bg-[#109121] hover:bg-[#0a5f15] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer">
+          {isUploading ? <Loader2 size={16} className="animate-spin" /> : <UploadCloud size={16} />}
+          <span>{isUploading ? 'Uploading...' : 'Upload Media'}</span>
+          <input type="file" className="hidden" accept="image/*" onChange={handleUpload} disabled={isUploading} />
+        </label>
       </div>
 
       <div className="bg-white p-6 rounded-2xl border shadow-sm">
