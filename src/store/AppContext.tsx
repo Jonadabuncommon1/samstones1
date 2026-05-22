@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { Product, CartItem, ViewState } from '../types';
-import { loadProducts, saveProducts, createProductId } from './productStorage';
+import { fetchProductsFromDB, addProductToDB, updateProductInDB, deleteProductFromDB, createProductId } from './productStorage';
 import { isAdminSessionActive, setAdminSession, verifyAdminLogin } from './adminAuth';
 import { searchProducts } from '../utils/searchProducts';
 
@@ -66,14 +66,14 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
-  const [products, setProducts] = useState<Product[]>(() => loadProducts());
+  const [products, setProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchSubmitted, setSearchSubmitted] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => isAdminSessionActive());
 
   useEffect(() => {
-    saveProducts(products);
-  }, [products]);
+    fetchProductsFromDB().then((data) => setProducts(data));
+  }, []);
 
   useEffect(() => {
     const onHash = () => {
@@ -86,26 +86,24 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  const persistProducts = useCallback((next: Product[]) => {
-    setProducts(next);
-    saveProducts(next);
-  }, []);
-
   const addProduct = useCallback((product: Omit<Product, 'id'>) => {
     const created: Product = { ...product, id: createProductId() };
-    persistProducts([created, ...products]);
+    setProducts((prev) => [created, ...prev]);
+    addProductToDB(created);
     return created;
-  }, [products, persistProducts]);
+  }, []);
 
   const updateProduct = useCallback((id: string, updates: Partial<Product>) => {
-    persistProducts(products.map((p) => (p.id === id ? { ...p, ...updates } : p)));
-  }, [products, persistProducts]);
+    setProducts((prev) => prev.map((p) => (p.id === id ? { ...p, ...updates } : p)));
+    updateProductInDB(id, updates);
+  }, []);
 
   const deleteProduct = useCallback((id: string) => {
-    persistProducts(products.filter((p) => p.id !== id));
+    setProducts((prev) => prev.filter((p) => p.id !== id));
+    deleteProductFromDB(id);
     setCart((prev) => prev.filter((i) => i.product.id !== id));
     setWishlist((prev) => prev.filter((pid) => pid !== id));
-  }, [products, persistProducts]);
+  }, []);
 
   const getProductById = useCallback(
     (id: string) => products.find((p) => p.id === id),
