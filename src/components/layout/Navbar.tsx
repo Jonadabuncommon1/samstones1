@@ -20,7 +20,6 @@ export const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', view: 'home' as const },
-    { name: 'Shop', view: 'shop' as const },
     { name: 'Categories', view: 'categories' as const },
     { name: 'About', view: 'about' as const },
     { name: 'Contact', view: 'contact' as const }
