@@ -5,70 +5,70 @@ export const marketplaceCategories = [
     id: 'shoes',
     name: 'Shoes',
     description: 'Luxury sneakers, heels, sandals, and designer footwear.',
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=1000',
+    image: '/cat_shoes.png',
     icon: 'Footprints'
   },
   {
     id: 'bags',
     name: 'Bags',
     description: 'Premium handbags, backpacks, purses, and travel bags.',
-    image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&q=80&w=1000',
+    image: '/cat_bags.png',
     icon: 'Briefcase'
   },
   {
     id: 'clothes',
     name: 'Clothes',
     description: 'Modern fashion wear, native wear, streetwear, and luxury outfits.',
-    image: 'https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&q=80&w=1000',
+    image: '/cat_clothes.png',
     icon: 'Shirt'
   },
   {
     id: 'jewelries',
     name: 'Jewelries',
     description: 'Gold jewelry, necklaces, rings, bracelets, earrings, and luxury accessories.',
-    image: 'https://images.unsplash.com/photo-1599643478524-fb66f70a00ea?auto=format&fit=crop&q=80&w=1000',
+    image: '/cat_jewelries.png',
     icon: 'Gem'
   },
   {
     id: 'cars',
     name: 'Cars',
     description: 'Luxury cars, SUVs, sedans, and vehicle listings.',
-    image: 'https://images.unsplash.com/photo-1503376760367-1b612164ad40?auto=format&fit=crop&q=80&w=1000',
+    image: '/cat_cars.png',
     icon: 'Car'
   },
   {
     id: 'phone-accessories',
     name: 'Phone Accessories',
     description: 'Chargers, AirPods, cases, power banks, smartwatches, and gadgets.',
-    image: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&q=80&w=1000',
+    image: '/cat_phone_accessories.png',
     icon: 'Headphones'
   },
   {
     id: 'drinks',
     name: 'Drinks',
     description: 'Soft drinks, wines, champagne, energy drinks, and beverages.',
-    image: 'https://images.unsplash.com/photo-1516594798947-e65505dbb29d?auto=format&fit=crop&q=80&w=1000',
+    image: '/cat_drinks.png',
     icon: 'Wine'
   },
   {
     id: 'cosmetics',
     name: 'Cosmetics',
     description: 'Skincare, makeup, perfumes, beauty products, and self-care items.',
-    image: 'https://images.unsplash.com/photo-1596462502278-27bf85033e5a?auto=format&fit=crop&q=80&w=1000',
+    image: '/cat_cosmetics.png',
     icon: 'Sparkles'
   },
   {
     id: 'provisions',
     name: 'Provisions',
     description: 'Groceries, food items, household essentials, and packaged goods.',
-    image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1000',
+    image: '/cat_provisions.png',
     icon: 'ShoppingBasket'
   },
   {
     id: 'real-estates',
     name: 'Real Estates',
     description: 'Properties, apartments, lands, offices, and luxury homes.',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1000',
+    image: '/cat_real_estates.png',
     icon: 'Building'
   }
 ];
