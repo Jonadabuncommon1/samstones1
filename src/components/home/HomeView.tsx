@@ -145,8 +145,8 @@ export const HomeView = () => {
             <span className="bg-[#109121]/10 text-[#109121] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block border border-[#109121]/30">
               Limited Offer
             </span>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-2">Fresh Assets & Provisions</h2>
-            <p className="text-gray-600 max-w-md">10% off your first concierge order when using the exclusive code.</p>
+            <h2 className="text-3xl md:text-4xl font-serif font-black text-[#DFB722] mb-2">Curated Essentials. Everyday Convenience</h2>
+            <p className="text-white max-w-md">Quality provisions and lifestyle products for modern living.</p>
           </div>
           <button
             onClick={() => { setCurrentView('category'); window.scrollTo(0, 0); }}
