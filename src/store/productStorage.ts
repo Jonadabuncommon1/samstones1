@@ -10,7 +10,13 @@ export async function fetchProductsFromDB(): Promise<Product[]> {
       return [];
     }
     if (data && data.length > 0) {
-      return data as Product[];
+      return data.map((item: any) => {
+        const product = { ...item };
+        if (product.image && !product.images) {
+          product.images = [product.image];
+        }
+        return product;
+      }) as Product[];
     }
   } catch (err) {
     console.error('Supabase fetch failed:', err);
@@ -29,12 +35,29 @@ export async function fetchProductsFromDB(): Promise<Product[]> {
 }
 
 export async function addProductToDB(product: Product): Promise<void> {
-  const { error } = await supabase.from('products').insert([product]);
+  const dbProduct: any = { ...product };
+  if (dbProduct.images && dbProduct.images.length > 0) {
+    dbProduct.image = dbProduct.images[0];
+  }
+  // Remove arrays that might cause supabase insert errors if columns don't exist
+  delete dbProduct.images;
+  delete dbProduct.colors;
+  delete dbProduct.sizes;
+
+  const { error } = await supabase.from('products').insert([dbProduct]);
   if (error) console.error('Error adding product:', error);
 }
 
 export async function updateProductInDB(id: string, updates: Partial<Product>): Promise<void> {
-  const { error } = await supabase.from('products').update(updates).eq('id', id);
+  const dbUpdates: any = { ...updates };
+  if (dbUpdates.images && dbUpdates.images.length > 0) {
+    dbUpdates.image = dbUpdates.images[0];
+  }
+  delete dbUpdates.images;
+  delete dbUpdates.colors;
+  delete dbUpdates.sizes;
+
+  const { error } = await supabase.from('products').update(dbUpdates).eq('id', id);
   if (error) console.error('Error updating product:', error);
 }
 
