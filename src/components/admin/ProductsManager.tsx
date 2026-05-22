@@ -1,16 +1,17 @@
 import React, { useMemo, useState } from 'react';
-import { Plus, Search, Edit, Trash2, X, UploadCloud } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, X, UploadCloud, Loader2 } from 'lucide-react';
 import { marketplaceCategories } from '../../data';
 import { Product } from '../../types';
 import { useAppContext } from '../../store/AppContext';
 import { formatPrice } from '../../data';
+import { uploadImage } from '../../lib/supabase';
 
 type FormState = {
   name: string;
   category: string;
   price: string;
   description: string;
-  imageUrl: string;
+  images: string[];
   isNew: boolean;
   isTrending: boolean;
 };
@@ -20,7 +21,7 @@ const emptyForm = (): FormState => ({
   category: marketplaceCategories[0]?.name || 'Shoes',
   price: '',
   description: '',
-  imageUrl: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=1000',
+  images: [],
   isNew: false,
   isTrending: false,
 });
@@ -33,6 +34,8 @@ export const ProductsManager = () => {
   const [form, setForm] = useState<FormState>(emptyForm);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [formError, setFormError] = useState('');
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -48,6 +51,7 @@ export const ProductsManager = () => {
   const openAdd = () => {
     setEditingId(null);
     setForm(emptyForm());
+    setSelectedFiles([]);
     setFormError('');
     setIsModalOpen(true);
   };
@@ -59,10 +63,11 @@ export const ProductsManager = () => {
       category: product.category,
       price: String(product.price),
       description: product.description,
-      imageUrl: product.images[0] || '',
+      images: product.images || [],
       isNew: !!product.isNew,
       isTrending: !!product.isTrending,
     });
+    setSelectedFiles([]);
     setFormError('');
     setIsModalOpen(true);
   };
@@ -70,10 +75,11 @@ export const ProductsManager = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setEditingId(null);
+    setSelectedFiles([]);
     setFormError('');
   };
 
-  const handlePublish = (e: React.FormEvent) => {
+  const handlePublish = async (e: React.FormEvent) => {
     e.preventDefault();
     const price = Number(form.price);
     if (!form.name.trim()) {
@@ -84,30 +90,50 @@ export const ProductsManager = () => {
       setFormError('Enter a valid price in Naira.');
       return;
     }
-    if (!form.imageUrl.trim()) {
-      setFormError('Image URL is required.');
+    if (form.images.length === 0 && selectedFiles.length === 0) {
+      setFormError('At least one image is required.');
       return;
     }
 
-    const payload = {
-      name: form.name.trim(),
-      category: form.category,
-      price,
-      description: form.description.trim() || 'Premium listing from Samstones Marketplace.',
-      images: [form.imageUrl.trim()],
-      isNew: form.isNew,
-      isTrending: form.isTrending,
-    };
+    setIsUploading(true);
+    setFormError('');
 
-    if (editingId) {
-      updateProduct(editingId, payload);
-    } else {
-      addProduct(payload);
+    try {
+      const uploadedUrls: string[] = [...form.images];
+      
+      for (const file of selectedFiles) {
+        const url = await uploadImage(file);
+        if (url) {
+          uploadedUrls.push(url);
+        } else {
+          throw new Error('Failed to upload one or more images.');
+        }
+      }
+
+      const payload = {
+        name: form.name.trim(),
+        category: form.category,
+        price,
+        description: form.description.trim() || 'Premium listing from Samstones Marketplace.',
+        images: uploadedUrls,
+        isNew: form.isNew,
+        isTrending: form.isTrending,
+      };
+
+      if (editingId) {
+        updateProduct(editingId, payload);
+      } else {
+        addProduct(payload);
+      }
+
+      setUploadSuccess(true);
+      setTimeout(() => setUploadSuccess(false), 3000);
+      closeModal();
+    } catch (err: any) {
+      setFormError(err.message || 'An error occurred during save.');
+    } finally {
+      setIsUploading(false);
     }
-
-    setUploadSuccess(true);
-    setTimeout(() => setUploadSuccess(false), 3000);
-    closeModal();
   };
 
   const handleDelete = (id: string, name: string) => {
@@ -284,20 +310,53 @@ export const ProductsManager = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
-                  <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 bg-gray-50">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Product Images (Max 5)</label>
+                  <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 bg-gray-50 text-center">
                     <UploadCloud size={28} className="text-gray-400 mx-auto mb-2" />
+                    <p className="text-sm text-gray-500 mb-4">Click to select files from your device</p>
                     <input
-                      type="url"
-                      required
-                      value={form.imageUrl}
-                      onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
-                      placeholder="https://..."
-                      className="w-full px-3 py-2 text-sm border border-gray-200 rounded-lg"
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={(e) => {
+                        const files = Array.from(e.target.files || []);
+                        const totalImages = form.images.length + selectedFiles.length + files.length;
+                        if (totalImages > 5) {
+                          setFormError('Maximum 5 images allowed per product.');
+                          return;
+                        }
+                        setFormError('');
+                        setSelectedFiles((prev) => [...prev, ...files]);
+                      }}
+                      className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#109121] file:text-white hover:file:bg-[#0a5f15] cursor-pointer"
                     />
-                    {form.imageUrl && (
-                      <img src={form.imageUrl} alt="" className="mt-3 w-full h-32 object-cover rounded-lg" />
-                    )}
+                    
+                    <div className="mt-4 grid grid-cols-5 gap-2">
+                      {form.images.map((url, idx) => (
+                        <div key={`existing-${idx}`} className="relative aspect-square rounded-lg overflow-hidden border">
+                          <img src={url} alt="" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => setForm({ ...form, images: form.images.filter((_, i) => i !== idx) })}
+                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600"
+                          >
+                            <X size={12} />
+                          </button>
+                        </div>
+                      ))}
+                      {selectedFiles.map((file, idx) => (
+                        <div key={`new-${idx}`} className="relative aspect-square rounded-lg overflow-hidden border">
+                          <img src={URL.createObjectURL(file)} alt="" className="w-full h-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => setSelectedFiles(selectedFiles.filter((_, i) => i !== idx))}
+                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600"
+                          >
+                            <X size={12} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -322,9 +381,17 @@ export const ProductsManager = () => {
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-[#109121] hover:bg-[#0a5f15] text-white rounded-lg text-sm font-medium"
+                disabled={isUploading}
+                className="px-4 py-2 bg-[#109121] hover:bg-[#0a5f15] text-white rounded-lg text-sm font-medium flex items-center space-x-2 disabled:opacity-50"
               >
-                {editingId ? 'Save Changes' : 'Publish Product'}
+                {isUploading ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    <span>Saving...</span>
+                  </>
+                ) : (
+                  <span>{editingId ? 'Save Changes' : 'Publish Product'}</span>
+                )}
               </button>
             </div>
           </form>

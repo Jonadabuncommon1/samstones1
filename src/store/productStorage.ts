@@ -10,13 +10,7 @@ export async function fetchProductsFromDB(): Promise<Product[]> {
       return [];
     }
     if (data && data.length > 0) {
-      return data.map((item: any) => {
-        const product = { ...item };
-        if (product.image && !product.images) {
-          product.images = [product.image];
-        }
-        return product;
-      }) as Product[];
+      return data as Product[];
     }
   } catch (err) {
     console.error('Supabase fetch failed:', err);
@@ -35,12 +29,7 @@ export async function fetchProductsFromDB(): Promise<Product[]> {
 }
 
 export async function addProductToDB(product: Product): Promise<void> {
-  const dbProduct: any = { ...product };
-  if (dbProduct.images && dbProduct.images.length > 0) {
-    dbProduct.image = dbProduct.images[0];
-  }
-  // Remove arrays that might cause supabase insert errors if columns don't exist
-  delete dbProduct.images;
+  const dbProduct = { ...product };
   delete dbProduct.colors;
   delete dbProduct.sizes;
 
@@ -49,11 +38,7 @@ export async function addProductToDB(product: Product): Promise<void> {
 }
 
 export async function updateProductInDB(id: string, updates: Partial<Product>): Promise<void> {
-  const dbUpdates: any = { ...updates };
-  if (dbUpdates.images && dbUpdates.images.length > 0) {
-    dbUpdates.image = dbUpdates.images[0];
-  }
-  delete dbUpdates.images;
+  const dbUpdates = { ...updates };
   delete dbUpdates.colors;
   delete dbUpdates.sizes;
 
