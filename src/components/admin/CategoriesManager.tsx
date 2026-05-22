@@ -13,10 +13,6 @@ export const CategoriesManager = () => {
           <h1 className="text-2xl font-bold mb-1">Shop Categories</h1>
           <p className="text-gray-500 text-sm">Create and organize unlimited categories.</p>
         </div>
-        <button className="flex items-center space-x-2 bg-[#109121] hover:bg-[#0a5f15] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-          <Plus size={16} />
-          <span>New Category</span>
-        </button>
       </div>
 
       <div className="bg-white p-4 text-gray-900 rounded-2xl border shadow-sm space-y-4">
