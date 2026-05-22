@@ -11,7 +11,7 @@ export const Footer = () => {
           <div>
             <h2 className="font-serif text-3xl font-bold tracking-tight mb-6 text-white">SAMSTONES</h2>
             <p className="text-white/80 text-sm leading-relaxed mb-6">
-              The premier luxury marketplace converging fashion, real estate, automotive, and lifestyle in one seamless digital vault.
+              The premier luxury marketplace converging fashion, real estate, automotive, and lifestyle in one seamless digital marketplace.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Instagram size={18} /></a>
@@ -31,7 +31,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-[#e6f4e8]">Concierge</h3>
+            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-[#e6f4e8]">Customer Support</h3>
             <ul className="space-y-4 text-sm font-medium">
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">WhatsApp Support</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Secure Shipping</a></li>
@@ -40,7 +40,7 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-[#e6f4e8]">The Vault</h3>
+            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-[#e6f4e8]">Shop Categories</h3>
             <p className="text-white/80 text-sm mb-6 font-medium">Subscribe for exclusive access to rare drops and private listings.</p>
             <form className="flex bg-white/15 rounded-xl border border-white/25 shadow-none p-1 overflow-hidden">
               <input

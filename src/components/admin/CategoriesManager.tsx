@@ -24,7 +24,7 @@ export const CategoriesManager = () => {
           <table className="w-full text-left text-sm text-gray-500">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b">
               <tr>
-                <th className="px-6 py-4">Vault Name</th>
+                <th className="px-6 py-4">Category Name</th>
                 <th className="px-6 py-4">Items Count</th>
                 <th className="px-6 py-4">Status</th>
                 <th className="px-6 py-4 text-right">Actions</th>

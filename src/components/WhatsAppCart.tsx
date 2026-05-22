@@ -10,7 +10,7 @@ export const WhatsAppCart = () => {
   const totalAmount = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
   const generateWhatsAppMessage = () => {
-    let message = "Hello, I would like to order from the vault:\n\n";
+    let message = "Hello, I would like to order from the store:\n\n";
 
     cart.forEach(item => {
       message += `* ${item.product.name} x${item.quantity}\n`;
@@ -48,7 +48,7 @@ export const WhatsAppCart = () => {
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#109121]/10 blur-2xl rounded-full transition-colors" />
               <div className="flex items-center space-x-2 relative z-10">
                 <ShoppingBag size={20} className="text-[#109121]" />
-                <h2 className="font-serif text-xl font-bold text-gray-900">Your Vault</h2>
+                <h2 className="font-serif text-xl font-bold text-gray-900">Your Cart</h2>
                 <span className="bg-[#109121] text-white text-xs px-2 py-0.5 rounded-full">{cart.length}</span>
               </div>
               <button
@@ -63,7 +63,7 @@ export const WhatsAppCart = () => {
               {cart.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-gray-500 space-y-4 relative z-10">
                   <ShoppingBag size={48} className="mb-2 text-[#e6f4e8]" />
-                  <p className="font-serif text-lg text-gray-900">Your vault is empty.</p>
+                  <p className="font-serif text-lg text-gray-900">Your cart is empty.</p>
                   <button
                     onClick={() => setCartOpen(false)}
                     className="text-xs font-bold tracking-widest uppercase text-[#109121] hover:text-[#0a5f15] transition-colors"

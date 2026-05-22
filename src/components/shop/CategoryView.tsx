@@ -102,7 +102,7 @@ export const CategoryView = () => {
             <div className="relative flex-1 md:w-64">
               <input 
                 type="text" 
-                placeholder="Search vault..." 
+                placeholder="Search products..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => {
