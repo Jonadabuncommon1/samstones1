@@ -34,7 +34,7 @@ export const HomeView = () => {
               transition={{ duration: 0.6 }}
               className="inline-flex items-center space-x-2 bg-white/20 px-4 py-2 rounded-full mb-6 w-fit border border-white/20"
             >
-              <span className="text-xs font-bold uppercase tracking-widest text-white">Premium Marketplace</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-white">WE MEET YOUR NEEDS</span>
             </motion.div>
 
             <motion.h1
