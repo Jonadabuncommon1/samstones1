@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Plus, Search, Filter, MoreHorizontal, Edit, Trash2 } from 'lucide-react';
 import { marketplaceCategories } from '../../data';
+import { useAppContext } from '../../store/AppContext';
 
 export const CategoriesManager = () => {
+  const { products } = useAppContext();
   const [categories] = useState(marketplaceCategories);
   const [search, setSearch] = useState('');
 
@@ -37,7 +39,7 @@ export const CategoriesManager = () => {
                     </div>
                   </td>
                   <td className="px-6 py-4 font-medium">
-                    ∞
+                    {products.filter(p => p.category === cat.name).length}
                   </td>
                   <td className="px-6 py-4">
                     <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded border border-green-200">Featured</span>
