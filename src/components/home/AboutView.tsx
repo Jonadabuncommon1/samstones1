@@ -17,7 +17,7 @@ export const AboutView = () => {
   ];
 
   const commitments = [
-    'Delivering authentic and quality products',
+    <>Delivering authentic and <span className="text-[#DFB722]">quality</span> products</>,
     'Maintaining excellent customer service',
     'Building long-term customer relationships',
     'Conducting business ethically and responsibly',
@@ -27,8 +27,8 @@ export const AboutView = () => {
   const reasons = [
     {
       icon: ShieldCheck,
-      title: 'Quality Assurance',
-      body: 'We are committed to offering products that meet high standards of quality and value.',
+      title: <><span className="text-[#DFB722]">Quality</span> Assurance</>,
+      body: <>We are committed to offering products that meet high standards of <span className="text-[#DFB722]">quality</span> and value.</>,
     },
     {
       icon: Heart,
@@ -48,7 +48,7 @@ export const AboutView = () => {
     {
       icon: Tag,
       title: 'Affordable Pricing',
-      body: 'We aim to make quality products accessible at competitive and fair prices.',
+      body: <>We aim to make <span className="text-[#DFB722]">quality</span> products accessible at competitive and fair prices.</>,
     },
   ];
 
@@ -118,7 +118,7 @@ export const AboutView = () => {
               A Dynamic, Customer-Focused Business
             </h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              <strong>Samstones International Resources Ltd</strong> is a dynamic and customer-focused business committed to providing quality products and reliable services across multiple industries. Based in Lagos State, Nigeria, we pride ourselves on delivering value, authenticity, affordability, and customer satisfaction in every transaction.
+              <strong>Samstones International Resources Ltd</strong> is a dynamic and customer-focused business committed to providing <span className="text-[#DFB722]">quality</span> products and reliable services across multiple industries. Based in Lagos State, Nigeria, we pride ourselves on delivering value, authenticity, affordability, and customer satisfaction in every transaction.
             </p>
             <p className="text-gray-600 leading-relaxed">
               Our company operates with professionalism, integrity, and a strong commitment to excellence, serving individuals, families, and businesses with a wide range of products tailored to modern lifestyle and everyday needs.
@@ -152,7 +152,7 @@ export const AboutView = () => {
             <span className="text-xs font-bold uppercase tracking-widest text-[#109121] mb-3 block">What We Offer</span>
             <h2 className="text-3xl font-serif font-bold text-gray-900">Our Products &amp; Services</h2>
             <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-              We offer carefully selected products and services across various categories, combining quality, durability, style, and affordability.
+              We offer carefully selected products and services across various categories, combining <span className="text-[#DFB722]">quality</span>, durability, style, and affordability.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -170,7 +170,7 @@ export const AboutView = () => {
           <div className="bg-[#109121] rounded-3xl p-8 text-white">
             <span className="text-white/70 text-xs font-bold uppercase tracking-widest mb-4 block">Our Mission</span>
             <p className="text-white/95 leading-relaxed text-base">
-              To become a trusted household and commercial brand by providing quality products and dependable services while building lasting relationships with our customers through honesty, consistency, and professionalism.
+              To become a trusted household and commercial brand by providing <span className="text-[#DFB722]">quality</span> products and dependable services while building lasting relationships with our customers through honesty, consistency, and professionalism.
             </p>
           </div>
           <div className="bg-gray-900 rounded-3xl p-8 text-white">

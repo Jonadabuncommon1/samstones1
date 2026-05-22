@@ -99,7 +99,7 @@ export const ContactView = () => {
 
         <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Building Long-Term Relationships</h3>
         <p className="text-gray-600 leading-relaxed">
-          Our goal is not simply to make sales but to build lasting relationships with our customers through consistent quality service and dependable business practices.
+          Our goal is not simply to make sales but to build lasting relationships with our customers through consistent <span className="text-[#DFB722]">quality</span> service and dependable business practices.
         </p>
         <p className="text-gray-600 leading-relaxed">
           We value every customer and continuously work towards improving our products, services, and customer experience.
@@ -110,7 +110,7 @@ export const ContactView = () => {
         <h2 className="text-3xl font-serif text-gray-900 mb-6 border-b pb-4">ATELIER</h2>
         <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Samstones Atelier</h3>
         <p className="text-gray-600 leading-relaxed">
-          The Samstones Atelier represents the creative and luxury fashion division of Samstones International Resources Ltd, dedicated to style, elegance, quality craftsmanship, and modern fashion excellence.
+          The Samstones Atelier represents the creative and luxury fashion division of Samstones International Resources Ltd, dedicated to style, elegance, <span className="text-[#DFB722]">quality</span> craftsmanship, and modern fashion excellence.
         </p>
         <p className="text-gray-600 leading-relaxed">
           Our atelier focuses on delivering carefully selected and fashion-forward products that reflect sophistication, confidence, and contemporary lifestyle trends.
@@ -128,20 +128,20 @@ export const ContactView = () => {
           <li>Beauty and cosmetic products</li>
         </ul>
         <p className="text-gray-600 leading-relaxed">
-          Each item is selected with attention to quality, durability, comfort, and style to meet the needs of modern fashion-conscious individuals.
+          Each item is selected with attention to <span className="text-[#DFB722]">quality</span>, durability, comfort, and style to meet the needs of modern fashion-conscious individuals.
         </p>
 
         <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Our Fashion Philosophy</h3>
         <p className="text-gray-600 leading-relaxed">
-          At Samstones Atelier, we believe fashion is more than appearance — it is a reflection of identity, confidence, creativity, and lifestyle. We are committed to providing products that combine elegance, comfort, and affordability without compromising quality.
+          At Samstones Atelier, we believe fashion is more than appearance — it is a reflection of identity, confidence, creativity, and lifestyle. We are committed to providing products that combine elegance, comfort, and affordability without compromising <span className="text-[#DFB722]">quality</span>.
         </p>
 
-        <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Quality & Craftsmanship</h3>
+        <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4"><span className="text-[#DFB722]">Quality</span> & Craftsmanship</h3>
         <p className="text-gray-600 leading-relaxed">
           We place strong emphasis on:
         </p>
         <ul className="list-disc pl-6 text-gray-600 space-y-2">
-          <li>Premium quality materials</li>
+          <li>Premium <span className="text-[#DFB722]">quality</span> materials</li>
           <li>Modern and timeless designs</li>
           <li>Attention to detail</li>
           <li>Excellent finishing and presentation</li>
@@ -150,7 +150,7 @@ export const ContactView = () => {
 
         <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Our Vision</h3>
         <p className="text-gray-600 leading-relaxed">
-          To establish Samstones Atelier as a recognised fashion and lifestyle brand known for quality, elegance, innovation, and customer satisfaction across Nigeria and beyond.
+          To establish Samstones Atelier as a recognised fashion and lifestyle brand known for <span className="text-[#DFB722]">quality</span>, elegance, innovation, and customer satisfaction across Nigeria and beyond.
         </p>
 
         <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Client Experience</h3>
@@ -162,7 +162,7 @@ export const ContactView = () => {
           <li>Carefully curated collections</li>
           <li>Reliable delivery services</li>
           <li>Personalised customer attention</li>
-          <li>Consistent product quality</li>
+          <li>Consistent product <span className="text-[#DFB722]">quality</span></li>
         </ul>
 
         <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Contact Information</h3>

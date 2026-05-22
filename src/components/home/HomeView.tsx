@@ -53,7 +53,7 @@ export const HomeView = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-white/90 text-lg mb-10 max-w-lg"
             >
-              Shop premium groceries, luxury vehicles, high-end real estate, and exclusive fashion, all sourced for quality and directly delivered.
+              Shop premium groceries, luxury vehicles, high-end real estate, and exclusive fashion, all sourced for <span className="text-[#DFB722]">quality</span> and directly delivered.
             </motion.p>
 
             <motion.form
@@ -100,7 +100,7 @@ export const HomeView = () => {
                   <ShieldCheck size={16} className="text-[#109121]" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Quality</p>
+                  <p className="text-xs text-gray-500"><span className="text-[#DFB722]">Quality</span></p>
                   <p className="text-sm font-bold text-gray-900">Guaranteed</p>
                 </div>
               </div>
@@ -256,7 +256,7 @@ export const HomeView = () => {
               <div className="w-16 h-16 bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 text-[#109121]">
                 <ShieldCheck size={32} />
               </div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Quality Guarantee</h3>
+              <h3 className="font-bold text-gray-900 text-lg mb-2"><span className="text-[#DFB722]">Quality</span> Guarantee</h3>
               <p className="text-gray-400 text-sm">Verified luxury assets and fresh provisions.</p>
             </div>
             <div className="text-center flex flex-col items-center">
