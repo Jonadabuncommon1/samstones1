@@ -39,6 +39,8 @@ interface AppContextProps {
   openAdminPortal: () => void;
   user: User | null;
   loadingAuth: boolean;
+  isGuest: boolean;
+  setIsGuest: (val: boolean) => void;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -76,6 +78,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => isAdminSessionActive());
   const [user, setUser] = useState<User | null>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
+  const [isGuest, _setIsGuest] = useState(() => localStorage.getItem('samstones_guest') === 'true');
+
+  const setIsGuest = useCallback((val: boolean) => {
+    _setIsGuest(val);
+    if (val) {
+      localStorage.setItem('samstones_guest', 'true');
+    } else {
+      localStorage.removeItem('samstones_guest');
+    }
+  }, []);
 
   useEffect(() => {
     // Get initial session
@@ -244,6 +256,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         openAdminPortal,
         user,
         loadingAuth,
+        isGuest,
+        setIsGuest,
       }}
     >
       {children}

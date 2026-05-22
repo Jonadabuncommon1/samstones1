@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { supabase } from '../../lib/supabase';
-import { Mail, Lock, AlertCircle, ArrowRight } from 'lucide-react';
+import { Mail, Lock, AlertCircle, ArrowRight, UserCircle } from 'lucide-react';
+import { useAppContext } from '../../store/AppContext';
 
 export const AuthView = () => {
+  const { setIsGuest } = useAppContext();
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isResetPassword, setIsResetPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,7 +21,14 @@ export const AuthView = () => {
     setMessage(null);
 
     try {
-      if (isSignUp) {
+      if (isResetPassword) {
+        if (!email) throw new Error('Please enter your email address.');
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin,
+        });
+        if (error) throw error;
+        setMessage('Password reset link sent to your email.');
+      } else if (isSignUp) {
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -55,7 +65,11 @@ export const AuthView = () => {
           <div className="text-center mb-8">
             <h1 className="font-serif text-3xl font-bold tracking-tight text-gradient mb-2">SAMSTONES</h1>
             <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-              {isSignUp ? 'Create an account to gain access' : 'Enter your credentials to continue'}
+              {isResetPassword 
+                ? 'Enter your email to reset password'
+                : isSignUp 
+                  ? 'Create an account to gain access' 
+                  : 'Enter your credentials to continue'}
             </p>
           </div>
 
@@ -88,19 +102,34 @@ export const AuthView = () => {
                 />
               </div>
 
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                  <Lock size={18} />
+              {!isResetPassword && (
+                <div>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                      <Lock size={18} />
+                    </div>
+                    <input
+                      type="password"
+                      required={!isResetPassword}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-[#141414] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#109121] focus:border-transparent dark:text-white transition-all outline-none"
+                      placeholder="Password"
+                    />
+                  </div>
+                  {!isSignUp && (
+                    <div className="mt-2 text-right">
+                      <button
+                        type="button"
+                        onClick={() => { setIsResetPassword(true); setError(null); setMessage(null); }}
+                        className="text-xs text-[#109121] dark:text-[#16C72E] hover:underline font-semibold"
+                      >
+                        Forgot Password?
+                      </button>
+                    </div>
+                  )}
                 </div>
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-[#141414] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#109121] focus:border-transparent dark:text-white transition-all outline-none"
-                  placeholder="Password"
-                />
-              </div>
+              )}
             </div>
 
             <button
@@ -112,21 +141,42 @@ export const AuthView = () => {
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
                 <>
-                  {isSignUp ? 'Create Account' : 'Sign In'}
+                  {isResetPassword ? 'Send Reset Link' : isSignUp ? 'Create Account' : 'Sign In'}
                   <ArrowRight size={18} className="ml-2" />
                 </>
               )}
             </button>
+            
+            {!isResetPassword && !isSignUp && (
+              <button
+                type="button"
+                onClick={() => setIsGuest(true)}
+                className="w-full bg-transparent border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white py-3.5 rounded-xl font-bold uppercase tracking-widest text-sm transition-colors flex items-center justify-center mt-3"
+              >
+                <UserCircle size={18} className="mr-2" />
+                Continue as Guest
+              </button>
+            )}
           </form>
 
-          <div className="mt-8 text-center">
-            <button
-              type="button"
-              onClick={() => setIsSignUp(!isSignUp)}
-              className="text-sm text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors"
-            >
-              {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
-            </button>
+          <div className="mt-8 text-center flex flex-col space-y-3">
+            {isResetPassword ? (
+              <button
+                type="button"
+                onClick={() => { setIsResetPassword(false); setError(null); setMessage(null); }}
+                className="text-sm text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors"
+              >
+                Back to Sign In
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => { setIsSignUp(!isSignUp); setError(null); setMessage(null); }}
+                className="text-sm text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors"
+              >
+                {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+              </button>
+            )}
           </div>
         </div>
       </motion.div>

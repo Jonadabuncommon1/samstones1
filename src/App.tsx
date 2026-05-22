@@ -25,7 +25,7 @@ import { AuthView } from './components/auth/AuthView';
 import { ThemeProvider } from './components/ThemeContext';
 
 function AppContent() {
-  const { currentView, isAdminAuthenticated, user, loadingAuth } = useAppContext();
+  const { currentView, isAdminAuthenticated, user, loadingAuth, isGuest } = useAppContext();
 
   if (loadingAuth) {
     return <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#109121]"></div></div>;
@@ -38,7 +38,7 @@ function AppContent() {
     return <AdminLayout />;
   }
 
-  if (!user) {
+  if (!user && !isGuest) {
     return <AuthView />;
   }
 

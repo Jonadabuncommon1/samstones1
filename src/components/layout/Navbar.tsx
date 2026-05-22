@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Heart, Menu, X, Search, LogOut } from 'lucide-react';
+import { ShoppingBag, Heart, Menu, X, Search, LogOut, LogIn } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useAppContext } from '../../store/AppContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { ThemeToggle } from '../ThemeToggle';
 
 export const Navbar = () => {
-  const { cart, wishlist, setCurrentView, setCartOpen, submitSearch } = useAppContext();
+  const { cart, wishlist, setCurrentView, setCartOpen, submitSearch, isGuest, setIsGuest } = useAppContext();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -139,11 +139,17 @@ export const Navbar = () => {
               )}
             </button>
             <button
-              onClick={() => supabase.auth.signOut()}
-              className="text-gray-600 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative ml-2"
-              title="Sign Out"
+              onClick={() => {
+                if (isGuest) {
+                  setIsGuest(false);
+                } else {
+                  supabase.auth.signOut();
+                }
+              }}
+              className="text-gray-600 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative ml-2 flex items-center"
+              title={isGuest ? "Sign In" : "Sign Out"}
             >
-              <LogOut size={20} />
+              {isGuest ? <LogIn size={20} /> : <LogOut size={20} />}
             </button>
           </div>
         </div>
@@ -186,10 +192,21 @@ export const Navbar = () => {
                   Contact Support
                 </a>
                 <button
-                  onClick={() => supabase.auth.signOut()}
-                  className="w-full mt-4 bg-transparent border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white dark:border-red-600 dark:text-red-600 dark:hover:bg-red-600 dark:hover:text-white text-center py-4 rounded-xl uppercase text-sm tracking-widest font-bold block transition-all"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (isGuest) {
+                      setIsGuest(false);
+                    } else {
+                      supabase.auth.signOut();
+                    }
+                  }}
+                  className={`w-full mt-4 bg-transparent border-2 text-center py-4 rounded-xl uppercase text-sm tracking-widest font-bold block transition-all ${
+                    isGuest 
+                      ? 'border-[#109121] text-[#109121] hover:bg-[#109121] hover:text-white dark:border-[#16C72E] dark:text-[#16C72E] dark:hover:bg-[#16C72E] dark:hover:text-white'
+                      : 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white dark:border-red-600 dark:text-red-600 dark:hover:bg-red-600 dark:hover:text-white'
+                  }`}
                 >
-                  Sign Out
+                  {isGuest ? 'Sign In / Register' : 'Sign Out'}
                 </button>
               </div>
             </div>
