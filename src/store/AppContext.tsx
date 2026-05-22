@@ -40,7 +40,27 @@ interface AppContextProps {
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [currentView, setCurrentView] = useState<ViewState>('home');
+  const [currentView, _setCurrentView] = useState<ViewState>('home');
+
+  const setCurrentView = useCallback((view: ViewState) => {
+    _setCurrentView(view);
+    // Push state to browser history to prevent PWA from closing on back navigation
+    window.history.pushState({ view }, '', '');
+  }, []);
+
+  useEffect(() => {
+    // Listen for browser/hardware back button
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.view) {
+        _setCurrentView(event.state.view);
+      } else {
+        // Fallback to home if no state (e.g., returned to initial load)
+        _setCurrentView('home');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
   const [activeProductId, setActiveProductId] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
