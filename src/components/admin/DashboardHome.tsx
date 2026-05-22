@@ -22,7 +22,15 @@ export const DashboardHome = ({ onChangeView }: { onChangeView: (view: AdminView
     { title: 'New Listings', value: String(overview.newItems), icon: Package, sub: `${overview.trending} trending` },
   ];
 
-  const recent = products.slice(0, 5);
+  const recent = useMemo(() => {
+    return [...products]
+      .sort((a, b) => {
+        const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return dateB - dateA;
+      })
+      .slice(0, 10);
+  }, [products]);
 
   return (
     <div className="space-y-6">
@@ -48,7 +56,7 @@ export const DashboardHome = ({ onChangeView }: { onChangeView: (view: AdminView
 
       <div className="bg-white p-6 rounded-2xl border shadow-sm">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold">Products Overview</h2>
+          <h2 className="text-lg font-bold">Upload History</h2>
           <button
             type="button"
             onClick={() => onChangeView('products')}
@@ -66,6 +74,7 @@ export const DashboardHome = ({ onChangeView }: { onChangeView: (view: AdminView
                 <tr>
                   <th className="py-3 pr-4">Product</th>
                   <th className="py-3 pr-4">Category</th>
+                  <th className="py-3 pr-4">Upload Date & Time</th>
                   <th className="py-3 pr-4">Price</th>
                   <th className="py-3">Status</th>
                 </tr>
@@ -75,6 +84,9 @@ export const DashboardHome = ({ onChangeView }: { onChangeView: (view: AdminView
                   <tr key={p.id} className="border-b last:border-0">
                     <td className="py-3 pr-4 font-bold text-[#16C72E]">{p.name}</td>
                     <td className="py-3 pr-4 text-gray-600">{p.category}</td>
+                    <td className="py-3 pr-4 text-sm text-gray-500 whitespace-nowrap">
+                      {p.created_at ? new Date(p.created_at).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) : 'Legacy Upload'}
+                    </td>
                     <td className="py-3 pr-4 font-bold text-[#000000]">{formatPrice(p.price)}</td>
                     <td className="py-3">
                       <span className="text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200">

@@ -12,6 +12,7 @@ export interface Product {
   location?: string;
   year?: string;
   mileage?: string;
+  created_at?: string;
 }
 
 export interface CartItem {
