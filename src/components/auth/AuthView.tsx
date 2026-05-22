@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { supabase } from '../../lib/supabase';
 import { Mail, Lock, AlertCircle, ArrowRight, UserCircle } from 'lucide-react';
@@ -13,6 +13,30 @@ export const AuthView = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash === '#signup') {
+        setIsSignUp(true);
+        setIsResetPassword(false);
+      } else if (hash === '#reset') {
+        setIsResetPassword(true);
+        setIsSignUp(false);
+      } else {
+        setIsSignUp(false);
+        setIsResetPassword(false);
+      }
+      setError(null);
+      setMessage(null);
+    };
+
+    // Initial check on mount
+    handleHashChange();
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -121,7 +145,7 @@ export const AuthView = () => {
                     <div className="mt-2 text-right">
                       <button
                         type="button"
-                        onClick={() => { setIsResetPassword(true); setError(null); setMessage(null); }}
+                        onClick={() => window.location.hash = 'reset'}
                         className="text-xs text-[#109121] dark:text-[#16C72E] hover:underline font-semibold"
                       >
                         Forgot Password?
@@ -163,7 +187,7 @@ export const AuthView = () => {
             {isResetPassword ? (
               <button
                 type="button"
-                onClick={() => { setIsResetPassword(false); setError(null); setMessage(null); }}
+                onClick={() => window.location.hash = 'signin'}
                 className="text-sm text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors"
               >
                 Back to Sign In
@@ -171,7 +195,7 @@ export const AuthView = () => {
             ) : (
               <button
                 type="button"
-                onClick={() => { setIsSignUp(!isSignUp); setError(null); setMessage(null); }}
+                onClick={() => window.location.hash = isSignUp ? 'signin' : 'signup'}
                 className="text-sm text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors"
               >
                 {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
