@@ -33,10 +33,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      className="group cursor-pointer h-full border border-gray-200 bg-white rounded-xl overflow-hidden glass-card shadow-none transition-all duration-300 hover:border-[#109121]/30"
+      className="group cursor-pointer h-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#141414] rounded-xl overflow-hidden glass-card dark:glass-card shadow-none transition-all duration-300 hover:border-[#109121]/30 dark:hover:border-[#16C72E]/50"
       onClick={handleView}
     >
-      <div className="relative aspect-[4/5] overflow-hidden bg-white">
+      <div className="relative aspect-[4/5] overflow-hidden bg-white dark:bg-[#141414]">
         {product.isNew && (
           <span className="absolute top-4 left-4 z-10 bg-[#109121] text-gray-900 text-[10px] font-bold tracking-widest uppercase px-3 py-1 shadow-lg rounded-full">
             New
@@ -53,7 +53,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="absolute bottom-4 left-0 right-0 px-4 flex space-x-2 transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 z-20">
           <button 
             onClick={handleQuickAdd}
-            className="flex-1 glass text-gray-900 py-3 px-4 flex items-center justify-center space-x-2 text-xs font-bold uppercase tracking-wide hover:bg-white hover:text-black transition-colors rounded-xl shadow-lg border border-white/20"
+            className="flex-1 glass dark:glass text-gray-900 dark:text-white py-3 px-4 flex items-center justify-center space-x-2 text-xs font-bold uppercase tracking-wide hover:bg-white dark:hover:bg-white dark:hover:text-black hover:text-black transition-colors rounded-xl shadow-lg border border-white/20"
           >
             <ShoppingBag size={14} />
             <span>Add</span>
@@ -73,21 +73,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <h3 className="font-serif text-lg font-bold tracking-wide text-[#16C72E] mb-2 transition-colors truncate">{product.name}</h3>
         
         {product.location && (
-          <p className="text-xs text-gray-400 mb-2 flex items-center">
+          <p className="text-xs text-gray-400 dark:text-gray-500 mb-2 flex items-center">
             <span className="inline-block w-1.5 h-1.5 bg-[#109121] rounded-full mr-2"></span>
             {product.location}
           </p>
         )}
         
         {(product.year || product.mileage) && (
-          <p className="text-xs text-gray-500 mb-2 flex items-center space-x-2">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 flex items-center space-x-2">
             {product.year && <span>{product.year}</span>}
             {product.year && product.mileage && <span>&bull;</span>}
             {product.mileage && <span>{product.mileage}</span>}
           </p>
         )}
 
-        <p className="text-lg font-bold text-[#000000] mt-2">{formatPrice(product.price)}</p>
+        <p className="text-lg font-bold text-[#000000] dark:text-gray-100 mt-2">{formatPrice(product.price)}</p>
       </div>
     </motion.div>
   );

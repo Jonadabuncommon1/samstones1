@@ -21,6 +21,8 @@ import { AdminLogin } from './components/admin/AdminLogin';
 import { CategoriesView } from './components/shop/CategoriesView';
 import { CategoryView } from './components/shop/CategoryView';
 
+import { ThemeProvider } from './components/ThemeContext';
+
 function AppContent() {
   const { currentView, isAdminAuthenticated } = useAppContext();
 
@@ -32,7 +34,7 @@ function AppContent() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col font-sans text-gray-900 bg-white overflow-x-hidden selection:bg-[#109121]/10 transition-colors duration-500">
+    <div className="min-h-screen flex flex-col font-sans text-gray-900 dark:text-gray-100 bg-white dark:bg-black overflow-x-hidden selection:bg-[#109121]/10 transition-colors duration-500">
       <Navbar />
 
       <main className="flex-grow w-full">
@@ -55,10 +57,14 @@ function AppContent() {
   );
 }
 
-export default function App() {
+function App() {
   return (
-    <AppProvider>
-      <AppContent />
-    </AppProvider>
+    <ThemeProvider>
+      <AppProvider>
+        <AppContent />
+      </AppProvider>
+    </ThemeProvider>
   );
 }
+
+export default App;

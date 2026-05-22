@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Heart, Menu, X, Search } from 'lucide-react';
 import { useAppContext } from '../../store/AppContext';
 import { motion, AnimatePresence } from 'motion/react';
+import { ThemeToggle } from '../ThemeToggle';
 
 export const Navbar = () => {
   const { cart, wishlist, setCurrentView, setCartOpen, submitSearch } = useAppContext();
@@ -35,7 +36,7 @@ export const Navbar = () => {
     <>
       <nav
         className={`fixed top-0 w-full z-40 transition-all duration-300 ${
-          isScrolled ? 'glass shadow-lg py-4 border-b' : 'bg-transparent py-6'
+          isScrolled ? 'glass dark:glass shadow-lg py-4 border-b dark:border-gray-800' : 'bg-transparent py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
@@ -77,6 +78,7 @@ export const Navbar = () => {
 
           {/* Desktop Links Right & Icons */}
           <div className="flex items-center space-x-5 md:space-x-6 ml-auto lg:ml-0">
+            <ThemeToggle />
             <div className="hidden sm:block relative">
               {searchOpen ? (
                 <form
