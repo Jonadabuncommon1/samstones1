@@ -26,8 +26,19 @@ export const HomeView = () => {
       <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-[#e6f4e8] dark:bg-[#109121]/10 blur-[150px] rounded-full pointer-events-none -z-10 transition-colors" />
 
       <section className="relative pt-24 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 items-center bg-[#109121] rounded-3xl p-8 lg:p-12 shadow-2xl">
-          <div className="flex flex-col justify-center text-left">
+        <div className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-center rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          >
+            <source src="/myvideo.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/60 z-10" />
+
+          <div className="relative z-20 flex flex-col justify-center text-left">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -85,7 +96,7 @@ export const HomeView = () => {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full h-[400px] lg:h-[500px] rounded-2xl overflow-hidden relative border-4 border-white/20"
+            className="relative z-20 w-full h-[400px] lg:h-[500px] rounded-2xl overflow-hidden border-4 border-white/20"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
             <img
