@@ -92,30 +92,7 @@ export const HomeView = () => {
             </motion.form>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative z-20 w-full h-[400px] lg:h-[500px] rounded-2xl overflow-hidden border-4 border-white/20"
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
-            <img
-              src="/premium_marketplace.png"
-              alt="Premium Marketplace Assets"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute bottom-6 left-6 z-20 flex space-x-4">
-              <div className="bg-white backdrop-blur px-4 py-2 rounded-lg flex items-center space-x-3 shadow-xl">
-                <div className="w-8 h-8 rounded-full bg-[#109121]/10 flex items-center justify-center">
-                  <ShieldCheck size={16} className="text-[#109121]" />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500"><span className="text-[#DFB722] font-black">Quality</span></p>
-                  <p className="text-sm font-bold text-gray-900">Guaranteed</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+
         </div>
       </section>
 
