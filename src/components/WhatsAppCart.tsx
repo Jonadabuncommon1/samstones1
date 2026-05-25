@@ -5,7 +5,7 @@ import { useAppContext } from '../store/AppContext';
 import { formatPrice } from '../data';
 
 export const WhatsAppCart = () => {
-  const { cart, removeFromCart, updateQuantity, cartOpen, setCartOpen } = useAppContext();
+  const { cart, removeFromCart, updateQuantity, cartOpen, setCartOpen, user, setCurrentView } = useAppContext();
 
   const totalAmount = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
@@ -137,15 +137,20 @@ export const WhatsAppCart = () => {
                   <span className="text-gray-600 text-sm font-bold uppercase tracking-widest">Subtotal</span>
                   <span className="font-serif font-bold text-xl text-[#000000]">{formatPrice(totalAmount)}</span>
                 </div>
-                <a
-                  href={generateWhatsAppMessage()}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => {
+                    if (!user) {
+                      setCartOpen(false);
+                      setCurrentView('auth');
+                    } else {
+                      window.open(generateWhatsAppMessage(), '_blank');
+                    }
+                  }}
                   className="w-full bg-[#109121] text-white flex items-center justify-center space-x-3 py-4 rounded-xl uppercase text-sm font-bold tracking-widest transition-transform transform active:scale-95 hover:bg-[#0a5f15]"
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.265-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.174-.3-.019-.465.13-.615.136-.135.301-.345.451-.523.146-.181.194-.301.297-.496.098-.203.048-.376-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.172-.015-.371-.015-.571-.015-.2 0-.523.076-.797.359-.273.3-1.045 1.02-1.045 2.475s1.07 2.865 1.219 3.075c.149.195 2.105 3.195 5.1 4.485.714.3 1.27.48 1.704.629.714.226 1.365.195 1.88.121.574-.09 1.767-.721 2.016-1.426.255-.705.255-1.29.18-1.425-.074-.135-.27-.21-.57-.345zM12.002 0C5.378 0 0 5.373 0 12c0 2.128.552 4.136 1.6 5.922L.15 23.85l6.082-1.597A11.954 11.954 0 0 0 12.002 24c6.621 0 12-5.373 12-12s-5.379-12-12-12zm0 21.996c-1.803 0-3.565-.48-5.112-1.396l-.367-.217-3.79 1.002.996-3.69-.239-.379A9.972 9.972 0 0 1 2.004 12c0-5.516 4.485-10 10-10s10 4.484 10 10-4.485 9.996-10 9.996z" /></svg>
                   <span>Checkout on WhatsApp</span>
-                </a>
+                </button>
               </div>
             )}
           </motion.div>

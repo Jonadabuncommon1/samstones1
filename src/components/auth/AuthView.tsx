@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { supabase } from '../../lib/supabase';
-import { Mail, Lock, AlertCircle, ArrowRight, UserCircle } from 'lucide-react';
+import { Mail, Lock, AlertCircle, ArrowRight } from 'lucide-react';
 import { useAppContext } from '../../store/AppContext';
 
 export const AuthView = () => {
-  const { setIsGuest } = useAppContext();
+  const { setCurrentView } = useAppContext();
   const [isSignUp, setIsSignUp] = useState(false);
   const [isResetPassword, setIsResetPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -65,7 +65,7 @@ export const AuthView = () => {
           password,
         });
         if (error) throw error;
-        // Successful login will automatically update AppContext via the listener
+        setCurrentView('home');
       }
     } catch (err: any) {
       setError(err.message || 'An error occurred during authentication.');
@@ -170,17 +170,6 @@ export const AuthView = () => {
                 </>
               )}
             </button>
-            
-            {!isResetPassword && !isSignUp && (
-              <button
-                type="button"
-                onClick={() => setIsGuest(true)}
-                className="w-full bg-transparent border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white py-3.5 rounded-xl font-bold uppercase tracking-widest text-sm transition-colors flex items-center justify-center mt-3"
-              >
-                <UserCircle size={18} className="mr-2" />
-                Continue as Guest
-              </button>
-            )}
           </form>
 
           <div className="mt-8 text-center flex flex-col space-y-3">
