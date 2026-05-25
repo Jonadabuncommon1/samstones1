@@ -87,9 +87,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
       setLoadingAuth(false);
+      
+      if (event === 'PASSWORD_RECOVERY') {
+        _setCurrentView('auth');
+        setTimeout(() => {
+          window.location.hash = 'update-password';
+        }, 100);
+      }
     });
 
     return () => subscription.unsubscribe();

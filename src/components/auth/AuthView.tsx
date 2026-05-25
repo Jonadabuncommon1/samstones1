@@ -8,6 +8,7 @@ export const AuthView = () => {
   const { setCurrentView } = useAppContext();
   const [isSignUp, setIsSignUp] = useState(false);
   const [isResetPassword, setIsResetPassword] = useState(false);
+  const [isUpdatePassword, setIsUpdatePassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -20,12 +21,19 @@ export const AuthView = () => {
       if (hash === '#signup') {
         setIsSignUp(true);
         setIsResetPassword(false);
+        setIsUpdatePassword(false);
       } else if (hash === '#reset') {
         setIsResetPassword(true);
         setIsSignUp(false);
+        setIsUpdatePassword(false);
+      } else if (hash === '#update-password') {
+        setIsUpdatePassword(true);
+        setIsSignUp(false);
+        setIsResetPassword(false);
       } else {
         setIsSignUp(false);
         setIsResetPassword(false);
+        setIsUpdatePassword(false);
       }
       setError(null);
       setMessage(null);
@@ -45,7 +53,14 @@ export const AuthView = () => {
     setMessage(null);
 
     try {
-      if (isResetPassword) {
+      if (isUpdatePassword) {
+        if (!password) throw new Error('Please enter a new password.');
+        const { error } = await supabase.auth.updateUser({ password });
+        if (error) throw error;
+        setMessage('Password updated successfully!');
+        setIsUpdatePassword(false);
+        window.location.hash = 'signin';
+      } else if (isResetPassword) {
         if (!email) throw new Error('Please enter your email address.');
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
           redirectTo: window.location.origin,
@@ -89,11 +104,13 @@ export const AuthView = () => {
           <div className="text-center mb-8">
             <h1 className="font-serif text-3xl font-bold tracking-tight text-gradient mb-2">SAMSTONES</h1>
             <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-              {isResetPassword 
-                ? 'Enter your email to reset password'
-                : isSignUp 
-                  ? 'Create an account to gain access' 
-                  : 'Enter your credentials to continue'}
+              {isUpdatePassword
+                ? 'Enter your new password below'
+                : isResetPassword 
+                  ? 'Enter your email to reset password'
+                  : isSignUp 
+                    ? 'Create an account to gain access' 
+                    : 'Enter your credentials to continue'}
             </p>
           </div>
 
@@ -112,19 +129,21 @@ export const AuthView = () => {
             )}
 
             <div className="space-y-4">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-                  <Mail size={18} />
+              {!isUpdatePassword && (
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+                    <Mail size={18} />
+                  </div>
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-[#141414] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#109121] focus:border-transparent dark:text-white transition-all outline-none"
+                    placeholder="Email address"
+                  />
                 </div>
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-[#141414] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#109121] focus:border-transparent dark:text-white transition-all outline-none"
-                  placeholder="Email address"
-                />
-              </div>
+              )}
 
               {!isResetPassword && (
                 <div>
@@ -138,10 +157,10 @@ export const AuthView = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-[#141414] border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-[#109121] focus:border-transparent dark:text-white transition-all outline-none"
-                      placeholder="Password"
+                      placeholder={isUpdatePassword ? "New Password" : "Password"}
                     />
                   </div>
-                  {!isSignUp && (
+                  {!isSignUp && !isUpdatePassword && (
                     <div className="mt-2 text-right">
                       <button
                         type="button"
@@ -165,7 +184,7 @@ export const AuthView = () => {
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
                 <>
-                  {isResetPassword ? 'Send Reset Link' : isSignUp ? 'Create Account' : 'Sign In'}
+                  {isUpdatePassword ? 'Update Password' : isResetPassword ? 'Send Reset Link' : isSignUp ? 'Create Account' : 'Sign In'}
                   <ArrowRight size={18} className="ml-2" />
                 </>
               )}
