@@ -68,12 +68,16 @@ export const AuthView = () => {
         if (error) throw error;
         setMessage('Password reset link sent to your email.');
       } else if (isSignUp) {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
         });
         if (error) throw error;
-        setMessage('Check your email for the confirmation link to complete registration.');
+        if (data.session) {
+          setCurrentView('home');
+        } else {
+          setMessage('Check your email for the confirmation link to complete registration. If you already have an account, please Sign In instead.');
+        }
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email,
