@@ -222,27 +222,41 @@ export const Navbar = () => {
               </div>
               
               {/* Left-aligned navigation links matching Image 2 */}
-              <div className="flex flex-col space-y-6 mt-8 flex-grow justify-start items-start px-2">
+              <div className="flex flex-col space-y-5 mt-6 flex-grow justify-start items-start px-2">
                 {navLinks.map((link) => (
                   <button
                     key={link.name}
                     onClick={() => handleNavClick(link.view)}
-                    className="text-left text-xl font-sans font-semibold text-gray-700 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-all duration-200 py-1 relative group w-full"
+                    className="text-left text-xl font-sans font-semibold text-gray-700 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-all duration-200 py-0.5 relative group w-full"
                   >
                     {link.name}
                     <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#109121] transition-all duration-300 group-hover:w-12"></span>
                   </button>
                 ))}
-              </div>
-              <div className="mt-8 border-t border-gray-200 dark:border-gray-800 pt-8">
-                <a
-                  href="https://wa.me/2348065179554"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-[#109121] hover:bg-[#0a5f15] text-white text-center py-4 rounded-xl uppercase text-sm tracking-widest font-bold block transition-all"
+
+                {/* Divider Line */}
+                <div className="w-full border-t border-gray-100 dark:border-gray-800 my-4" />
+
+                {/* Secondary smaller links (size 12px) */}
+                <button
+                  onClick={() => {
+                    handleNavClick('wishlist');
+                  }}
+                  className="text-left text-[12px] font-sans font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors py-1.5 w-full"
                 >
-                  Contact Support
-                </a>
+                  Wishlist {wishlist.length > 0 ? `(${wishlist.length})` : ''}
+                </button>
+
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    setCartOpen(true);
+                  }}
+                  className="text-left text-[12px] font-sans font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors py-1.5 w-full"
+                >
+                  Your Cart {cartItemsCount > 0 ? `(${cartItemsCount})` : ''}
+                </button>
+
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
@@ -252,14 +266,22 @@ export const Navbar = () => {
                       supabase.auth.signOut();
                     }
                   }}
-                  className={`w-full mt-4 bg-transparent border-2 text-center py-4 rounded-xl uppercase text-sm tracking-widest font-bold block transition-all ${
-                    !user 
-                      ? 'border-[#109121] text-[#109121] hover:bg-[#109121] hover:text-white dark:border-[#16C72E] dark:text-[#16C72E] dark:hover:bg-[#16C72E] dark:hover:text-white'
-                      : 'border-red-500 text-red-500 hover:bg-red-500 hover:text-white dark:border-red-600 dark:text-red-600 dark:hover:bg-red-600 dark:hover:text-white'
-                  }`}
+                  className="text-left text-[12px] font-sans font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors py-1.5 w-full"
                 >
-                  {!user ? 'Sign In / Register' : 'Sign Out'}
+                  {user ? 'Sign Out' : 'Sign In / Register'}
                 </button>
+              </div>
+
+              {/* Bottom Drawer Action (Contact Support) */}
+              <div className="mt-8 border-t border-gray-200 dark:border-gray-800 pt-6">
+                <a
+                  href="https://wa.me/2348065179554"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#109121] hover:bg-[#0a5f15] text-white text-center py-4 rounded-xl uppercase text-sm tracking-widest font-bold block transition-all"
+                >
+                  Contact Support
+                </a>
               </div>
             </div>
           </motion.div>
