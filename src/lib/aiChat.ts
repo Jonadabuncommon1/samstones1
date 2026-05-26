@@ -7,13 +7,15 @@ function buildSystemPrompt(products: Product[]): string {
     `- ${p.name} (${p.category}): ${formatPrice(p.price)}${p.description ? ' — ' + p.description : ''}${p.isNew ? ' [NEW]' : ''}${p.isTrending ? ' [TRENDING]' : ''}`
   ).join('\n');
 
-  return `You are "Sam", a friendly and knowledgeable AI shopping assistant for SAMSTONES — a premium Nigerian marketplace selling luxury goods including Shoes, Bags, Clothes, Jewelries, Cars, Phone Accessories, Drinks, Cosmetics, Provisions, and Real Estates.
+  return `You are "Sam", a friendly and knowledgeable AI shopping assistant for SAMSTONES — a premium, legally registered Nigerian marketplace (CAC Reg No: 1836199) selling luxury goods including Shoes, Bags, Clothes, Jewelries, Cars, Phone Accessories, Drinks, Cosmetics, Provisions, and Real Estates.
+
+Our store opening hours are: 8am - 10pm, Monday to Saturday (Closed on Sundays).
 
 Your personality: warm, helpful, enthusiastic about fashion and luxury, professional but conversational. You use natural Nigerian English occasionally (e.g., "you will love this", "very nice", etc.). You speak concisely — keep replies to 2-4 sentences unless listing products.
 
 Your capabilities:
 - Help customers find products by category, price range, or description
-- Answer questions about the store (Samstones is based in Nigeria, payments via order through WhatsApp, checkout via WhatsApp chat)
+- Answer questions about the store (Samstones is based in Nigeria, CAC registration number is 1836199, open Monday-Saturday from 8am to 10pm, payments via order through WhatsApp, checkout via WhatsApp chat)
 - Suggest trending/new arrival products
 - Explain how ordering works (add to cart → checkout on WhatsApp)
 - Give general fashion/style advice
@@ -55,7 +57,8 @@ function findPredefinedAnswer(message: string): string | null {
   if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'lekki')) {
     return `We are proudly based in **Nigeria**! 🇳🇬 
 Our premium real estate properties are located in elite areas like **Lekki Phase 1, Lagos**. 
-We offer secure, prompt nationwide delivery for all our luxury physical items (shoes, bags, clothes, cosmetics, etc.) directly to your doorstep.`;
+We offer secure, prompt nationwide delivery for all our luxury physical items (shoes, bags, clothes, cosmetics, etc.) directly to your doorstep.
+We are open **Monday to Saturday, from 8am to 10pm** (Closed on Sundays).`;
   }
 
   // 3. Delivery / shipping / duration
@@ -67,7 +70,8 @@ Once you place your order via **Checkout on WhatsApp**, our representative will 
   // 4. Contact / phone / whatsapp / number / call
   if (containsAny('contact', 'phone', 'whatsapp', 'number', 'call you', 'reach you', 'support', 'instagram', 'facebook')) {
     return `You can reach our team instantly by clicking the **Checkout on WhatsApp** button in your Cart! 
-If you have a general inquiry or want to chat with us directly, you can click on the WhatsApp icon on any product page, or send a message to our store number. We are online and happy to assist you! 💬`;
+If you have a general inquiry or want to chat with us directly, you can click on the WhatsApp icon on any product page, or send a message to our store number. We are online and happy to assist you! 💬
+Our support is fully active during opening hours: **Monday to Saturday, 8am - 10pm** (CAC Reg No: 1836199).`;
   }
 
   // 5. Trending / best / popular / hot
@@ -165,6 +169,18 @@ Click the **Real Estates** category on our homepage to view all our available pr
 - 🎧 **Phone Accessories**: Premium tech gadgets and smart accessories
 
 Feel free to click any category on our homepage to see our full inventory! 🛍️`;
+  }
+
+  // 17. Hours / times / when are you open / closing / schedule
+  if (containsAny('hours', 'time', 'when are you open', 'opening', 'close', 'schedule', 'open days', 'work days', 'saturday', 'monday', 'weekdays')) {
+    return `We are open **Monday to Saturday, from 8am to 10pm**! 🕙 
+Please note that we are closed on Sundays. You can still browse our site and add items to your cart anytime, and we will process your WhatsApp order first thing Monday morning!`;
+  }
+
+  // 18. Registration number / CAC / RC / legal / company number
+  if (containsAny('registration', 'register', 'cac', 'rc', 'number', 'legal', 'company', 'licensed')) {
+    return `Yes, **SAMSTONES** is a fully registered and legal luxury marketplace in Nigeria! 🇳🇬 
+Our official CAC registration number is **1836199**. You can shop with absolute trust and peace of mind!`;
   }
 
   return null;

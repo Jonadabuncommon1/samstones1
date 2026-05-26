@@ -6,7 +6,7 @@ import { useAppContext } from '../store/AppContext';
 
 const WELCOME_MESSAGE: ChatMessage = {
   role: 'assistant',
-  content: "Hi there! 👋 I'm **Sam**, your personal Samstones shopping assistant! I can help you find the perfect item, answer questions about our products, or guide you through our luxury collection. What are you looking for today? 🛍️",
+  content: "Hi there! 👋 I'm **Sam**, your personal Samstones shopping assistant (CAC No: **1836199**). We are open **Monday to Saturday, 8am - 10pm**! I can help you find products, answer questions, or guide you through our luxury collection. What can I help you find today? 🛍️",
 };
 
 function renderMarkdown(text: string): React.ReactNode {
@@ -223,7 +223,7 @@ export const AIChatWidget = () => {
                     {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                   </button>
                 </div>
-                <p className="text-center text-[10px] text-gray-400 dark:text-gray-600 mt-2">Powered by Gemini AI · Samstones Assistant</p>
+                <p className="text-center text-[10px] text-gray-400 dark:text-gray-600 mt-2">CAC Reg: 1836199 · Mon-Sat: 8am - 10pm · Powered by Gemini AI</p>
               </div>
             </div>
           </motion.div>
