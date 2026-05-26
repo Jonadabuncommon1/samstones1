@@ -52,7 +52,7 @@ export const Navbar = () => {
             <div className="flex flex-col justify-center">
               <h1 className="font-sans text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white transition-colors duration-300 drop-shadow-sm group-hover:drop-shadow-md flex items-center">
                 <img
-                  src="/samstones-logo.jpg"
+                  src="/logo-meck.jpg"
                   alt="Samstones Logo"
                   className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded"
                 />
@@ -164,7 +164,16 @@ export const Navbar = () => {
           >
             <div className="p-6 flex flex-col h-full text-gray-900 dark:text-gray-100">
               <div className="flex justify-between items-center mb-12">
-                <h1 className="font-serif text-2xl font-bold tracking-tight text-gradient">SAMSTONES</h1>
+                <div className="flex items-center space-x-2.5">
+                  <img
+                    src="/logo-meck.jpg"
+                    alt="Logo"
+                    className="h-10 w-auto object-contain rounded"
+                  />
+                  <span className="font-sans text-xl font-bold text-gray-900 dark:text-white">
+                    <span className="text-[#DFB722]">Samstones</span> <span className="font-light text-black dark:text-white">Marketplace</span>
+                  </span>
+                </div>
                 <button onClick={() => setMobileMenuOpen(false)} className="text-gray-400 hover:text-[#109121]">
                   <X size={28} />
                 </button>
