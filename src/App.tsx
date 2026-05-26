@@ -87,10 +87,10 @@ function AppContent() {
             <div className="flex flex-col items-center">
               {/* Dynamic Rotating SVG Loader */}
               <motion.svg
-                width="80"
-                height="80"
+                width="100"
+                height="100"
                 viewBox="0 0 100 100"
-                className="mb-8"
+                className="mb-10"
               >
                 <circle
                   cx="50"
@@ -122,7 +122,7 @@ function AppContent() {
               </motion.svg>
 
               {/* SAMSTONES Staggered Spelling Entrance */}
-              <div className="flex space-x-1.5 md:space-x-2.5 justify-center">
+              <div className="flex gap-2 md:gap-4 justify-center">
                 {"SAMSTONES".split("").map((letter, i) => (
                   <motion.span
                     key={i}
@@ -130,7 +130,7 @@ function AppContent() {
                     variants={letterVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-xl md:text-3xl font-serif font-black tracking-widest text-[#109121] dark:text-[#DFB722]"
+                    className="text-3xl md:text-5xl lg:text-6xl font-serif font-black tracking-widest text-[#109121] dark:text-[#DFB722]"
                   >
                     {letter}
                   </motion.span>
@@ -138,9 +138,9 @@ function AppContent() {
               </div>
               <motion.p
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.6 }}
+                animate={{ opacity: 0.7 }}
                 transition={{ delay: 0.8, duration: 0.5 }}
-                className="text-xs uppercase tracking-[0.25em] text-gray-500 dark:text-gray-400 mt-3 font-semibold"
+                className="text-xs md:text-sm uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400 mt-4 font-black"
               >
                 International
               </motion.p>
