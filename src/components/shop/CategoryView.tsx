@@ -21,12 +21,12 @@ export const CategoryView = () => {
   } = useAppContext();
 
   const [sortMode, setSortMode] = useState<string>('default');
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   React.useEffect(() => {
     if (activeCategory === 'clothes') {
       const interval = setInterval(() => {
-        setCurrentVideoIndex((prev) => (prev + 1) % 4);
+        setCurrentSlideIndex((prev) => (prev + 1) % 4);
       }, 3000);
       return () => clearInterval(interval);
     }
@@ -74,23 +74,19 @@ export const CategoryView = () => {
         {activeCategory === 'clothes' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/suites/video1.mp4',
-              '/suites/video2.mp4',
-              '/suites/video3.mp4',
-              '/suites/video4.mp4'
-            ].map((videoSrc, idx) => (
-              <video
-                key={videoSrc}
-                autoPlay
-                loop
-                muted
-                playsInline
+              '/clothes/slide1.jpg',
+              '/clothes/slide2.jpg',
+              '/clothes/slide3.jpg',
+              '/clothes/slide4.jpg'
+            ].map((imgSrc, idx) => (
+              <img
+                key={imgSrc}
+                src={imgSrc}
+                alt={`Clothes slide ${idx + 1}`}
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                  currentVideoIndex === idx ? 'opacity-60' : 'opacity-0'
+                  currentSlideIndex === idx ? 'opacity-70' : 'opacity-0'
                 }`}
-              >
-                <source src={videoSrc} type="video/mp4" />
-              </video>
+              />
             ))}
           </div>
         ) : (
@@ -100,12 +96,12 @@ export const CategoryView = () => {
             className="w-full h-full object-cover opacity-60"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
         <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-4 pb-16">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-serif text-white mb-4 tracking-tight"
+            className="text-5xl md:text-7xl font-serif text-white mb-4 tracking-tight font-extrabold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
           >
             {categoryName}
           </motion.h1>
@@ -113,7 +109,7 @@ export const CategoryView = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-white/90 max-w-2xl mx-auto md:text-lg font-medium"
+            className="text-white font-bold text-sm md:text-lg tracking-wide max-w-2xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] bg-black/40 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 w-fit mt-2 shadow-lg"
           >
             {categoryData?.description || 'Explore our comprehensive collection of luxury assets.'}
           </motion.p>
