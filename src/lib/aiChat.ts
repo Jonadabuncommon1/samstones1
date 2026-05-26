@@ -56,13 +56,15 @@ export async function sendChatMessage(
     const systemMsg = buildSystemPrompt(products);
 
     // Build chat history excluding the last (current) user message
+    // Gemini requires history to start with a 'user' role message, so we drop any leading assistant messages
     const priorMessages = history.slice(0, -1);
-    const chatHistory = priorMessages.length > 0
-      ? priorMessages.map(msg => ({
-          role: msg.role === 'assistant' ? 'model' as const : 'user' as const,
-          parts: [{ text: msg.content }],
-        }))
-      : [];
+    const firstUserIdx = priorMessages.findIndex(m => m.role === 'user');
+    const trimmedHistory = firstUserIdx >= 0 ? priorMessages.slice(firstUserIdx) : [];
+
+    const chatHistory = trimmedHistory.map(msg => ({
+      role: msg.role === 'assistant' ? 'model' as const : 'user' as const,
+      parts: [{ text: msg.content }],
+    }));
 
     const chat = model.startChat({
       history: chatHistory,
@@ -70,7 +72,7 @@ export async function sendChatMessage(
     });
 
     // Prepend system context to the first message if it's the first real exchange
-    const fullMessage = history.length <= 2
+    const fullMessage = firstUserIdx < 0
       ? `[SYSTEM CONTEXT - follow this always]: ${systemMsg}\n\nUser: ${message}`
       : message;
 
