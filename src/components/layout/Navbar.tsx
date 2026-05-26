@@ -40,33 +40,27 @@ export const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          {/* Left: Mobile Menu & Logo Brand */}
-          <div className="flex items-center">
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden text-gray-900 dark:text-white hover:text-[#109121] transition-colors mr-4"
-            >
-              <Menu size={24} />
-            </button>
-
-            <div className="flex items-center space-x-4 cursor-pointer group relative" onClick={() => handleNavClick('home')}>
-              <div className="flex flex-col justify-center">
-                <h1 className="font-sans text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white transition-colors duration-300 drop-shadow-sm group-hover:drop-shadow-md flex items-center">
-                  <img
-                    src="/samstones-logo.jpg"
-                    alt="Samstones Logo"
-                    className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded"
-                  />
-                  <span>
-                    <span className="text-[#DFB722]">Samstones</span> <span className="font-light text-black dark:text-white">Marketplace</span>
-                  </span>
-                </h1>
-              </div>
+          {/* Left: Logo Brand (Visible on both desktop & mobile) */}
+          <div 
+            className="flex items-center cursor-pointer group relative" 
+            onClick={() => handleNavClick('home')}
+          >
+            <img
+              src="/samstones-logo.jpg"
+              alt="Samstones Logo"
+              className="h-10 md:h-12 w-auto mr-2.5 md:mr-3.5 object-contain rounded-lg shadow-sm animate-fade-in"
+            />
+            <div className="flex flex-col justify-center leading-none">
+              <span className="font-sans text-lg md:text-xl font-extrabold tracking-tight text-gray-900 dark:text-white uppercase transition-colors duration-300">
+                SAMSTONES
+              </span>
+              <span className="font-sans text-[9px] md:text-[10px] font-bold tracking-widest text-[#109121] dark:text-[#16C72E] uppercase mt-0.5 transition-colors duration-300">
+                MARKETPLACE
+              </span>
             </div>
           </div>
 
-          {/* Right: Desktop Links & Action Icons (Shifted to Top Right) */}
+          {/* Right: Desktop Links, Action Icons & Mobile Menu Button */}
           <div className="flex items-center space-x-5 md:space-x-6">
             {/* Desktop Menu links (Option 2 - smaller font size 10px, shifted to top right) */}
             <div className="hidden lg:flex items-center space-x-6">
@@ -168,10 +162,19 @@ export const Navbar = () => {
                   supabase.auth.signOut();
                 }
               }}
-              className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative flex items-center"
+              className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative flex items-center animate-fade-in"
               title={!user ? "Sign In" : "Sign Out"}
             >
               {!user ? <LogIn size={20} /> : <LogOut size={20} />}
+            </button>
+
+            {/* Mobile Menu Button (Positioned at the far right, styled with brand green icon matching Image 1) */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="lg:hidden text-gray-900 dark:text-white hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors p-1 flex items-center justify-center animate-fade-in"
+              aria-label="Toggle Menu"
+            >
+              <Menu size={24} className="text-[#109121] dark:text-[#16C72E]" strokeWidth={2.5} />
             </button>
           </div>
         </div>
@@ -187,20 +190,47 @@ export const Navbar = () => {
             className="fixed inset-0 z-50 bg-white/95 dark:bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-gray-100 dark:border-gray-800"
           >
             <div className="p-6 flex flex-col h-full text-gray-900 dark:text-gray-100">
-              <div className="flex justify-between items-center mb-12">
-                <h1 className="font-serif text-2xl font-bold tracking-tight text-gradient">SAMSTONES</h1>
-                <button onClick={() => setMobileMenuOpen(false)} className="text-gray-400 hover:text-[#109121]">
-                  <X size={28} />
+              <div className="flex justify-between items-center mb-8 border-b border-gray-100 dark:border-gray-800 pb-6">
+                <div 
+                  className="flex items-center cursor-pointer group relative"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleNavClick('home');
+                  }}
+                >
+                  <img
+                    src="/samstones-logo.jpg"
+                    alt="Samstones Logo"
+                    className="h-10 w-auto mr-2.5 object-contain rounded-lg shadow-sm"
+                  />
+                  <div className="flex flex-col justify-center leading-none">
+                    <span className="font-sans text-lg font-extrabold tracking-tight text-gray-900 dark:text-white uppercase">
+                      SAMSTONES
+                    </span>
+                    <span className="font-sans text-[9px] font-bold tracking-widest text-[#109121] dark:text-[#16C72E] uppercase mt-0.5">
+                      MARKETPLACE
+                    </span>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => setMobileMenuOpen(false)} 
+                  className="text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] p-1 flex items-center justify-center"
+                  aria-label="Close Menu"
+                >
+                  <X size={26} className="text-[#109121] dark:text-[#16C72E]" strokeWidth={2.5} />
                 </button>
               </div>
-              <div className="flex flex-col space-y-8 flex-grow justify-center items-center">
+              
+              {/* Left-aligned navigation links matching Image 2 */}
+              <div className="flex flex-col space-y-6 mt-8 flex-grow justify-start items-start px-2">
                 {navLinks.map((link) => (
                   <button
                     key={link.name}
                     onClick={() => handleNavClick(link.view)}
-                    className="text-center text-4xl font-serif font-bold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+                    className="text-left text-xl font-sans font-semibold text-gray-700 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-all duration-200 py-1 relative group w-full"
                   >
                     {link.name}
+                    <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#109121] transition-all duration-300 group-hover:w-12"></span>
                   </button>
                 ))}
               </div>
