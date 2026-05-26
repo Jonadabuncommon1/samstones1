@@ -281,7 +281,7 @@ export const HomeView = () => {
                 <div>
                   <h3 className="text-sm font-bold text-[#109121] dark:text-[#16C72E] mb-3 uppercase tracking-widest">Our Mission</h3>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
-                    To provide high-quality products and dependable services that enhance everyday living through excellence, affordability, trust, and convenience. At **Samstones International Resources Ltd**, we are committed to delivering exceptional value across fashion, automobiles, beauty, lifestyle essentials, and real estate while maintaining professionalism, customer satisfaction, and integrity in every aspect of our business.
+                    To provide high-quality products and dependable services that enhance everyday living through excellence, affordability, trust, and convenience. At <strong>Samstones International Resources Ltd</strong>, we are committed to delivering exceptional value across fashion, automobiles, beauty, lifestyle essentials, and real estate while maintaining professionalism, customer satisfaction, and integrity in every aspect of our business.
                   </p>
                 </div>
               )}
