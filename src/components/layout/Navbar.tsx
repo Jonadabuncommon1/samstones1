@@ -3,7 +3,6 @@ import { ShoppingBag, Heart, Menu, X, Search, LogOut, LogIn } from 'lucide-react
 import { supabase } from '../../lib/supabase';
 import { useAppContext } from '../../store/AppContext';
 import { motion, AnimatePresence } from 'motion/react';
-import { ThemeToggle } from '../ThemeToggle';
 
 export const Navbar = () => {
   const { cart, wishlist, setCurrentView, setCartOpen, submitSearch, user } = useAppContext();
@@ -79,7 +78,6 @@ export const Navbar = () => {
 
           {/* Desktop Links Right & Icons */}
           <div className="flex items-center space-x-5 md:space-x-6 ml-auto lg:ml-0">
-            <ThemeToggle />
             <div className="hidden sm:block relative">
               {searchOpen ? (
                 <form
