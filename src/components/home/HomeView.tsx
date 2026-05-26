@@ -5,6 +5,25 @@ import { marketplaceCategories, formatPrice } from '../../data';
 import { ProductCard } from '../shop/ProductCard';
 import { Search, ArrowRight, ShieldCheck, Zap, Globe, ShoppingBag } from 'lucide-react';
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08
+    }
+  }
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 100, damping: 15 }
+  }
+};
+
 export const HomeView = () => {
   const { setCurrentView, setActiveCategory, products, submitSearch } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
@@ -109,14 +128,18 @@ export const HomeView = () => {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"
+        >
           {marketplaceCategories.slice(0, 5).map((category) => (
             <motion.div
               key={category.id}
+              variants={cardVariants}
               onClick={() => { setActiveCategory(category.id); setCurrentView('category'); window.scrollTo(0, 0); }}
-              whileHover={{ y: -8, scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
               className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center cursor-pointer hover:bg-white/10 group shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="w-24 h-24 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg border border-[#109121]/20">
@@ -125,7 +148,7 @@ export const HomeView = () => {
               <h3 className="font-black text-[#109121] text-base group-hover:text-green-700 group-hover:underline transition-colors">{category.name}</h3>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       <section className="py-8 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -137,16 +160,13 @@ export const HomeView = () => {
             <h2 className="text-3xl md:text-4xl font-serif font-black text-[#DFB722] mb-2">Curated Essentials. Everyday Convenience</h2>
             <p className="text-white max-w-md">Quality provisions and lifestyle products for modern living.</p>
           </div>
-          <motion.button
+          <button
             onClick={() => { setCurrentView('category'); window.scrollTo(0, 0); }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 15 }}
             className="bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-gray-200 transition-colors flex items-center space-x-2 shrink-0 shadow-lg"
           >
             <ShoppingBag size={20} />
             <span>Shop Now</span>
-          </motion.button>
+          </button>
         </div>
       </section>
 
@@ -156,11 +176,17 @@ export const HomeView = () => {
             Popular <span className="text-[#109121]">Items</span>
           </h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
           {trendingProducts.map(product => (
             <ProductCard key={product.id} product={product} />
           ))}
-        </div>
+        </motion.div>
       </section>
 
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
@@ -177,13 +203,17 @@ export const HomeView = () => {
                 View All
               </button>
             </div>
-            <div className="space-y-4">
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="space-y-4"
+            >
               {featuredCars.map(car => (
                 <motion.div
                   key={car.id}
-                  whileHover={{ y: -4, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  variants={cardVariants}
                   className="flex gap-4 bg-white/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5 shadow-sm"
                   onClick={() => { setActiveCategory('Cars'); setCurrentView('category'); window.scrollTo(0, 0); }}
                 >
@@ -203,7 +233,7 @@ export const HomeView = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           <div className="bg-white/5 border border-white/10 p-8 rounded-3xl">
@@ -218,13 +248,17 @@ export const HomeView = () => {
                 View All
               </button>
             </div>
-            <div className="space-y-4">
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className="space-y-4"
+            >
               {featuredRealEstate.map(estate => (
                 <motion.div
                   key={estate.id}
-                  whileHover={{ y: -4, scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  variants={cardVariants}
                   className="flex gap-4 bg-white/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5 shadow-sm"
                   onClick={() => { setActiveCategory('Real Estates'); setCurrentView('category'); window.scrollTo(0, 0); }}
                 >
@@ -242,7 +276,7 @@ export const HomeView = () => {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

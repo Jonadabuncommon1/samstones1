@@ -9,6 +9,15 @@ interface ProductCardProps {
   product: Product;
 }
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 25 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { type: "spring", stiffness: 100, damping: 15 }
+  }
+};
+
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { setActiveProductId, setCurrentView, addToCart } = useAppContext();
 
@@ -30,12 +39,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 400, damping: 20 }}
       className="group cursor-pointer h-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#141414] rounded-xl overflow-hidden glass-card dark:glass-card shadow-none hover:shadow-xl transition-all duration-300 hover:border-[#109121]/30 dark:hover:border-[#16C72E]/50"
       onClick={handleView}
     >

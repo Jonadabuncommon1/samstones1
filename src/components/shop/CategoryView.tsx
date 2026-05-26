@@ -6,6 +6,16 @@ import { useAppContext } from '../../store/AppContext';
 import { searchProducts } from '../../utils/searchProducts';
 import { Search, SlidersHorizontal, ChevronDown } from 'lucide-react';
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05
+    }
+  }
+};
+
 export const CategoryView = () => {
   const {
     products,
@@ -247,8 +257,9 @@ export const CategoryView = () => {
           <div className="flex-1">
             {displayProducts.length > 0 ? (
               <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
               >
                 {displayProducts.map(product => (
