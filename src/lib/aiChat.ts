@@ -2,8 +2,6 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Product } from '../types';
 import { formatPrice } from '../data';
 
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
-
 function buildSystemPrompt(products: Product[]): string {
   const productList = products.slice(0, 40).map(p =>
     `- ${p.name} (${p.category}): ${formatPrice(p.price)}${p.description ? ' — ' + p.description : ''}${p.isNew ? ' [NEW]' : ''}${p.isTrending ? ' [TRENDING]' : ''}`
@@ -24,12 +22,11 @@ Your capabilities:
 Current store inventory:
 ${productList}
 
-Ordering process: Customers browse the site, add items to cart, then checkout through WhatsApp. Delivery is arranged after the WhatsApp conversation.
+Ordering process: Customers browse the site, add items to cart, then click "Checkout on WhatsApp". A WhatsApp message with their full order is sent to the Samstones team. Delivery is arranged after the WhatsApp conversation.
 
 Important rules:
 - NEVER make up products not in the inventory above
 - If asked about a product not in stock, say it's not currently available and suggest similar alternatives
-- If the Gemini API key is missing, still introduce yourself warmly
 - Keep responses concise and helpful
 - Always end with a helpful follow-up question or suggestion when appropriate`;
 }
@@ -44,31 +41,56 @@ export async function sendChatMessage(
   history: ChatMessage[],
   products: Product[]
 ): Promise<string> {
-  if (!API_KEY) {
-    return "Hi! I'm Sam, your Samstones shopping assistant! 🛍️ I'd love to help you find something amazing today. To enable full AI chat, please add your VITE_GEMINI_API_KEY to the environment settings. In the meantime, feel free to browse our amazing collection of luxury goods!";
+  const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+  if (!API_KEY || API_KEY.trim() === '') {
+    return "Hi! I'm Sam 👋 The AI assistant is almost ready — the Gemini API key just needs to be added to Vercel environment variables. In the meantime, feel free to browse the store or contact us on WhatsApp for help!";
   }
 
   try {
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-1.5-flash',
-      systemInstruction: buildSystemPrompt(products),
-    });
+    const genAI = new GoogleGenerativeAI(API_KEY.trim());
+
+    // Use system instruction via the chat config
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+    const systemMsg = buildSystemPrompt(products);
+
+    // Build chat history excluding the last (current) user message
+    const priorMessages = history.slice(0, -1);
+    const chatHistory = priorMessages.length > 0
+      ? priorMessages.map(msg => ({
+          role: msg.role === 'assistant' ? 'model' as const : 'user' as const,
+          parts: [{ text: msg.content }],
+        }))
+      : [];
 
     const chat = model.startChat({
-      history: history.slice(0, -1).map(msg => ({
-        role: msg.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: msg.content }],
-      })),
+      history: chatHistory,
+      generationConfig: { maxOutputTokens: 400 },
     });
 
-    const result = await chat.sendMessage(message);
-    return result.response.text();
+    // Prepend system context to the first message if it's the first real exchange
+    const fullMessage = history.length <= 2
+      ? `[SYSTEM CONTEXT - follow this always]: ${systemMsg}\n\nUser: ${message}`
+      : message;
+
+    const result = await chat.sendMessage(fullMessage);
+    const text = result.response.text();
+    return text || "I couldn't generate a response. Please try asking again!";
+
   } catch (error: any) {
     console.error('Gemini API error:', error);
-    if (error.message?.includes('API_KEY')) {
-      return "I'm having trouble connecting right now. Please check that the Gemini API key is configured correctly.";
+    const msg = error?.message || '';
+    if (msg.includes('API_KEY') || msg.includes('api key') || msg.includes('API key')) {
+      return "⚠️ The API key seems invalid. Please double-check that VITE_GEMINI_API_KEY is set correctly in Vercel and redeploy.";
     }
-    return "Sorry, I'm experiencing a connection issue. Please try again in a moment! 😊";
+    if (msg.includes('quota') || msg.includes('QUOTA')) {
+      return "I've hit my usage limit for now. Please try again in a few minutes! 😊";
+    }
+    if (msg.includes('network') || msg.includes('fetch')) {
+      return "Network error — please check your internet connection and try again.";
+    }
+    // Return the actual error to help debugging
+    return `Error: ${msg || 'Unknown error. Check browser console for details.'}`;
   }
 }
