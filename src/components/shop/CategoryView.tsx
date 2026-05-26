@@ -121,20 +121,20 @@ export const CategoryView = () => {
             className="w-full h-full object-cover opacity-60"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-        <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-4 pb-16">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+        <div className="absolute inset-0 flex flex-col items-start justify-end text-left px-6 md:px-12 pb-6 md:pb-10">
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-serif text-white mb-4 tracking-tight font-extrabold drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
+            className="text-2xl md:text-3xl font-bold text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] mb-1"
           >
             {categoryName}
           </motion.h1>
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-white font-bold text-sm md:text-lg tracking-wide max-w-2xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] bg-black/40 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 w-fit mt-2 shadow-lg"
+            className="text-[12px] md:text-xs font-semibold text-white/90 tracking-wide drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] max-w-xl"
           >
             {categoryData?.description || 'Explore our comprehensive collection of luxury assets.'}
           </motion.p>
