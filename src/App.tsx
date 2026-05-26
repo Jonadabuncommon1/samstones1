@@ -21,6 +21,7 @@ import { AdminLogin } from './components/admin/AdminLogin';
 import { CategoriesView } from './components/shop/CategoriesView';
 import { CategoryView } from './components/shop/CategoryView';
 import { AuthView } from './components/auth/AuthView';
+import { AIChatWidget } from './components/AIChatWidget';
 
 import { ThemeProvider } from './components/ThemeContext';
 
@@ -59,6 +60,7 @@ function AppContent() {
       <Footer />
       <WhatsAppCart />
       <FloatingWhatsApp />
+      <AIChatWidget />
     </div>
   );
 }
