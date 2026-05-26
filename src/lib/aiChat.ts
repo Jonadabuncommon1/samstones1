@@ -49,34 +49,22 @@ export async function sendChatMessage(
 
   try {
     const genAI = new GoogleGenerativeAI(API_KEY.trim());
-
-    // Use system instruction via the chat config
     const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const systemMsg = buildSystemPrompt(products);
 
-    // Build chat history excluding the last (current) user message
-    // Gemini requires history to start with a 'user' role message, so we drop any leading assistant messages
-    const priorMessages = history.slice(0, -1);
-    const firstUserIdx = priorMessages.findIndex(m => m.role === 'user');
-    const trimmedHistory = firstUserIdx >= 0 ? priorMessages.slice(firstUserIdx) : [];
+    // Format the entire history as a single text prompt to completely bypass Gemini's strict history validation rules
+    let promptString = `[SYSTEM INSTRUCTIONS]\n${systemMsg}\n\n[CONVERSATION HISTORY]\n`;
+    
+    for (const msg of history) {
+      const speaker = msg.role === 'assistant' ? 'Sam' : 'User';
+      promptString += `${speaker}: ${msg.content}\n\n`;
+    }
+    
+    // Add the final prompt for the assistant to reply
+    promptString += `Sam: `;
 
-    const chatHistory = trimmedHistory.map(msg => ({
-      role: msg.role === 'assistant' ? 'model' as const : 'user' as const,
-      parts: [{ text: msg.content }],
-    }));
-
-    const chat = model.startChat({
-      history: chatHistory,
-      generationConfig: { maxOutputTokens: 400 },
-    });
-
-    // Prepend system context to the first message if it's the first real exchange
-    const fullMessage = firstUserIdx < 0
-      ? `[SYSTEM CONTEXT - follow this always]: ${systemMsg}\n\nUser: ${message}`
-      : message;
-
-    const result = await chat.sendMessage(fullMessage);
+    const result = await model.generateContent(promptString);
     const text = result.response.text();
     return text || "I couldn't generate a response. Please try asking again!";
 
