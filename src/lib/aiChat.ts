@@ -7,7 +7,7 @@ function buildSystemPrompt(products: Product[]): string {
     `- ${p.name} (${p.category}): ${formatPrice(p.price)}${p.description ? ' — ' + p.description : ''}${p.isNew ? ' [NEW]' : ''}${p.isTrending ? ' [TRENDING]' : ''}`
   ).join('\n');
 
-  return `You are "Sam", a friendly and knowledgeable AI shopping assistant for SAMSTONES — a premium, legally registered Nigerian marketplace (CAC Reg No: 1836199) selling luxury goods including Shoes, Bags, Clothes, Jewelries, Cars, Phone Accessories, Drinks, Cosmetics, Provisions, and Real Estates.
+  return `You are "Sam", a friendly and knowledgeable AI shopping assistant for SAMSTONES — a premium, legally registered Nigerian marketplace (legally registered as "Samstones International Resources Limited" with CAC Reg No: 1836199) selling luxury goods including Shoes, Bags, Clothes, Jewelries, Cars, Phone Accessories, Drinks, Cosmetics, Provisions, and Real Estates.
 
 Our store opening hours are: 8am - 10pm, Monday to Saturday (Closed on Sundays).
 
@@ -179,7 +179,7 @@ Please note that we are closed on Sundays. You can still browse our site and add
 
   // 18. Registration number / CAC / RC / legal / company number
   if (containsAny('registration', 'register', 'cac', 'rc', 'number', 'legal', 'company', 'licensed')) {
-    return `Yes, **SAMSTONES** is a fully registered and legal luxury marketplace in Nigeria! 🇳🇬 
+    return `Yes, **Samstones International Resources Limited** is a fully registered and legal company in Nigeria! 🇳🇬 
 Our official CAC registration number is **1836199**. You can shop with absolute trust and peace of mind!`;
   }
 
