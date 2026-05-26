@@ -7,8 +7,7 @@ export const CategoriesView = () => {
   const { setCurrentView, setActiveCategory } = useAppContext();
 
   return (
-    <div className="pt-32 pb-24 min-h-screen bg-white dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100 relative transition-colors duration-500">
-      <div className="fixed top-0 right-0 w-[50%] h-[50%] bg-[#e6f4e8] blur-[150px] pointer-events-none transition-colors" />
+    <div className="pt-32 pb-24 min-h-screen bg-transparent text-gray-900 dark:text-gray-100 relative transition-colors duration-500">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
@@ -27,7 +26,9 @@ export const CategoriesView = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ delay: idx * 0.05, type: "spring", stiffness: 400, damping: 20 }}
               onClick={() => {
                 setActiveCategory(category.id);
                 setCurrentView('category');

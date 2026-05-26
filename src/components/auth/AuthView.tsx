@@ -94,10 +94,7 @@ export const AuthView = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100 flex items-center justify-center p-4 transition-colors duration-500 relative overflow-hidden">
-      {/* Background Orbs */}
-      <div className="fixed top-[-20%] left-[-10%] w-[500px] h-[500px] bg-[#e6f4e8] dark:bg-[#109121]/20 blur-[150px] rounded-full pointer-events-none -z-10 transition-colors" />
-      <div className="fixed bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-[#e6f4e8] dark:bg-[#109121]/20 blur-[150px] rounded-full pointer-events-none -z-10 transition-colors" />
+    <div className="min-h-screen bg-transparent text-gray-900 dark:text-gray-100 flex items-center justify-center p-4 transition-colors duration-500 relative overflow-hidden">
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}

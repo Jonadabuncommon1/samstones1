@@ -71,8 +71,7 @@ export const CategoryView = () => {
   const trendingProducts = categoryProducts.filter(p => p.isTrending);
 
   return (
-    <div className="pt-24 pb-24 min-h-screen bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-gray-100 relative transition-colors duration-500">
-       <div className="fixed top-0 left-0 w-[50%] h-[50%] bg-[#e6f4e8] dark:bg-[#109121]/10 blur-[150px] pointer-events-none transition-colors" />
+    <div className="pt-24 pb-24 min-h-screen bg-transparent text-gray-900 dark:text-gray-100 relative transition-colors duration-500">
        
       {/* Category Hero */}
       <div className="relative h-[40vh] md:h-[50vh] w-full mb-12 border-b border-white/5">

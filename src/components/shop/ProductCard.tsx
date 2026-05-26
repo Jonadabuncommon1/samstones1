@@ -33,7 +33,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      className="group cursor-pointer h-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#141414] rounded-xl overflow-hidden glass-card dark:glass-card shadow-none transition-all duration-300 hover:border-[#109121]/30 dark:hover:border-[#16C72E]/50"
+      whileHover={{ y: -8, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+      className="group cursor-pointer h-full border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#141414] rounded-xl overflow-hidden glass-card dark:glass-card shadow-none hover:shadow-xl transition-all duration-300 hover:border-[#109121]/30 dark:hover:border-[#16C72E]/50"
       onClick={handleView}
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-white dark:bg-[#141414]">

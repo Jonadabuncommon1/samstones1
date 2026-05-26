@@ -22,9 +22,7 @@ export const HomeView = () => {
   };
 
   return (
-    <div className="w-full bg-white dark:bg-black text-gray-900 dark:text-gray-100 selection:bg-[#109121]/10 overflow-hidden transition-colors duration-500">
-      <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-[#e6f4e8] dark:bg-[#109121]/10 blur-[150px] rounded-full pointer-events-none -z-10 transition-colors" />
-      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-[#e6f4e8] dark:bg-[#109121]/10 blur-[150px] rounded-full pointer-events-none -z-10 transition-colors" />
+    <div className="w-full bg-transparent text-gray-900 dark:text-gray-100 selection:bg-[#109121]/10 overflow-hidden transition-colors duration-500">
 
       <section className="relative pt-24 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-center rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden">
@@ -113,16 +111,19 @@ export const HomeView = () => {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
           {marketplaceCategories.slice(0, 5).map((category) => (
-            <div
+            <motion.div
               key={category.id}
               onClick={() => { setActiveCategory(category.id); setCurrentView('category'); window.scrollTo(0, 0); }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center cursor-pointer hover:bg-white/10 transition-all group"
+              whileHover={{ y: -8, scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center cursor-pointer hover:bg-white/10 group shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="w-24 h-24 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg border border-[#109121]/20">
                 <img src={category.image} alt={category.name} className="w-20 h-20 rounded-full object-cover shadow-sm" />
               </div>
               <h3 className="font-black text-[#109121] text-base group-hover:text-green-700 group-hover:underline transition-colors">{category.name}</h3>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -136,13 +137,16 @@ export const HomeView = () => {
             <h2 className="text-3xl md:text-4xl font-serif font-black text-[#DFB722] mb-2">Curated Essentials. Everyday Convenience</h2>
             <p className="text-white max-w-md">Quality provisions and lifestyle products for modern living.</p>
           </div>
-          <button
+          <motion.button
             onClick={() => { setCurrentView('category'); window.scrollTo(0, 0); }}
-            className="bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-gray-200 transition-colors flex items-center space-x-2 shrink-0"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+            className="bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-gray-200 transition-colors flex items-center space-x-2 shrink-0 shadow-lg"
           >
             <ShoppingBag size={20} />
             <span>Shop Now</span>
-          </button>
+          </motion.button>
         </div>
       </section>
 
@@ -175,9 +179,12 @@ export const HomeView = () => {
             </div>
             <div className="space-y-4">
               {featuredCars.map(car => (
-                <div
+                <motion.div
                   key={car.id}
-                  className="flex gap-4 bg-white/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5"
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  className="flex gap-4 bg-white/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5 shadow-sm"
                   onClick={() => { setActiveCategory('Cars'); setCurrentView('category'); window.scrollTo(0, 0); }}
                 >
                   <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
@@ -194,7 +201,7 @@ export const HomeView = () => {
                       {car.mileage && <span>{car.mileage}</span>}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -213,9 +220,12 @@ export const HomeView = () => {
             </div>
             <div className="space-y-4">
               {featuredRealEstate.map(estate => (
-                <div
+                <motion.div
                   key={estate.id}
-                  className="flex gap-4 bg-white/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5"
+                  whileHover={{ y: -4, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  className="flex gap-4 bg-white/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5 shadow-sm"
                   onClick={() => { setActiveCategory('Real Estates'); setCurrentView('category'); window.scrollTo(0, 0); }}
                 >
                   <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
@@ -230,7 +240,7 @@ export const HomeView = () => {
                       {estate.location && <span>{estate.location}</span>}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
