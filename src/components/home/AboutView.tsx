@@ -56,39 +56,31 @@ export const AboutView = () => {
     <div className="pt-24 pb-24 min-h-screen bg-white dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100 transition-colors duration-500">
 
       {/* Hero Banner */}
-      <div className="relative h-[55vh] w-full overflow-hidden mb-20 bg-[#109121] flex flex-col items-center justify-center text-center px-4">
-        {/* Decorative blobs */}
-        <div className="absolute top-0 left-0 w-72 h-72 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full translate-x-1/3 translate-y-1/3 pointer-events-none" />
+      <div className="relative h-[60vh] w-full overflow-hidden mb-20 bg-gradient-to-br from-[#0B5C15] via-[#109121] to-[#073D0E] flex flex-col items-center justify-center text-center px-4 shadow-xl">
+        {/* Decorative blobs and radial glows */}
+        <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full -translate-x-1/3 -translate-y-1/3 pointer-events-none filter blur-2xl" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full translate-x-1/4 translate-y-1/4 pointer-events-none filter blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-[#DFB722]/10 rounded-full pointer-events-none filter blur-3xl" />
 
-        {/* Two-people icon */}
+        {/* Large, Bolder Family Illustration */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          className="mb-6 relative z-10"
+          transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+          className="mb-8 relative z-10 w-44 h-44 md:w-56 md:h-56 rounded-full overflow-hidden bg-white p-4 border-4 border-[#DFB722] shadow-[0_20px_50px_rgba(0,0,0,0.4)] ring-8 ring-white/10 flex items-center justify-center hover:scale-105 transition-transform duration-300"
         >
-          <svg
-            viewBox="0 0 200 130"
-            className="w-28 h-20 fill-white/90"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <circle cx="42" cy="22" r="14" />
-            <path d="M42 40 C42 40 20 52 10 38 C6 32 14 26 20 32 C26 38 34 48 42 54 C50 48 58 38 64 32 C70 26 78 32 74 38 C64 52 42 40 42 40Z" />
-            <path d="M28 62 C28 62 24 90 26 108 C27 116 34 118 38 112 C40 106 40 88 42 82 C44 88 44 106 46 112 C50 118 57 116 58 108 C60 90 56 62 56 62Z" />
-            <circle cx="158" cy="22" r="14" />
-            <path d="M158 40 C158 40 136 52 126 38 C122 32 130 26 136 32 C142 38 150 48 158 54 C166 48 174 38 180 32 C186 26 194 32 190 38 C180 52 158 40 158 40Z" />
-            <path d="M144 62 C144 62 140 90 142 108 C143 116 150 118 154 112 C156 106 156 88 158 82 C160 88 160 106 162 112 C166 118 173 116 174 108 C176 90 172 62 172 62Z" />
-            <path d="M64 32 Q100 8 136 32" stroke="white" strokeWidth="12" fill="none" strokeLinecap="round"/>
-          </svg>
+          <img
+            src="/about_hero.jpg"
+            alt="About Samstones"
+            className="w-full h-full object-contain filter contrast-125"
+          />
         </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-white/80 text-xs font-bold uppercase tracking-widest mb-4 relative z-10"
+          className="text-[#DFB722] text-xs font-bold uppercase tracking-widest mb-3 relative z-10 drop-shadow-sm"
         >
           About Us
         </motion.p>
@@ -96,11 +88,11 @@ export const AboutView = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-4xl md:text-6xl font-serif text-white tracking-tight font-bold relative z-10"
+          className="text-4xl md:text-6xl font-serif text-white tracking-tight font-bold relative z-10 drop-shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
         >
           Samstones International
           <br />
-          <span className="font-light">Resources Ltd</span>
+          <span className="font-medium tracking-wide text-[#DFB722]">Resources Ltd</span>
         </motion.h1>
       </div>
 
@@ -167,16 +159,16 @@ export const AboutView = () => {
 
         {/* Mission & Vision */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-[#109121] rounded-3xl p-8 text-white">
+          <div className="bg-[#109121] rounded-3xl p-8 text-white shadow-xl hover:shadow-[#109121]/20 hover:scale-[1.01] transition-all duration-300">
             <span className="text-white/70 text-xs font-bold uppercase tracking-widest mb-4 block">Our Mission</span>
-            <p className="text-white/95 leading-relaxed text-base">
-              To become a trusted household and commercial brand by providing <span className="text-[#DFB722] font-black">quality</span> products and dependable services while building lasting relationships with our customers through honesty, consistency, and professionalism.
+            <p className="text-white/95 leading-relaxed text-sm md:text-base">
+              To provide high-quality products and dependable services that enhance everyday living through excellence, affordability, trust, and convenience. At <strong>Samstones International Resources Ltd</strong>, we are committed to delivering exceptional value across fashion, automobiles, beauty, lifestyle essentials, and real estate while maintaining professionalism, customer satisfaction, and integrity in every aspect of our business.
             </p>
           </div>
-          <div className="bg-gray-900 rounded-3xl p-8 text-white">
+          <div className="bg-gray-900 rounded-3xl p-8 text-white shadow-xl hover:shadow-black/20 hover:scale-[1.01] transition-all duration-300">
             <span className="text-white/60 text-xs font-bold uppercase tracking-widest mb-4 block">Our Vision</span>
-            <p className="text-white/95 leading-relaxed text-base">
-              To be recognised as one of Nigeria's leading multi-service and retail brands known for excellence, reliability, innovation, and customer satisfaction.
+            <p className="text-white/95 leading-relaxed text-sm md:text-base">
+              To become one of Nigeria’s most trusted and recognised multi-sector retail and lifestyle brands, renowned for quality, innovation, integrity, and outstanding customer service. We aspire to empower individuals and communities by providing access to premium products, reliable services, and modern commerce solutions that inspire confidence and elevate lifestyles.
             </p>
           </div>
         </section>
