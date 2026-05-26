@@ -25,7 +25,7 @@ export const CategoryView = () => {
 
   React.useEffect(() => {
     let slidesCount = 0;
-    if (activeCategory === 'clothes') slidesCount = 4;
+    if (activeCategory === 'clothes') slidesCount = 6;
     else if (activeCategory === 'shoes') slidesCount = 5;
 
     if (slidesCount > 0) {
@@ -81,7 +81,9 @@ export const CategoryView = () => {
               '/clothes/slide1.jpg',
               '/clothes/slide2.jpg',
               '/clothes/slide3.jpg',
-              '/clothes/slide4.jpg'
+              '/clothes/slide4.jpg',
+              '/clothes/slide5.jpg',
+              '/clothes/slide6.jpg'
             ].map((imgSrc, idx) => (
               <img
                 key={imgSrc}
