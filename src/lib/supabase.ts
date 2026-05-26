@@ -21,13 +21,13 @@ export async function uploadImage(file: File): Promise<string | null> {
 
     if (uploadError) {
       console.error('Error uploading image:', uploadError.message);
-      return null;
+      throw uploadError;
     }
 
     const { data } = supabase.storage.from('product-images').getPublicUrl(filePath);
     return data.publicUrl;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Unexpected error during image upload:', error);
-    return null;
+    throw error;
   }
 }

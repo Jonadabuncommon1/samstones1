@@ -102,11 +102,13 @@ export const ProductsManager = () => {
       const uploadedUrls: string[] = [...form.images];
       
       for (const file of selectedFiles) {
-        const url = await uploadImage(file);
-        if (url) {
-          uploadedUrls.push(url);
-        } else {
-          throw new Error('Failed to upload one or more images.');
+        try {
+          const url = await uploadImage(file);
+          if (url) {
+            uploadedUrls.push(url);
+          }
+        } catch (err: any) {
+          throw new Error(`Upload failed: ${err.message || 'Unknown error'}`);
         }
       }
 
@@ -129,8 +131,8 @@ export const ProductsManager = () => {
       setUploadSuccess(true);
       setTimeout(() => setUploadSuccess(false), 3000);
       closeModal();
-    } catch (err: any) {
-      setFormError(err.message || 'An error occurred during save.');
+    } catch (error: any) {
+      setFormError(error.message || 'Failed to publish product. Please try again.');
     } finally {
       setIsUploading(false);
     }
