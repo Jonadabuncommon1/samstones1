@@ -21,6 +21,16 @@ export const CategoryView = () => {
   } = useAppContext();
 
   const [sortMode, setSortMode] = useState<string>('default');
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+
+  React.useEffect(() => {
+    if (activeCategory === 'clothes') {
+      const interval = setInterval(() => {
+        setCurrentVideoIndex((prev) => (prev + 1) % 4);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [activeCategory]);
 
   const categoryData = marketplaceCategories.find(
     c => c.id === activeCategory || c.name === activeCategory
@@ -61,11 +71,35 @@ export const CategoryView = () => {
        
       {/* Category Hero */}
       <div className="relative h-[40vh] md:h-[50vh] w-full mb-12 border-b border-white/5">
-        <img 
-          src={categoryData?.image || 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=2000'} 
-          alt={categoryName}
-          className="w-full h-full object-cover opacity-60"
-        />
+        {activeCategory === 'clothes' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/suites/video1.mp4',
+              '/suites/video2.mp4',
+              '/suites/video3.mp4',
+              '/suites/video4.mp4'
+            ].map((videoSrc, idx) => (
+              <video
+                key={videoSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                  currentVideoIndex === idx ? 'opacity-60' : 'opacity-0'
+                }`}
+              >
+                <source src={videoSrc} type="video/mp4" />
+              </video>
+            ))}
+          </div>
+        ) : (
+          <img 
+            src={categoryData?.image || 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=2000'} 
+            alt={categoryName}
+            className="w-full h-full object-cover opacity-60"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         <div className="absolute inset-0 flex flex-col items-center justify-end text-center px-4 pb-16">
           <motion.h1 
