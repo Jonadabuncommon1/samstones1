@@ -40,44 +40,64 @@ export const Navbar = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="lg:hidden text-gray-900 hover:text-[#109121] transition-colors mr-4"
-          >
-            <Menu size={24} />
-          </button>
+          {/* Left: Mobile Menu & Logo Brand */}
+          <div className="flex items-center">
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="lg:hidden text-gray-900 dark:text-white hover:text-[#109121] transition-colors mr-4"
+            >
+              <Menu size={24} />
+            </button>
 
-          <div className="flex items-center space-x-4 cursor-pointer group relative" onClick={() => handleNavClick('home')}>
-            <div className="flex flex-col justify-center">
-              <h1 className="font-sans text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white transition-colors duration-300 drop-shadow-sm group-hover:drop-shadow-md flex items-center">
-                <img
-                  src="/logo-meck.jpg"
-                  alt="Samstones Logo"
-                  className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded"
-                />
-                <span>
-                  <span className="text-[#DFB722]">Samstones</span> <span className="font-light text-black dark:text-white">Marketplace</span>
-                </span>
-              </h1>
+            <div className="flex items-center space-x-4 cursor-pointer group relative" onClick={() => handleNavClick('home')}>
+              <div className="flex flex-col justify-center">
+                <h1 className="font-sans text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white transition-colors duration-300 drop-shadow-sm group-hover:drop-shadow-md flex items-center">
+                  <img
+                    src="/samstones-logo.jpg"
+                    alt="Samstones Logo"
+                    className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded"
+                  />
+                  <span>
+                    <span className="text-[#DFB722]">Samstones</span> <span className="font-light text-black dark:text-white">Marketplace</span>
+                  </span>
+                </h1>
+              </div>
             </div>
           </div>
 
-          <div className="flex-1 hidden lg:flex justify-center space-x-8 px-6">
-            {navLinks.map((link) => (
+          {/* Right: Desktop Links & Action Icons (Shifted to Top Right) */}
+          <div className="flex items-center space-x-5 md:space-x-6">
+            {/* Desktop Menu links (Option 2 - smaller font size 10px, shifted to top right) */}
+            <div className="hidden lg:flex items-center space-x-6">
+              {navLinks.map((link) => (
+                <button
+                  key={link.name}
+                  onClick={() => handleNavClick(link.view)}
+                  className="text-[10px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group"
+                >
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+                </button>
+              ))}
+              
+              {/* Desktop Sign In / Sign Out (Reduced size 10px, text link) */}
               <button
-                key={link.name}
-                onClick={() => handleNavClick(link.view)}
-                className="text-xs font-semibold tracking-widest uppercase text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors relative group"
+                onClick={() => {
+                  if (!user) {
+                    setCurrentView('auth');
+                  } else {
+                    supabase.auth.signOut();
+                  }
+                }}
+                className="text-[10px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative group"
               >
-                {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+                {user ? 'Sign Out' : 'Sign In'}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
               </button>
-            ))}
-          </div>
+            </div>
 
-          {/* Desktop Links Right & Icons */}
-          <div className="flex items-center space-x-5 md:space-x-6 ml-auto lg:ml-0">
+            {/* Icons */}
             <div className="hidden sm:block relative">
               {searchOpen ? (
                 <form
@@ -114,6 +134,7 @@ export const Navbar = () => {
                 </button>
               )}
             </div>
+
             <button 
               onClick={() => handleNavClick('wishlist')}
               className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors relative"
@@ -125,6 +146,7 @@ export const Navbar = () => {
                 </span>
               )}
             </button>
+
             <button
               onClick={() => setCartOpen(true)}
               className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors relative"
@@ -136,6 +158,8 @@ export const Navbar = () => {
                 </span>
               )}
             </button>
+
+            {/* Mobile Auth Fallback Icon */}
             <button
               onClick={() => {
                 if (!user) {
@@ -144,7 +168,7 @@ export const Navbar = () => {
                   supabase.auth.signOut();
                 }
               }}
-              className="text-gray-600 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative ml-2 flex items-center"
+              className="lg:hidden text-gray-600 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative flex items-center"
               title={!user ? "Sign In" : "Sign Out"}
             >
               {!user ? <LogIn size={20} /> : <LogOut size={20} />}
@@ -164,16 +188,7 @@ export const Navbar = () => {
           >
             <div className="p-6 flex flex-col h-full text-gray-900 dark:text-gray-100">
               <div className="flex justify-between items-center mb-12">
-                <div className="flex items-center space-x-2.5">
-                  <img
-                    src="/logo-meck.jpg"
-                    alt="Logo"
-                    className="h-10 w-auto object-contain rounded"
-                  />
-                  <span className="font-sans text-xl font-bold text-gray-900 dark:text-white">
-                    <span className="text-[#DFB722]">Samstones</span> <span className="font-light text-black dark:text-white">Marketplace</span>
-                  </span>
-                </div>
+                <h1 className="font-serif text-2xl font-bold tracking-tight text-gradient">SAMSTONES</h1>
                 <button onClick={() => setMobileMenuOpen(false)} className="text-gray-400 hover:text-[#109121]">
                   <X size={28} />
                 </button>
