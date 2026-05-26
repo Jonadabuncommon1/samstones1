@@ -24,9 +24,13 @@ export const CategoryView = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
   React.useEffect(() => {
-    if (activeCategory === 'clothes') {
+    let slidesCount = 0;
+    if (activeCategory === 'clothes') slidesCount = 4;
+    else if (activeCategory === 'shoes') slidesCount = 5;
+
+    if (slidesCount > 0) {
       const interval = setInterval(() => {
-        setCurrentSlideIndex((prev) => (prev + 1) % 4);
+        setCurrentSlideIndex((prev) => (prev + 1) % slidesCount);
       }, 3000);
       return () => clearInterval(interval);
     }
@@ -83,6 +87,25 @@ export const CategoryView = () => {
                 key={imgSrc}
                 src={imgSrc}
                 alt={`Clothes slide ${idx + 1}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-70' : 'opacity-0'
+                }`}
+              />
+            ))}
+          </div>
+        ) : activeCategory === 'shoes' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/shoes/slide1.jpg',
+              '/shoes/slide2.jpg',
+              '/shoes/slide3.jpg',
+              '/shoes/slide4.jpg',
+              '/shoes/slide5.jpg'
+            ].map((imgSrc, idx) => (
+              <img
+                key={imgSrc}
+                src={imgSrc}
+                alt={`Shoes slide ${idx + 1}`}
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
                   currentSlideIndex === idx ? 'opacity-70' : 'opacity-0'
                 }`}
