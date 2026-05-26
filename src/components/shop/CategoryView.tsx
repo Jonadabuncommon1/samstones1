@@ -27,6 +27,7 @@ export const CategoryView = () => {
     let slidesCount = 0;
     if (activeCategory === 'clothes') slidesCount = 6;
     else if (activeCategory === 'shoes') slidesCount = 5;
+    else if (activeCategory === 'bags') slidesCount = 5;
 
     if (slidesCount > 0) {
       const interval = setInterval(() => {
@@ -108,6 +109,25 @@ export const CategoryView = () => {
                 key={imgSrc}
                 src={imgSrc}
                 alt={`Shoes slide ${idx + 1}`}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-70' : 'opacity-0'
+                }`}
+              />
+            ))}
+          </div>
+        ) : activeCategory === 'bags' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/bags/slide1.jpg',
+              '/bags/slide2.jpg',
+              '/bags/slide3.jpg',
+              '/bags/slide4.jpg',
+              '/bags/slide5.jpg'
+            ].map((imgSrc, idx) => (
+              <img
+                key={imgSrc}
+                src={imgSrc}
+                alt={`Bags slide ${idx + 1}`}
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
                   currentSlideIndex === idx ? 'opacity-70' : 'opacity-0'
                 }`}
