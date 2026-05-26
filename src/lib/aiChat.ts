@@ -36,11 +36,151 @@ export interface ChatMessage {
   content: string;
 }
 
+function findPredefinedAnswer(message: string): string | null {
+  const normalized = message.toLowerCase().trim();
+
+  // Helper helpers to check if a message matches keywords
+  const containsAny = (...words: string[]) => words.some(word => normalized.includes(word));
+
+  // 1. How to order / buy / checkout
+  if (containsAny('order', 'buy', 'purchase', 'checkout', 'how to shop', 'how do i shop', 'how can i shop', 'how do i buy', 'how to buy')) {
+    return `To order from **SAMSTONES**, simply follow these easy steps:
+1. Browse our categories and click on any product you love.
+2. Select your preferences (like color, size, or quantity) and click **Add to Cart**.
+3. Open your Cart from the top-right header and click **Checkout on WhatsApp**.
+4. This will open a pre-filled WhatsApp chat with our sales team so we can finalize delivery details with you! 🛍️`;
+  }
+
+  // 2. Location / address / base
+  if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'lekki')) {
+    return `We are proudly based in **Nigeria**! 🇳🇬 
+Our premium real estate properties are located in elite areas like **Lekki Phase 1, Lagos**. 
+We offer secure, prompt nationwide delivery for all our luxury physical items (shoes, bags, clothes, cosmetics, etc.) directly to your doorstep.`;
+  }
+
+  // 3. Delivery / shipping / duration
+  if (containsAny('deliver', 'shipping', 'courier', 'send to', 'dispatch', 'transport')) {
+    return `Yes, we offer reliable **nationwide delivery** across Nigeria! 📦 
+Once you place your order via **Checkout on WhatsApp**, our representative will confirm your delivery address and provide you with direct delivery rates and timelines. For luxury cars and real estate properties, we arrange physical site inspections and secure handovers.`;
+  }
+
+  // 4. Contact / phone / whatsapp / number / call
+  if (containsAny('contact', 'phone', 'whatsapp', 'number', 'call you', 'reach you', 'support', 'instagram', 'facebook')) {
+    return `You can reach our team instantly by clicking the **Checkout on WhatsApp** button in your Cart! 
+If you have a general inquiry or want to chat with us directly, you can click on the WhatsApp icon on any product page, or send a message to our store number. We are online and happy to assist you! 💬`;
+  }
+
+  // 5. Trending / best / popular / hot
+  if (containsAny('trending', 'trend', 'best', 'popular', 'hot', 'recommend', 'favorite', 'new')) {
+    return `Here are some of our hottest and most popular items at **SAMSTONES** right now:
+- 👟 **Italian Leather Oxfords** (₦85,000) — Handcrafted and ultra-sleek
+- 👗 **Onyx Black Senator Suit** (₦150,000) — Impeccably tailored Italian wool
+- 🚗 **2023 Mercedes-Benz G-Class** (₦150,000,000) — Luxury SUV, pristine condition
+- 🏠 **Luxury Detached Duplex** (₦350,000,000) — 5-Bedroom smart home in Lekki Phase 1
+- 🎧 **AirPods Pro (2nd Gen)** (₦180,000) — Personalized spatial audio
+- 🧴 **Tom Ford Oud Wood** (₦220,000) — Rare, exotic, and distinctive fragrance
+
+Which of these would you like to know more about? or you can add them directly to your cart! 😊`;
+  }
+
+  // 6. Shoes
+  if (containsAny('shoes', 'shoe', 'footwear', 'sneakers', 'heels', 'sandals', 'oxford', 'oxfords')) {
+    return `We have an elite collection of luxury footwear! 👟
+Our trending item is the **Italian Leather Oxfords** (₦85,000) — handcrafted from premium leather for gentlemen.
+You can view our complete footwear collection by clicking the **Shoes** category on our homepage!`;
+  }
+
+  // 7. Bags
+  if (containsAny('bags', 'bag', 'handbag', 'handbags', 'backpack', 'backpacks', 'purse', 'clutch')) {
+    return `We offer premium luxury bags and clutches! 👜
+Check out our gorgeous **Heritage Beaded Clutch** (₦45,000) which features stunning traditional beadwork.
+Click the **Bags** category on our homepage to view the full designer collection!`;
+  }
+
+  // 8. Clothes
+  if (containsAny('clothes', 'clothing', 'suit', 'suits', 'senator', 'wear', 'streetwear', 'outfit', 'outfits', 'native')) {
+    return `We offer impeccably tailored luxury outfits! 👗👔
+Our top trending item is the **Onyx Black Senator Suit** (₦150,000) — tailored from premium Italian wool with traditional accents.
+Select the **Clothes** category on our homepage to browse all our luxury outfits!`;
+  }
+
+  // 9. Jewelries
+  if (containsAny('jewelries', 'jewelry', 'jewellery', 'gold', 'necklace', 'necklaces', 'ring', 'rings', 'bracelet', 'earrings', 'bead', 'beads')) {
+    return `Add a touch of elegance with our premium jewelry pieces! 💎
+Our popular **Coral Choker Statement** (₦60,000) features authentic Nigerian coral beads modernized into a structural neckpiece.
+Browse the **Jewelries** category on our homepage to see all our gold and traditional items!`;
+  }
+
+  // 10. Cars
+  if (containsAny('cars', 'car', 'vehicle', 'vehicles', 'mercedes', 'suv', 'benz', 'g-class', 'g-wagon')) {
+    return `Looking for luxury on wheels? 🚗
+We feature pristine premium vehicles, including our flagship **2023 Mercedes-Benz G-Class** (₦150,000,000) — foreign used, full options, in Obsidian Black!
+Explore the **Cars** category on our homepage to view our luxury vehicle listings.`;
+  }
+
+  // 11. Phone Accessories
+  if (containsAny('phone', 'accessories', 'airpods', 'charger', 'cases', 'power bank', 'smartwatch', 'smartwatches', 'gadgets')) {
+    return `Upgrade your tech collection! 🎧
+Our top seller is the **AirPods Pro (2nd Gen)** (₦180,000) featuring Active Noise Cancellation and spatial audio.
+Click the **Phone Accessories** category on our homepage to see all our chargers, power banks, and gadgets!`;
+  }
+
+  // 12. Drinks
+  if (containsAny('drinks', 'drink', 'wine', 'wines', 'champagne', 'beverage', 'beverages', 'dom perignon')) {
+    return `Celebrate in high style! 🍾
+We have the iconic **Dom Pérignon Vintage 2012** (₦250,000) in stock — perfect for grand celebrations!
+Click the **Drinks** category on our homepage to explore our complete premium beverage menu.`;
+  }
+
+  // 13. Cosmetics
+  if (containsAny('cosmetics', 'cosmetic', 'perfume', 'perfumes', 'fragrance', 'fragrances', 'skincare', 'makeup', 'tom ford')) {
+    return `Smell and feel premium every single day! ✨
+A classic favorite is **Tom Ford Oud Wood (50ml)** (₦220,000) — a rare, exotic, and highly distinctive fragrance.
+View all our luxury fragrances and beauty products under the **Cosmetics** category on our homepage!`;
+  }
+
+  // 14. Provisions
+  if (containsAny('provisions', 'provision', 'groceries', 'grocery', 'food', 'rice', 'basmati')) {
+    return `Stock up on high-quality kitchen essentials! 🌾
+We stock **Premium Basmati Rice (5kg)** (₦18,500) — premium long-grain, aromatic rice perfect for that special jollof.
+Select the **Provisions** category on our homepage to browse all household groceries.`;
+  }
+
+  // 15. Real Estates
+  if (containsAny('real estate', 'realestates', 'estate', 'property', 'properties', 'apartment', 'apartments', 'house', 'houses', 'duplex', 'duplexes', 'land', 'lands')) {
+    return `Invest in secure luxury properties! 🏠
+We have an exquisite **Luxury 5-Bedroom Detached Duplex** (₦350,000,000) located in **Lekki Phase 1, Lagos** with smart automation and a swimming pool!
+Click the **Real Estates** category on our homepage to view all our available premium listings and schedule inspections.`;
+  }
+
+  // 16. Categories / products / what do you sell / what do you have / stock
+  if (containsAny('sell', 'have', 'products', 'category', 'categories', 'items', 'inventory', 'what do you do', 'what is this', 'stock')) {
+    return `We offer a curated collection of high-end luxury items and premium investments across these categories:
+- 👟 **Shoes & Bags**: Luxury designer footwear & handcrafted beaded clutches
+- 👗 **Clothes & Jewelries**: Senator suits & authentic structural coral beaded neckpieces
+- 🚗 **Cars**: Premium foreign-used luxury vehicles
+- 🏠 **Real Estates**: Exquisite properties and duplexes in Lagos
+- 🍾 **Drinks & Provisions**: Fine champagnes and premium groceries
+- 🧴 **Cosmetics**: Exquisite designer perfumes and skincare
+- 🎧 **Phone Accessories**: Premium tech gadgets and smart accessories
+
+Feel free to click any category on our homepage to see our full inventory! 🛍️`;
+  }
+
+  return null;
+}
+
 export async function sendChatMessage(
   message: string,
   history: ChatMessage[],
   products: Product[]
 ): Promise<string> {
+  // 1. Try local FAQ matcher first to give instant, bulletproof replies even if offline/blocked
+  const faqAnswer = findPredefinedAnswer(message);
+  if (faqAnswer) {
+    return faqAnswer;
+  }
+
   const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
   if (!API_KEY || API_KEY.trim() === '') {
@@ -71,14 +211,30 @@ export async function sendChatMessage(
   } catch (error: any) {
     console.error('Gemini API error:', error);
     const msg = error?.message || '';
+    
     if (msg.includes('API_KEY') || msg.includes('api key') || msg.includes('API key')) {
       return "⚠️ The API key seems invalid. Please double-check that VITE_GEMINI_API_KEY is set correctly in Vercel and redeploy.";
     }
     if (msg.includes('quota') || msg.includes('QUOTA')) {
       return "I've hit my usage limit for now. Please try again in a few minutes! 😊";
     }
-    if (msg.includes('network') || msg.includes('fetch')) {
-      return "Network error — please check your internet connection and try again.";
+    if (msg.includes('network') || msg.includes('fetch') || msg.includes('Failed to fetch') || error instanceof TypeError) {
+      return `Hi there! I'm having trouble connecting to my AI brain right now. 🧠⚡
+
+This is usually caused by:
+1. **Adblockers** (like Brave Shields or uBlock Origin) blocking third-party AI connections.
+2. **VPNs** or strict local networks/ISPs.
+
+**How to fix the connection:**
+- If you're on **Brave**, try turning off **Shields** for this site.
+- Try testing in an **Incognito window** or on a mobile phone using cellular data.
+
+No worries at all, though! Here are answers to our most popular questions:
+- **How to Buy:** Add items to your cart, click **Checkout on WhatsApp**, and chat with our team.
+- **Location:** We are based in Nigeria! Physical luxury goods ship nationwide, and real estate properties are in **Lekki Phase 1, Lagos**.
+- **Delivery:** Yes, safe & prompt nationwide delivery is fully available.
+
+Feel free to browse our premium collection, or click the WhatsApp icon on any product or cart to message our human sales team directly! 💬`;
     }
     // Return the actual error to help debugging
     return `Error: ${msg || 'Unknown error. Check browser console for details.'}`;
