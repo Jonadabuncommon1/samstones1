@@ -78,7 +78,7 @@ export const AboutView = () => {
   const [activeProductIdx, setActiveProductIdx] = React.useState<number | null>(null);
 
   const commitments = [
-    <>Delivering authentic and <span className="text-[#DFB722] font-black">quality</span> products</>,
+    'Delivering authentic and quality products',
     'Maintaining excellent customer service',
     'Building long-term customer relationships',
     'Conducting business ethically and responsibly',
@@ -88,8 +88,8 @@ export const AboutView = () => {
   const reasons = [
     {
       icon: ShieldCheck,
-      title: <><span className="text-[#DFB722] font-black">Quality</span> Assurance</>,
-      body: <>We are committed to offering products that meet high standards of <span className="text-[#DFB722] font-black">quality</span> and value.</>,
+      title: 'Quality Assurance',
+      body: 'We are committed to offering products that meet high standards of quality and value.',
     },
     {
       icon: Heart,
@@ -109,7 +109,7 @@ export const AboutView = () => {
     {
       icon: Tag,
       title: 'Affordable Pricing',
-      body: <>We aim to make <span className="text-[#DFB722] font-black">quality</span> products accessible at competitive and fair prices.</>,
+      body: 'We aim to make quality products accessible at competitive and fair prices.',
     },
   ];
 
@@ -171,7 +171,7 @@ export const AboutView = () => {
               A Dynamic, Customer-Focused Business
             </h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              <strong>Samstones International Resources Ltd</strong> is a dynamic and customer-focused business committed to providing <span className="text-[#DFB722] font-black">quality</span> products and reliable services across multiple industries. Based in Lagos State, Nigeria, we pride ourselves on delivering value, authenticity, affordability, and customer satisfaction in every transaction.
+              <strong>Samstones International Resources Ltd</strong> is a dynamic and customer-focused business committed to providing quality products and reliable services across multiple industries. Based in Lagos State, Nigeria, we pride ourselves on delivering value, authenticity, affordability, and customer satisfaction in every transaction.
             </p>
             <p className="text-gray-600 leading-relaxed">
               Our company operates with professionalism, integrity, and a strong commitment to excellence, serving individuals, families, and businesses with a wide range of products tailored to modern lifestyle and everyday needs.
@@ -205,7 +205,7 @@ export const AboutView = () => {
             <span className="text-xs font-bold uppercase tracking-widest text-[#109121] mb-3 block">What We Offer</span>
             <h2 className="text-3xl font-serif font-bold text-gray-900">Our Products &amp; Services</h2>
             <p className="text-gray-500 mt-3 max-w-xl mx-auto">
-              We offer carefully selected products and services across various categories, combining <span className="text-[#DFB722] font-black">quality</span>, durability, style, and affordability.
+              We offer carefully selected products and services across various categories, combining quality, durability, style, and affordability.
             </p>
           </div>
           <motion.div 
