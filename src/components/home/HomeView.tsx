@@ -8,6 +8,7 @@ import { Search, ArrowRight, ShieldCheck, Zap, Globe, ShoppingBag } from 'lucide
 export const HomeView = () => {
   const { setCurrentView, setActiveCategory, products, submitSearch } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<'mission' | 'vision' | 'motto' | null>(null);
 
   const trendingProducts = products.filter(p => p.isTrending).slice(0, 4);
   const featuredCars = products.filter(p => p.category === 'Cars').slice(0, 4);
@@ -233,6 +234,75 @@ export const HomeView = () => {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Expandable Mission, Vision & Motto Section */}
+      <section className="py-12 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="text-center mb-8">
+          <h2 className="text-xs font-semibold tracking-widest text-[#109121] uppercase dark:text-green-400">
+            About Samstones International Resources Ltd
+          </h2>
+        </div>
+        
+        <div className="grid grid-cols-3 gap-3 sm:gap-6 mb-6">
+          {[
+            { id: 'mission', title: 'Mission', icon: '🎯' },
+            { id: 'vision', title: 'Vision', icon: '✨' },
+            { id: 'motto', title: 'Motto', icon: '💎' }
+          ].map((sec) => {
+            const isActive = activeTab === sec.id;
+            return (
+              <button
+                key={sec.id}
+                onClick={() => setActiveTab(isActive ? null : sec.id as any)}
+                className={`flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                  isActive 
+                    ? 'bg-[#109121] border-[#109121] text-white shadow-lg scale-105' 
+                    : 'bg-white dark:bg-[#111] border-gray-200 dark:border-gray-800 text-gray-800 dark:text-gray-100 hover:border-[#109121] hover:shadow-md'
+                }`}
+              >
+                <span className="text-xl sm:text-2xl mb-2">{sec.icon}</span>
+                <span className="font-bold text-xs sm:text-sm tracking-wider uppercase">{sec.title}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="relative transition-all duration-500">
+          {activeTab && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="bg-gray-50 dark:bg-[#0d0d0d] border border-gray-100 dark:border-gray-800 rounded-3xl p-6 md:p-8 text-center shadow-inner"
+            >
+              {activeTab === 'mission' && (
+                <div>
+                  <h3 className="text-sm font-bold text-[#109121] dark:text-[#16C72E] mb-3 uppercase tracking-widest">Our Mission</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
+                    To provide high-quality products and dependable services that enhance everyday living through excellence, affordability, trust, and convenience. At **Samstones International Resources Ltd**, we are committed to delivering exceptional value across fashion, automobiles, beauty, lifestyle essentials, and real estate while maintaining professionalism, customer satisfaction, and integrity in every aspect of our business.
+                  </p>
+                </div>
+              )}
+              {activeTab === 'vision' && (
+                <div>
+                  <h3 className="text-sm font-bold text-[#109121] dark:text-[#16C72E] mb-3 uppercase tracking-widest">Our Vision</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
+                    To become one of Nigeria’s most trusted and recognised multi-sector retail and lifestyle brands, renowned for quality, innovation, integrity, and outstanding customer service. We aspire to empower individuals and communities by providing access to premium products, reliable services, and modern commerce solutions that inspire confidence and elevate lifestyles.
+                  </p>
+                </div>
+              )}
+              {activeTab === 'motto' && (
+                <div>
+                  <h3 className="text-sm font-bold text-[#109121] dark:text-[#16C72E] mb-3 uppercase tracking-widest">Our Motto</h3>
+                  <p className="text-gray-800 dark:text-gray-100 font-serif italic text-base sm:text-lg font-medium leading-relaxed">
+                    "Precision, Quality, and Reliability at Its Finest."
+                  </p>
+                </div>
+              )}
+            </motion.div>
+          )}
         </div>
       </section>
 
