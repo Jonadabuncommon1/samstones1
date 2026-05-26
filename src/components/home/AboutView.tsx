@@ -1,20 +1,81 @@
 import React from 'react';
-import { motion } from 'motion/react';
-import { ShieldCheck, Heart, Star, Layers, Tag, CheckCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ShieldCheck, Heart, Star, Layers, Tag, CheckCircle, ChevronDown } from 'lucide-react';
+
+const productDetails = [
+  {
+    title: "Premium Shoes & Footwear",
+    desc: "Step into ultimate comfort and style with an elite collection of footwear sourced from the world's finest retail hubs.",
+    icon: "👠"
+  },
+  {
+    title: "Fashion Bags & Accessories",
+    desc: "Elevate your everyday look with statement pieces and premium bags designed for the modern trendsetter.",
+    icon: "💼"
+  },
+  {
+    title: "Clothing & Fashion Items",
+    desc: "Stay ahead of the trends with high-quality apparel crafted to make you look and feel confident.",
+    icon: "👕"
+  },
+  {
+    title: "Jewelry & Luxury Accessories",
+    desc: "Add a touch of elegance to your collection with pristine, hand-selected luxury pieces built to shine.",
+    icon: "💎"
+  },
+  {
+    title: "Cosmetics & Beauty Products",
+    desc: "Flawless formulations and premium beauty essentials to enhance your natural glow.",
+    icon: "💄"
+  },
+  {
+    title: "Drinks & Beverages",
+    desc: "A sophisticated curation of refreshing, high-quality drinks perfect for any occasion or celebration.",
+    icon: "🍷"
+  },
+  {
+    title: "Provisions & Household Essentials",
+    desc: "Keep your home running seamlessly with trusted, top-tier daily essentials and household necessities.",
+    icon: "🏡"
+  },
+  {
+    title: "Phone Accessories & Gadgets",
+    desc: "Power your digital lifestyle with high-performance, durable accessories and cutting-edge tech.",
+    icon: "📱"
+  },
+  {
+    title: "Cars & Vehicle Sales",
+    desc: "Drive with confidence in premium-certified, high-performing brand-new and cleanly maintained used vehicles.",
+    icon: "🚗"
+  },
+  {
+    title: "Real Estate & Property-Related Services",
+    desc: "Secure your future with meticulously vetted, prime property opportunities and trusted real estate services.",
+    icon: "🏢"
+  }
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.06
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 100, damping: 15 }
+  }
+};
 
 export const AboutView = () => {
-  const products = [
-    'Premium shoes and footwear',
-    'Fashion bags and accessories',
-    'Clothing and fashion items',
-    'Jewellery and luxury accessories',
-    'Cars and vehicle sales',
-    'Phone accessories and gadgets',
-    'Drinks and beverages',
-    'Cosmetics and beauty products',
-    'Provisions and household essentials',
-    'Real estate and property-related services',
-  ];
+  const [activeProductIdx, setActiveProductIdx] = React.useState<number | null>(null);
 
   const commitments = [
     <>Delivering authentic and <span className="text-[#DFB722] font-black">quality</span> products</>,
@@ -147,14 +208,61 @@ export const AboutView = () => {
               We offer carefully selected products and services across various categories, combining <span className="text-[#DFB722] font-black">quality</span>, durability, style, and affordability.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {products.map((item) => (
-              <div key={item} className="flex items-center gap-3 bg-[#e6f4e8] rounded-xl px-5 py-4 border border-[#109121]/10">
-                <CheckCircle size={18} className="text-[#109121] flex-shrink-0" />
-                <span className="text-gray-700 font-medium text-sm">{item}</span>
-              </div>
-            ))}
-          </div>
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+          >
+            {productDetails.map((item, idx) => {
+              const isExpanded = activeProductIdx === idx;
+              return (
+                <motion.div
+                  key={item.title}
+                  variants={itemVariants}
+                  onClick={() => setActiveProductIdx(isExpanded ? null : idx)}
+                  className={`rounded-2xl p-5 border transition-all duration-300 select-none ${
+                    isExpanded 
+                      ? 'bg-gradient-to-r from-[#e6f4e8] to-[#f4fbf5] dark:from-[#109121]/20 dark:to-[#109121]/5 border-[#109121] shadow-md scale-[1.01]' 
+                      : 'bg-white dark:bg-[#111] border-gray-200 dark:border-gray-800 hover:border-[#109121]/30 hover:shadow-sm'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{item.icon}</span>
+                      <span className="text-gray-900 dark:text-gray-100 font-bold text-sm md:text-base">
+                        {item.title}
+                      </span>
+                    </div>
+                    <motion.div
+                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-gray-400 dark:text-gray-500"
+                    >
+                      <ChevronDown size={18} />
+                    </motion.div>
+                  </div>
+
+                  <AnimatePresence initial={false}>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-gray-600 dark:text-gray-300 text-xs md:text-sm mt-4 pl-9 leading-relaxed border-l-2 border-[#109121]/20">
+                          {item.desc}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </section>
 
         {/* Mission & Vision */}
