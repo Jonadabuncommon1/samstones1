@@ -368,8 +368,12 @@ export const HomeView = () => {
               <p className="text-gray-400 text-sm">Swift and reliable shipping directly to your doorstep.</p>
             </div>
             <div className="text-center flex flex-col items-center">
-              <div className="w-16 h-16 bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 text-[#109121]">
-                <Globe size={32} />
+              <div className="w-16 h-16 bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 text-[#109121] overflow-hidden">
+                <img
+                  src="/samstones-logo.jpg"
+                  alt="Samstones Logo"
+                  className="w-10 h-10 object-contain rounded-full shadow-sm"
+                />
               </div>
               <h3 className="font-bold text-gray-900 text-lg mb-2">Global Support</h3>
               <p className="text-gray-400 text-sm">Dedicated customer support available 24/7 globally.</p>
