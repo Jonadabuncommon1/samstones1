@@ -178,7 +178,7 @@ export const products: Product[] = [
     price: 350000000,
     description: 'Contemporary architecture with a swimming pool, smart home automation, and 2 rooms BQ.',
     category: 'Real Estates',
-    location: 'Lekki Phase 1, Lagos',
+    location: 'Lagos & Prime Locations in Nigeria',
     images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1000', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1000'],
     isTrending: true,
     isNew: true,

@@ -56,8 +56,10 @@ function findPredefinedAnswer(message: string): string | null {
   // 2. Location / address / base
   if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'lekki')) {
     return `We are proudly based in **Nigeria**! 🇳🇬 
-Our premium real estate properties are located in elite areas like **Lekki Phase 1, Lagos**. 
-We offer secure, prompt nationwide delivery for all our luxury physical items (shoes, bags, clothes, cosmetics, etc.) directly to your doorstep.
+Our luxury physical items (shoes, bags, clothes, cosmetics, etc.) are available for prompt nationwide delivery directly to your doorstep.
+For our luxury investments:
+- 🚗 **Premium Cars** are available in **Lagos**.
+- 🏠 **Real Estate & Lands** are available in premier, high-demand locations both in **Lagos** and across **Nigeria**!
 We are open **Monday to Saturday, from 8am to 10pm** (Closed on Sundays).`;
   }
 
@@ -80,7 +82,7 @@ Our support is fully active during opening hours: **Monday to Saturday, 8am - 10
 - 👟 **Italian Leather Oxfords** (₦85,000) — Handcrafted and ultra-sleek
 - 👗 **Onyx Black Senator Suit** (₦150,000) — Impeccably tailored Italian wool
 - 🚗 **2023 Mercedes-Benz G-Class** (₦150,000,000) — Luxury SUV, pristine condition
-- 🏠 **Luxury Detached Duplex** (₦350,000,000) — 5-Bedroom smart home in Lekki Phase 1
+- 🏠 **Luxury Detached Duplex** (₦350,000,000) — 5-Bedroom smart home in Lagos (with premium properties/lands available across Nigeria)
 - 🎧 **AirPods Pro (2nd Gen)** (₦180,000) — Personalized spatial audio
 - 🧴 **Tom Ford Oud Wood** (₦220,000) — Rare, exotic, and distinctive fragrance
 
@@ -152,9 +154,9 @@ Select the **Provisions** category on our homepage to browse all household groce
 
   // 15. Real Estates
   if (containsAny('real estate', 'realestates', 'estate', 'property', 'properties', 'apartment', 'apartments', 'house', 'houses', 'duplex', 'duplexes', 'land', 'lands')) {
-    return `Invest in secure luxury properties! 🏠
-We have an exquisite **Luxury 5-Bedroom Detached Duplex** (₦350,000,000) located in **Lekki Phase 1, Lagos** with smart automation and a swimming pool!
-Click the **Real Estates** category on our homepage to view all our available premium listings and schedule inspections.`;
+    return `Invest in secure, high-yield luxury properties and premium lands! 🏠
+We offer pristine lands and luxury homes in prime, high-demand areas across both **Lagos** and multiple fast-growing locations within **Nigeria**! Our signature listings include a smart **Luxury 5-Bedroom Detached Duplex** (₦350,000,000) in Lagos.
+Click the **Real Estates** category on our homepage to view all our available premium property and land listings and schedule physical inspections.`;
   }
 
   // 16. Categories / products / what do you sell / what do you have / stock
@@ -247,8 +249,8 @@ This is usually caused by:
 
 No worries at all, though! Here are answers to our most popular questions:
 - **How to Buy:** Add items to your cart, click **Checkout on WhatsApp**, and chat with our team.
-- **Location:** We are based in Nigeria! Physical luxury goods ship nationwide, and real estate properties are in **Lekki Phase 1, Lagos**.
-- **Delivery:** Yes, safe & prompt nationwide delivery is fully available.
+- **Location:** We are based in Nigeria! Our luxury cars are available in **Lagos**, and lands/real estates are located in premium areas across both **Lagos** and other parts of **Nigeria**.
+- **Delivery:** Yes, safe & prompt nationwide delivery is fully available for all physical goods.
 
 Feel free to browse our premium collection, or click the WhatsApp icon on any product or cart to message our human sales team directly! 💬`;
     }
