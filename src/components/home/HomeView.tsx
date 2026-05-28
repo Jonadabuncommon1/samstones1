@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { useAppContext } from '../../store/AppContext';
 import { marketplaceCategories, formatPrice } from '../../data';
 import { ProductCard } from '../shop/ProductCard';
-import { Search, ArrowRight, ShieldCheck, Zap, Globe, ShoppingBag } from 'lucide-react';
+import { Search, ArrowRight, ShieldCheck, Zap, Globe, ShoppingBag, Shirt, Footprints, Briefcase, Gem, Car, Home, Sparkles, Wine, Headphones, ArrowUpRight, ArrowLeft } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -29,9 +29,93 @@ export const HomeView = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'mission' | 'vision' | 'motto' | null>(null);
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [stepWidth, setStepWidth] = useState(304);
+  const carouselRef = React.useRef<HTMLDivElement>(null);
+
+  const coreServices = [
+    {
+      id: 'clothes',
+      title: 'Luxury Fashion',
+      image: '/cat_clothes.png',
+      icon: Shirt
+    },
+    {
+      id: 'shoes',
+      title: 'Premium Footwear',
+      image: '/cat_shoes.png',
+      icon: Footprints
+    },
+    {
+      id: 'bags',
+      title: 'Designer Bags',
+      image: '/cat_bags.png',
+      icon: Briefcase
+    },
+    {
+      id: 'jewelries',
+      title: 'Jewellery & Watches',
+      image: '/cat_jewelries.png',
+      icon: Gem
+    },
+    {
+      id: 'cars',
+      title: 'Cars & Automobiles',
+      image: '/cat_cars.png',
+      icon: Car
+    },
+    {
+      id: 'real-estates',
+      title: 'Real Estate',
+      image: '/cat_real_estates.png',
+      icon: Home
+    },
+    {
+      id: 'cosmetics',
+      title: 'Cosmetics & Beauty',
+      image: '/cat_cosmetics.png',
+      icon: Sparkles
+    },
+    {
+      id: 'drinks',
+      title: 'Drinks & Beverages',
+      image: '/cat_drinks.png',
+      icon: Wine
+    },
+    {
+      id: 'phone-accessories',
+      title: 'Phone Accessories',
+      image: '/cat_phone_accessories.png',
+      icon: Headphones
+    },
+    {
+      id: 'provisions',
+      title: 'Provisions & Essentials',
+      image: '/cat_provisions.png',
+      icon: ShoppingBag
+    }
+  ];
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setStepWidth(window.innerWidth >= 768 ? 304 : 256);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  React.useEffect(() => {
+    if (isHovered || isDragging) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % coreServices.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [isHovered, isDragging, coreServices.length]);
+
   const trendingProducts = products.filter(p => p.isTrending).slice(0, 4);
-  const featuredCars = products.filter(p => p.category === 'Cars').slice(0, 4);
-  const featuredRealEstate = products.filter(p => p.category === 'Real Estates').slice(0, 4);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -179,97 +263,165 @@ export const HomeView = () => {
         </motion.div>
       </section>
 
-      <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <div className="bg-white/5 border border-white/10 p-8 rounded-3xl">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-serif font-bold text-gray-900">
-                Featured <span className="text-[#109121]">Motors</span>
-              </h2>
-              <button
-                onClick={() => { setActiveCategory('Cars'); setCurrentView('category'); window.scrollTo(0, 0); }}
-                className="text-[#109121] hover:text-[#109121] transition-colors text-sm font-medium"
-              >
-                View All
-              </button>
-            </div>
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              className="space-y-4"
+      {/* Modern Premium "Core Services" Section inspired by Interlink */}
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20"
+      >
+        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center rounded-[2.5rem] p-8 lg:p-16 shadow-2xl overflow-hidden bg-gradient-to-br from-[#020A30] via-[#041B6B] to-[#010620] border border-cyan-500/20">
+          {/* Dynamic Background Blur Effects */}
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none -z-10" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none -z-10" />
+
+          {/* Left Side (60% width) - Sliding Service Cards (lg:col-span-7) */}
+          <div className="lg:col-span-7 w-full overflow-hidden relative">
+            <div 
+              className="relative w-full py-4"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              {featuredCars.map(car => (
+              <div ref={carouselRef} className="overflow-hidden w-full">
                 <motion.div
-                  key={car.id}
-                  variants={cardVariants}
-                  className="flex gap-4 bg-white/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5 shadow-sm"
-                  onClick={() => { setActiveCategory('Cars'); setCurrentView('category'); window.scrollTo(0, 0); }}
+                  drag="x"
+                  dragConstraints={{ 
+                    left: -(coreServices.length * stepWidth - (carouselRef.current?.offsetWidth || 0) - 24), 
+                    right: 0 
+                  }}
+                  dragElastic={0.2}
+                  onDragStart={() => setIsDragging(true)}
+                  onDragEnd={(e, info) => {
+                    setIsDragging(false);
+                    const dragOffset = info.offset.x;
+                    const threshold = 50;
+                    if (dragOffset < -threshold) {
+                      setCurrentIndex((prev) => Math.min(prev + 1, coreServices.length - 1));
+                    } else if (dragOffset > threshold) {
+                      setCurrentIndex((prev) => Math.max(prev - 1, 0));
+                    }
+                  }}
+                  animate={{ x: -currentIndex * stepWidth }}
+                  transition={{ type: "spring", stiffness: 85, damping: 17 }}
+                  className="flex gap-6 cursor-grab active:cursor-grabbing w-max py-2 px-1"
                 >
-                  <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
-                    <img src={car.images[0]} alt={car.name} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <h4 className="font-bold text-[#16C72E] text-sm md:text-base">{car.name}</h4>
-                    <p className="font-bold text-[#000000] mb-2">
-                      {formatPrice(car.price)}
-                    </p>
-                    <div className="flex items-center space-x-2 text-[10px] uppercase tracking-widest text-gray-500">
-                      {car.year && <span>{car.year}</span>}
-                      {car.year && car.mileage && <span>•</span>}
-                      {car.mileage && <span>{car.mileage}</span>}
-                    </div>
-                  </div>
+                  {coreServices.map((service, index) => {
+                    const IconComponent = service.icon;
+                    const isActive = index === currentIndex;
+                    return (
+                      <motion.div
+                        key={service.id}
+                        whileHover={{ y: -8 }}
+                        className={`w-[240px] md:w-[280px] h-[340px] md:h-[420px] flex-shrink-0 relative rounded-3xl overflow-hidden group shadow-xl border transition-all duration-500 cursor-pointer ${
+                          isActive ? 'border-cyan-400 shadow-cyan-500/20' : 'border-white/10 hover:border-cyan-500/30'
+                        }`}
+                        onClick={() => {
+                          if (!isDragging) {
+                            setActiveCategory(service.id);
+                            setCurrentView('category');
+                            window.scrollTo(0, 0);
+                          }
+                        }}
+                      >
+                        {/* Slide Category Image */}
+                        <img 
+                          src={service.image} 
+                          alt={service.title} 
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out z-0"
+                        />
+                        {/* Dark Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#020A30] via-black/30 to-transparent z-10" />
+
+                        {/* Slide Card Content */}
+                        <div className="absolute inset-0 p-6 flex flex-col justify-end z-20">
+                          <div className="flex items-end justify-between">
+                            <div className="flex flex-col text-left">
+                              {/* Service Icon */}
+                              <div className="w-10 h-10 bg-cyan-500/20 backdrop-blur-md rounded-full flex items-center justify-center mb-3 text-cyan-300 border border-cyan-500/30 group-hover:bg-cyan-500 group-hover:text-black transition-colors duration-300">
+                                <IconComponent size={20} />
+                              </div>
+                              {/* Service Title */}
+                              <h4 className="font-sans font-black text-white text-lg md:text-xl tracking-wide group-hover:text-cyan-300 transition-colors duration-300">
+                                {service.title}
+                              </h4>
+                            </div>
+
+                            {/* Small Arrow Icon */}
+                            <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/80 group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300">
+                              <ArrowUpRight size={18} className="group-hover:rotate-45 transition-transform duration-300" />
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </motion.div>
-              ))}
-            </motion.div>
+              </div>
+
+              {/* Slider Controls & Premium Indicator Dots */}
+              <div className="flex items-center space-x-4 mt-6 justify-start">
+                <button 
+                  onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
+                  disabled={currentIndex === 0}
+                  className="w-10 h-10 rounded-full border border-white/20 hover:border-cyan-400 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
+                >
+                  <ArrowLeft size={18} />
+                </button>
+                <div className="flex space-x-1.5">
+                  {coreServices.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentIndex(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        i === currentIndex ? 'w-6 bg-cyan-400' : 'w-1.5 bg-white/30 hover:bg-white/60'
+                      }`}
+                    />
+                  ))}
+                </div>
+                <button 
+                  onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, coreServices.length - 1))}
+                  disabled={currentIndex === coreServices.length - 1}
+                  className="w-10 h-10 rounded-full border border-white/20 hover:border-cyan-400 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
+                >
+                  <ArrowRight size={18} />
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white/5 border border-white/10 p-8 rounded-3xl">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-serif font-bold text-gray-900">
-                Prime <span className="text-[#109121]">Estates</span>
-              </h2>
+          {/* Right Side (40% width) - Text Content & CTAs (lg:col-span-5) */}
+          <div className="lg:col-span-5 flex flex-col text-left relative z-10 lg:pl-6">
+            <span className="text-cyan-400 font-serif font-extrabold uppercase tracking-[0.25em] text-xs mb-3 block">
+              Core Services
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif font-black text-white mb-6 leading-tight">
+              Redefining Modern Commerce & Lifestyle.
+            </h2>
+            <p className="text-white/80 text-sm md:text-base leading-relaxed mb-6">
+              At Samstones International Resources Ltd, we provide premium products and reliable services designed to meet modern lifestyle and everyday needs with quality, elegance, and convenience.
+            </p>
+            <p className="text-white/70 text-sm leading-relaxed mb-8">
+              We deliver premium fashion, automobiles, beauty products, lifestyle essentials, and real estate solutions with a commitment to quality, trust, and customer satisfaction. Designed for modern living. Delivered with excellence.
+            </p>
+
+            <div className="flex flex-wrap gap-4">
               <button
-                onClick={() => { setActiveCategory('Real Estates'); setCurrentView('category'); window.scrollTo(0, 0); }}
-                className="text-[#109121] hover:text-green-300 transition-colors text-sm font-medium"
+                onClick={() => { setCurrentView('categories'); window.scrollTo(0, 0); }}
+                className="bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold px-8 py-4 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.8)] active:scale-95 cursor-pointer text-sm tracking-wider uppercase"
               >
-                View All
+                Explore Services
+              </button>
+              <button
+                onClick={() => { setCurrentView('contact'); window.scrollTo(0, 0); }}
+                className="border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10 font-bold px-8 py-4 rounded-xl transition-all duration-300 active:scale-95 cursor-pointer text-sm tracking-wider uppercase"
+              >
+                Contact Us
               </button>
             </div>
-            <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              className="space-y-4"
-            >
-              {featuredRealEstate.map(estate => (
-                <motion.div
-                  key={estate.id}
-                  variants={cardVariants}
-                  className="flex gap-4 bg-white/40 p-3 rounded-2xl cursor-pointer hover:bg-white/10 transition-colors border border-white/5 shadow-sm"
-                  onClick={() => { setActiveCategory('Real Estates'); setCurrentView('category'); window.scrollTo(0, 0); }}
-                >
-                  <div className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0">
-                    <img src={estate.images[0]} alt={estate.name} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <h4 className="font-bold text-[#16C72E] text-sm md:text-base">{estate.name}</h4>
-                    <p className="font-bold text-[#000000] mb-2">
-                      {formatPrice(estate.price)}
-                    </p>
-                    <div className="flex items-center space-x-2 text-[10px] uppercase tracking-widest text-gray-500">
-                      {estate.location && <span>{estate.location}</span>}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Expandable Mission, Vision & Motto Section */}
       <section className="py-12 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
