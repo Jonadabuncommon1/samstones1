@@ -44,17 +44,7 @@ export const HomeView = () => {
     <div className="w-full bg-transparent text-gray-900 dark:text-gray-100 selection:bg-[#109121]/10 overflow-hidden transition-colors duration-500">
 
       <section className="relative pt-24 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-center rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover z-0"
-          >
-            <source src="/myvideo.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-black/60 z-10" />
+        <div className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-center rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden bg-gradient-to-br from-[#0A0A0A] via-[#112F18] to-[#0A0A0A] border border-[#109121]/30">
 
           <div className="relative z-20 flex flex-col justify-center text-left">
             <motion.div
