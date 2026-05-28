@@ -199,8 +199,8 @@ export const HomeView = () => {
 
       <section className="py-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-end mb-8">
-          <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900">
-            Shop by <span className="text-[#109121]">Category</span>
+          <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#109121]">
+            Categories
           </h2>
           <button
             onClick={() => { setCurrentView('category'); window.scrollTo(0, 0); }}
