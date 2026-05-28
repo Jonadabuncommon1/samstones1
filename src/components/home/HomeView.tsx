@@ -39,61 +39,61 @@ export const HomeView = () => {
     {
       id: 'clothes',
       title: 'Luxury Fashion',
-      image: '/cat_clothes.png',
+      image: '/cat_clothes_new.jpg',
       icon: Shirt
     },
     {
       id: 'shoes',
       title: 'Premium Footwear',
-      image: '/cat_shoes.png',
+      image: '/cat_shoes_new.jpg',
       icon: Footprints
     },
     {
       id: 'bags',
       title: 'Designer Bags',
-      image: '/cat_bags.png',
+      image: '/cat_bags_new.jpg',
       icon: Briefcase
     },
     {
       id: 'jewelries',
       title: 'Jewellery & Watches',
-      image: '/cat_jewelries.png',
+      image: '/cat_jewelries_new.jpg',
       icon: Gem
     },
     {
       id: 'cars',
       title: 'Cars & Automobiles',
-      image: '/cat_cars.png',
+      image: '/cat_cars_new.jpg',
       icon: Car
     },
     {
       id: 'real-estates',
       title: 'Real Estate',
-      image: '/cat_real_estates.png',
+      image: '/cat_real_estates_new.jpg',
       icon: Home
     },
     {
       id: 'cosmetics',
       title: 'Cosmetics & Beauty',
-      image: '/cat_cosmetics.png',
+      image: '/cat_cosmetics_new.jpg',
       icon: Sparkles
     },
     {
       id: 'drinks',
       title: 'Drinks & Beverages',
-      image: '/cat_drinks.png',
+      image: '/cat_drinks_new.jpg',
       icon: Wine
     },
     {
       id: 'phone-accessories',
       title: 'Phone Accessories',
-      image: '/cat_phone_accessories.png',
+      image: '/cat_phone_accessories_new.jpg',
       icon: Headphones
     },
     {
       id: 'provisions',
       title: 'Provisions & Essentials',
-      image: '/cat_provisions.png',
+      image: '/cat_provisions_new.jpg',
       icon: ShoppingBag
     }
   ];
