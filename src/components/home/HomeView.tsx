@@ -165,15 +165,6 @@ export const HomeView = () => {
               Discover the Finest Assets & Supplies.
             </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-[#DFB722] font-extrabold text-base md:text-lg mb-8 max-w-lg leading-relaxed"
-            >
-              Shop premium groceries, luxury vehicles, high-end real estate, and exclusive fashion, all sourced for quality and directly delivered.
-            </motion.p>
-
             <motion.form
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

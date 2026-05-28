@@ -192,7 +192,7 @@ function AppContent() {
         {currentView === 'auth' && <AuthView />}
       </main>
 
-      <Footer />
+      {currentView === 'home' && <Footer />}
       <WhatsAppCart />
       <FloatingWhatsApp />
       <AIChatWidget />
