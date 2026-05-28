@@ -45,16 +45,12 @@ export const HomeView = () => {
 
       <section className="relative pt-24 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-center rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden">
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover z-0"
-          >
-            <source src="/myvideo.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-black/60 z-10" />
+          <img
+            src="/hero-collage.jpg"
+            alt="Samstones Marketplace"
+            className="absolute inset-0 w-full h-full object-cover z-0 animate-fade-in"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/40 to-transparent z-10" />
 
           <div className="relative z-20 flex flex-col justify-center text-left">
             <motion.div

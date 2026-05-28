@@ -1,3 +1,4 @@
+
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Product } from '../types';
 import { formatPrice } from '../data';
@@ -55,7 +56,7 @@ function findPredefinedAnswer(message: string): string | null {
 
   // 2. Location / address / base
   if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'lekki')) {
-    return `We are proudly based in **Nigeria**! 🇳🇬 
+    return `We are proudly based in **Nigeria**!     
 Our luxury physical items (shoes, bags, clothes, cosmetics, etc.) are available for prompt nationwide delivery directly to your doorstep.
 For our luxury investments:
 - 🚗 **Premium Cars** are available in **Lagos**.
