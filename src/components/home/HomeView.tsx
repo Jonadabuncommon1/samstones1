@@ -131,7 +131,7 @@ export const HomeView = () => {
         <div 
           className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-center rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden border border-[#DFB722]/30 bg-white min-h-[500px] xl:min-h-[550px]"
           style={{ 
-            backgroundImage: "url('/store_collage_green.png')", 
+            backgroundImage: "url('/premium_marketplace.png')", 
             backgroundSize: 'cover', 
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
