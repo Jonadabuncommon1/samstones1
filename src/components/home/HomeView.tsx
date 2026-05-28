@@ -271,10 +271,10 @@ export const HomeView = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20"
       >
-        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center rounded-[2.5rem] p-8 lg:p-16 shadow-2xl overflow-hidden bg-gradient-to-br from-[#020A30] via-[#041B6B] to-[#010620] border border-cyan-500/20">
+        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center rounded-[2.5rem] p-8 lg:p-16 shadow-2xl overflow-hidden bg-gradient-to-br from-[#031505] via-[#094711] to-[#010B02] border border-[#DFB722]/30">
           {/* Dynamic Background Blur Effects */}
-          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none -z-10" />
-          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none -z-10" />
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#DFB722]/10 blur-[120px] rounded-full pointer-events-none -z-10" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#109121]/15 blur-[120px] rounded-full pointer-events-none -z-10" />
 
           {/* Left Side (60% width) - Sliding Service Cards (lg:col-span-7) */}
           <div className="lg:col-span-7 w-full overflow-hidden relative">
@@ -314,7 +314,7 @@ export const HomeView = () => {
                         key={service.id}
                         whileHover={{ y: -8 }}
                         className={`w-[240px] md:w-[280px] h-[340px] md:h-[420px] flex-shrink-0 relative rounded-3xl overflow-hidden group shadow-xl border transition-all duration-500 cursor-pointer ${
-                          isActive ? 'border-cyan-400 shadow-cyan-500/20' : 'border-white/10 hover:border-cyan-500/30'
+                          isActive ? 'border-[#DFB722] shadow-[#DFB722]/20' : 'border-white/10 hover:border-[#DFB722]/30'
                         }`}
                         onClick={() => {
                           if (!isDragging) {
@@ -331,24 +331,24 @@ export const HomeView = () => {
                           className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out z-0"
                         />
                         {/* Dark Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#020A30] via-black/30 to-transparent z-10" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#031505] via-black/30 to-transparent z-10" />
 
                         {/* Slide Card Content */}
                         <div className="absolute inset-0 p-6 flex flex-col justify-end z-20">
                           <div className="flex items-end justify-between">
                             <div className="flex flex-col text-left">
                               {/* Service Icon */}
-                              <div className="w-10 h-10 bg-cyan-500/20 backdrop-blur-md rounded-full flex items-center justify-center mb-3 text-cyan-300 border border-cyan-500/30 group-hover:bg-cyan-500 group-hover:text-black transition-colors duration-300">
+                              <div className="w-10 h-10 bg-[#DFB722]/25 backdrop-blur-md rounded-full flex items-center justify-center mb-3 text-[#DFB722] border border-[#DFB722]/30 group-hover:bg-[#DFB722] group-hover:text-black transition-colors duration-300">
                                 <IconComponent size={20} />
                               </div>
                               {/* Service Title */}
-                              <h4 className="font-sans font-black text-white text-lg md:text-xl tracking-wide group-hover:text-cyan-300 transition-colors duration-300">
+                              <h4 className="font-sans font-black text-white text-lg md:text-xl tracking-wide group-hover:text-[#DFB722] transition-colors duration-300">
                                 {service.title}
                               </h4>
                             </div>
 
                             {/* Small Arrow Icon */}
-                            <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/80 group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300">
+                            <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/80 group-hover:bg-[#DFB722] group-hover:text-black group-hover:border-[#DFB722] transition-all duration-300">
                               <ArrowUpRight size={18} className="group-hover:rotate-45 transition-transform duration-300" />
                             </div>
                           </div>
@@ -364,7 +364,7 @@ export const HomeView = () => {
                 <button 
                   onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
                   disabled={currentIndex === 0}
-                  className="w-10 h-10 rounded-full border border-white/20 hover:border-cyan-400 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
+                  className="w-10 h-10 rounded-full border border-white/20 hover:border-[#DFB722] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
                 >
                   <ArrowLeft size={18} />
                 </button>
@@ -374,7 +374,7 @@ export const HomeView = () => {
                       key={i}
                       onClick={() => setCurrentIndex(i)}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
-                        i === currentIndex ? 'w-6 bg-cyan-400' : 'w-1.5 bg-white/30 hover:bg-white/60'
+                        i === currentIndex ? 'w-6 bg-[#DFB722]' : 'w-1.5 bg-white/30 hover:bg-white/60'
                       }`}
                     />
                   ))}
@@ -382,7 +382,7 @@ export const HomeView = () => {
                 <button 
                   onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, coreServices.length - 1))}
                   disabled={currentIndex === coreServices.length - 1}
-                  className="w-10 h-10 rounded-full border border-white/20 hover:border-cyan-400 flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
+                  className="w-10 h-10 rounded-full border border-white/20 hover:border-[#DFB722] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
                 >
                   <ArrowRight size={18} />
                 </button>
@@ -392,10 +392,10 @@ export const HomeView = () => {
 
           {/* Right Side (40% width) - Text Content & CTAs (lg:col-span-5) */}
           <div className="lg:col-span-5 flex flex-col text-left relative z-10 lg:pl-6">
-            <span className="text-cyan-400 font-serif font-extrabold uppercase tracking-[0.25em] text-xs mb-3 block">
+            <span className="text-[#DFB722] font-serif font-extrabold uppercase tracking-[0.25em] text-xs mb-3 block">
               Core Services
             </span>
-            <h2 className="text-3xl md:text-5xl font-serif font-black text-white mb-6 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-serif font-black text-[#DFB722] mb-6 leading-tight">
               Redefining Modern Commerce & Lifestyle.
             </h2>
             <p className="text-white/80 text-sm md:text-base leading-relaxed mb-6">
@@ -408,13 +408,13 @@ export const HomeView = () => {
             <div className="flex flex-wrap gap-4">
               <button
                 onClick={() => { setCurrentView('categories'); window.scrollTo(0, 0); }}
-                className="bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold px-8 py-4 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.8)] active:scale-95 cursor-pointer text-sm tracking-wider uppercase"
+                className="bg-[#DFB722] hover:bg-[#cdaf20] text-black font-extrabold px-8 py-4 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(223,183,34,0.3)] hover:shadow-[0_0_30px_rgba(223,183,34,0.8)] active:scale-95 cursor-pointer text-sm tracking-wider uppercase"
               >
                 Explore Services
               </button>
               <button
                 onClick={() => { setCurrentView('contact'); window.scrollTo(0, 0); }}
-                className="border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10 font-bold px-8 py-4 rounded-xl transition-all duration-300 active:scale-95 cursor-pointer text-sm tracking-wider uppercase"
+                className="border border-[#DFB722]/30 text-[#DFB722] hover:bg-[#DFB722]/10 font-bold px-8 py-4 rounded-xl transition-all duration-300 active:scale-95 cursor-pointer text-sm tracking-wider uppercase"
               >
                 Contact Us
               </button>
