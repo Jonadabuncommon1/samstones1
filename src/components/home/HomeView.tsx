@@ -128,23 +128,39 @@ export const HomeView = () => {
     <div className="w-full bg-transparent text-gray-900 dark:text-gray-100 selection:bg-[#109121]/10 overflow-hidden transition-colors duration-500">
 
       <section className="relative pt-24 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-center rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden bg-gradient-to-br from-[#0A0A0A] via-[#112F18] to-[#0A0A0A] border border-[#109121]/30">
+        <div 
+          className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-center rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden border border-[#DFB722]/30 bg-white min-h-[500px] xl:min-h-[550px]"
+          style={{ 
+            backgroundImage: "url('/store_collage_green.png')", 
+            backgroundSize: 'cover', 
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          {/* Subtle overlay to enhance contrast slightly if needed */}
+          <div className="absolute inset-0 bg-white/10 pointer-events-none z-0" />
 
-          <div className="relative z-20 flex flex-col justify-center text-left">
+          {/* Left Column - Premium Floating Frosted Glass Panel for 100% Legibility */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="relative z-20 flex flex-col justify-center text-left bg-white/85 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-white/50 shadow-2xl max-w-xl"
+          >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center space-x-2 bg-white/20 px-4 py-2 rounded-full mb-6 w-fit border border-white/20"
+              className="inline-flex items-center space-x-2 bg-[#109121]/10 px-4 py-2 rounded-full mb-6 w-fit border border-[#109121]/20"
             >
-              <span className="text-xs font-bold uppercase tracking-widest text-white">WE MEET YOUR NEEDS</span>
+              <span className="text-xs font-black uppercase tracking-widest text-[#109121]">WE MEET YOUR NEEDS</span>
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-6xl font-serif font-black text-[#DFB722] mb-6 leading-tight"
+              className="text-4xl md:text-5xl font-serif font-black text-[#109121] mb-6 leading-tight"
             >
               Discover the Finest Assets & Supplies.
             </motion.h1>
@@ -153,7 +169,7 @@ export const HomeView = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-white/90 text-lg mb-10 max-w-lg"
+              className="text-gray-700 font-semibold text-base md:text-lg mb-8 max-w-lg leading-relaxed"
             >
               Shop premium groceries, luxury vehicles, high-end real estate, and exclusive fashion, all sourced for quality and directly delivered.
             </motion.p>
@@ -163,7 +179,7 @@ export const HomeView = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               onSubmit={handleSearch}
-              className="flex w-full max-w-md bg-white rounded-full p-2 shadow-lg"
+              className="flex w-full bg-white rounded-full p-1.5 shadow-lg border border-gray-200/80 hover:border-gray-300 transition-colors"
             >
               <div className="flex items-center pl-4 pr-2 w-full">
                 <Search size={20} className="text-gray-400 mr-3" />
@@ -172,18 +188,20 @@ export const HomeView = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search for premium items..."
-                  className="w-full bg-transparent border-none outline-none text-gray-900 placeholder:text-gray-400"
+                  className="w-full bg-transparent border-none outline-none text-gray-900 placeholder:text-gray-400 font-medium"
                 />
               </div>
               <button
                 type="submit"
-                className="bg-[#109121] hover:bg-[#0c6c19] text-white px-6 py-3 rounded-full font-medium transition-colors"
+                className="bg-[#109121] hover:bg-[#0c6c19] text-white px-6 py-3 rounded-full font-bold transition-colors shadow-md active:scale-95"
               >
                 Search
               </button>
             </motion.form>
-          </div>
+          </motion.div>
 
+          {/* Right Column - Kept empty to display the luxury house, car, phones, and brand stripes of the collage background */}
+          <div className="hidden xl:block w-full h-full pointer-events-none" />
 
         </div>
       </section>
@@ -209,7 +227,7 @@ export const HomeView = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"
         >
-          {marketplaceCategories.slice(0, 5).map((category) => (
+          {marketplaceCategories.map((category) => (
             <motion.div
               key={category.id}
               variants={cardVariants}
