@@ -145,7 +145,7 @@ export const HomeView = () => {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="relative z-20 flex flex-col justify-center text-left bg-white/85 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-white/50 shadow-2xl max-w-xl"
+            className="relative z-20 flex flex-col justify-center text-left max-w-xl"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
