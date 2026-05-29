@@ -192,14 +192,14 @@ export const HomeView = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"
+          className="grid grid-flow-col auto-cols-[calc(50%-0.5rem)] sm:auto-cols-[calc(33.333%-0.666rem)] lg:auto-cols-[calc(20%-0.8rem)] gap-4 overflow-x-auto snap-x snap-mandatory pb-4 no-scrollbar"
         >
           {marketplaceCategories.map((category) => (
             <motion.div
               key={category.id}
               variants={cardVariants}
               onClick={() => { setActiveCategory(category.id); setCurrentView('category'); window.scrollTo(0, 0); }}
-              className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center cursor-pointer hover:bg-white/10 group shadow-sm hover:shadow-md transition-shadow"
+              className="snap-start bg-white/5 border border-white/10 rounded-2xl p-6 text-center cursor-pointer hover:bg-white/10 group shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="w-24 h-24 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg border border-[#109121]/20">
                 <img src={category.image} alt={category.name} className="w-20 h-20 rounded-full object-cover shadow-sm" />
