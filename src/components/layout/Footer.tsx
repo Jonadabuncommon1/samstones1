@@ -2,7 +2,14 @@ import React from 'react';
 import { Instagram, Facebook, Twitter } from 'lucide-react';
 import { useAppContext } from '../../store/AppContext';
 export const Footer = () => {
-  const { setCurrentView } = useAppContext();
+  const { setCurrentView, setActiveCategory } = useAppContext();
+
+  const handleCategoryClick = (categoryId: string) => {
+    setActiveCategory(categoryId);
+    setCurrentView('categories');
+    window.scrollTo(0, 0);
+  };
+
   return (
     <footer 
       className="text-white pt-20 pb-10 border-t border-[#0a5f15] relative overflow-hidden transition-colors"
@@ -29,10 +36,10 @@ export const Footer = () => {
 
           <div>
             <ul className="space-y-4 text-sm font-medium">
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Fashion & Apparel</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Automobiles</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Real Estate</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Jewelry & Watches</a></li>
+              <li><button onClick={() => handleCategoryClick('clothes')} className="text-white/80 hover:text-white transition-colors text-left w-full">Fashion & Apparel</button></li>
+              <li><button onClick={() => handleCategoryClick('cars')} className="text-white/80 hover:text-white transition-colors text-left w-full">Automobiles</button></li>
+              <li><button onClick={() => handleCategoryClick('real-estates')} className="text-white/80 hover:text-white transition-colors text-left w-full">Real Estate</button></li>
+              <li><button onClick={() => handleCategoryClick('jewelries')} className="text-white/80 hover:text-white transition-colors text-left w-full">Jewelry & Watches</button></li>
             </ul>
           </div>
 
