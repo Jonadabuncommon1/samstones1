@@ -235,7 +235,15 @@ export const HomeView = () => {
       </section>
 
       <section className="py-8 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="w-full bg-[#109121] rounded-3xl p-8 md:p-12 border border-[#109121]/30 flex flex-col md:flex-row items-center justify-between shadow-2xl">
+        <div 
+          className="w-full rounded-3xl p-8 md:p-12 border border-[#109121]/30 flex flex-col md:flex-row items-center justify-between shadow-2xl bg-[#109121]"
+          style={{ 
+            backgroundImage: "url('/provisions_banner_bg.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
           <div className="mb-6 md:mb-0">
             <span className="bg-[#109121]/10 text-[#109121] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block border border-[#109121]/30">
               Limited Offer
