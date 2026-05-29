@@ -105,7 +105,7 @@ export const Navbar = () => {
                 className="relative group flex items-center justify-center hover:scale-105 transition-transform"
                 title="Your Cart"
               >
-                <img src="/pic2.png" alt="Cart" className="w-5 h-5 object-contain" />
+                <img src="/pic2.jpg" alt="Cart" className="w-5 h-5 object-contain" />
                 {cartItemsCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-bold px-1 rounded-full">
                     {cartItemsCount}

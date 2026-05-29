@@ -250,7 +250,7 @@ export const AIChatWidget = () => {
             </motion.div>
           ) : (
             <motion.div key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }}>
-              <img src="/pic4.png" alt="AI Chat" className="w-8 h-8 object-contain" />
+              <img src="/pic4.jpg" alt="AI Chat" className="w-8 h-8 object-contain" />
             </motion.div>
           )}
         </AnimatePresence>
