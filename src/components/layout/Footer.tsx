@@ -4,69 +4,77 @@ import { useAppContext } from '../../store/AppContext';
 export const Footer = () => {
   const { setCurrentView } = useAppContext();
   return (
-    <footer className="bg-[#109121] text-white pt-20 pb-10 border-t border-[#0a5f15] relative overflow-hidden transition-colors">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-50" />
+    <footer 
+      className="text-white pt-20 pb-10 border-t border-[#0a5f15] relative overflow-hidden transition-colors"
+      style={{
+        backgroundImage: "url('/core_services_bg.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="absolute inset-0 bg-black/30 pointer-events-none" /> {/* Optional backdrop for legibility */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-80" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
           <div>
-            <h2 className="font-serif text-3xl font-bold tracking-tight mb-6 text-white">SAMSTONES</h2>
-            <p className="text-white/80 text-sm leading-relaxed mb-6">
+            <h2 className="font-serif text-3xl font-black tracking-tight mb-6 text-white drop-shadow-lg">SAMSTONES</h2>
+            <p className="text-white font-bold text-sm md:text-base leading-relaxed mb-6 drop-shadow-md">
               The premier luxury marketplace converging fashion, real estate, automotive, and lifestyle in one seamless digital marketplace.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Instagram size={18} /></a>
-              <a href="https://www.facebook.com/share/15y5yJ2Xfff/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Facebook size={18} /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Twitter size={18} /></a>
+              <a href="#" className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-lg backdrop-blur-sm"><Instagram size={18} strokeWidth={2.5} /></a>
+              <a href="https://www.facebook.com/share/15y5yJ2Xfff/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-lg backdrop-blur-sm"><Facebook size={18} strokeWidth={2.5} /></a>
+              <a href="#" className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-lg backdrop-blur-sm"><Twitter size={18} strokeWidth={2.5} /></a>
             </div>
           </div>
 
           <div>
-            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-[#e6f4e8]">Universes</h3>
-            <ul className="space-y-4 text-sm font-medium">
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Fashion & Apparel</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Automobiles</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Real Estate</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Jewelry & Watches</a></li>
+            <h3 className="font-sans text-sm font-black tracking-widest uppercase mb-6 text-white drop-shadow-lg">Universes</h3>
+            <ul className="space-y-4 text-sm md:text-base font-bold">
+              <li><a href="#" className="text-white hover:text-[#DFB722] transition-colors drop-shadow-md">Fashion & Apparel</a></li>
+              <li><a href="#" className="text-white hover:text-[#DFB722] transition-colors drop-shadow-md">Automobiles</a></li>
+              <li><a href="#" className="text-white hover:text-[#DFB722] transition-colors drop-shadow-md">Real Estate</a></li>
+              <li><a href="#" className="text-white hover:text-[#DFB722] transition-colors drop-shadow-md">Jewelry & Watches</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-[#e6f4e8]">Customer Support</h3>
-            <ul className="space-y-4 text-sm font-medium">
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">WhatsApp Support</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Secure Shipping</a></li>
-              <li><a href="#" className="text-white/80 hover:text-white transition-colors">Global Network</a></li>
+            <h3 className="font-sans text-sm font-black tracking-widest uppercase mb-6 text-white drop-shadow-lg">Customer Support</h3>
+            <ul className="space-y-4 text-sm md:text-base font-bold">
+              <li><a href="#" className="text-white hover:text-[#DFB722] transition-colors drop-shadow-md">WhatsApp Support</a></li>
+              <li><a href="#" className="text-white hover:text-[#DFB722] transition-colors drop-shadow-md">Secure Shipping</a></li>
+              <li><a href="#" className="text-white hover:text-[#DFB722] transition-colors drop-shadow-md">Global Network</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-[#e6f4e8]">Shop Categories</h3>
-            <p className="text-white/80 text-sm mb-6 font-medium">Subscribe for exclusive access to rare drops and private listings.</p>
-            <form className="flex bg-white/15 rounded-xl border border-white/25 shadow-none p-1 overflow-hidden">
+            <h3 className="font-sans text-sm font-black tracking-widest uppercase mb-6 text-white drop-shadow-lg">Shop Categories</h3>
+            <p className="text-white font-bold text-sm md:text-base mb-6 drop-shadow-md">Subscribe for exclusive access to rare drops and private listings.</p>
+            <form className="flex bg-black/40 backdrop-blur-sm rounded-xl border border-white/20 shadow-lg p-1 overflow-hidden">
               <input
                 type="email"
                 placeholder="Enter email address"
-                className="bg-transparent border-none outline-none text-sm text-white px-4 w-full placeholder-white/50"
+                className="bg-transparent border-none outline-none text-sm font-bold text-white px-4 w-full placeholder-white/70"
               />
-              <button type="button" className="bg-white text-[#109121] px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wide hover:bg-[#e6f4e8] transition-colors">
+              <button type="button" className="bg-white text-black px-4 py-2 rounded-lg text-sm font-black uppercase tracking-wide hover:bg-gray-200 transition-colors shadow-md">
                 Join
               </button>
             </form>
           </div>
         </div>
 
-        <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center text-xs font-medium text-white/60">
+        <div className="border-t border-white/30 pt-8 flex flex-col md:flex-row justify-between items-center text-sm font-bold text-white drop-shadow-md">
           <p>&copy; {new Date().getFullYear()} Samstones International Resources Ltd.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          <div className="flex space-x-6 mt-4 md:mt-0 font-bold">
             <button
               onClick={() => { setCurrentView('privacy'); window.scrollTo(0, 0); }}
-              className="hover:text-white transition-colors"
+              className="hover:text-[#DFB722] transition-colors"
             >
               Privacy
             </button>
             <button
               onClick={() => { setCurrentView('terms'); window.scrollTo(0, 0); }}
-              className="hover:text-white transition-colors"
+              className="hover:text-[#DFB722] transition-colors"
             >
               Terms
             </button>
