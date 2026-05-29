@@ -53,11 +53,15 @@ export const CategoryView = () => {
   const isGlobalSearch = searchSubmitted && searchQuery.trim().length > 0;
   const categoryName = isGlobalSearch
     ? `Search: "${searchQuery}"`
+    : activeCategory === 'trending'
+    ? 'Trending'
     : categoryData?.name || 'All Categories';
 
   let categoryProducts = products;
   if (isGlobalSearch) {
     categoryProducts = searchProductsGlobally(searchQuery);
+  } else if (activeCategory === 'trending') {
+    categoryProducts = products.filter((p) => p.isTrending);
   } else if (categoryData) {
     categoryProducts = products.filter((p) => p.category === categoryData.name);
   }
@@ -230,6 +234,14 @@ export const CategoryView = () => {
             <div className="space-y-8 p-6 rounded-2xl border border-gray-200 bg-[#e6f4e8]/50 shadow-none">
               <div>
                 <ul className="space-y-3">
+                  <li>
+                    <button 
+                      onClick={() => setActiveCategory('trending')}
+                      className={`text-sm tracking-wide transition-colors ${activeCategory === 'trending' ? 'text-[#109121] font-bold' : 'text-gray-400 hover:text-[#109121]'}`}
+                    >
+                      Trending
+                    </button>
+                  </li>
                   {marketplaceCategories.map(cat => (
                     <li key={cat.id}>
                       <button 
