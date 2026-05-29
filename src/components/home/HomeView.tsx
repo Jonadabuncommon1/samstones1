@@ -140,15 +140,12 @@ export const HomeView = () => {
           {/* Subtle overlay to enhance contrast slightly if needed */}
           <div className="absolute inset-0 bg-white/10 pointer-events-none z-0" />
 
-          {/* Left Column - Kept empty to display the luxury products on the left side of the background collage */}
-          <div className="hidden xl:block w-full h-full pointer-events-none" />
-
-          {/* Right Column - Premium Text overlay pushed to the top right to avoid overlap */}
+          {/* Left Column - Premium Text overlay pushed to the top left to avoid overlap */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="relative z-20 flex flex-col justify-start text-left max-w-xl xl:ml-auto"
+            className="relative z-20 flex flex-col justify-start text-left max-w-xl"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -193,6 +190,9 @@ export const HomeView = () => {
               </button>
             </motion.form>
           </motion.div>
+
+          {/* Right Column - Kept empty to display the luxury house, car, phones, and brand stripes of the collage background */}
+          <div className="hidden xl:block w-full h-full pointer-events-none" />
 
         </div>
       </section>
