@@ -252,14 +252,7 @@ export const CategoryView = () => {
                       </button>
                     </li>
                   ))}
-                  <li>
-                    <button 
-                      onClick={() => setActiveCategory(null)}
-                      className={`text-sm tracking-wide transition-colors block mt-4 pt-4 border-t border-white/10 w-full text-left ${!activeCategory ? 'text-[#109121] font-bold' : 'text-gray-400 hover:text-[#109121]'}`}
-                    >
-                      All Categories
-                    </button>
-                  </li>
+
                 </ul>
               </div>
             </div>
