@@ -380,16 +380,16 @@ export const HomeView = () => {
               We deliver premium fashion, automobiles, beauty products, lifestyle essentials, and real estate solutions with a commitment to quality, trust, and customer satisfaction. Designed for modern living. Delivered with excellence.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-row items-center gap-3 w-full">
               <button
                 onClick={() => { setCurrentView('categories'); window.scrollTo(0, 0); }}
-                className="bg-[#DFB722] hover:bg-[#cdaf20] text-black font-extrabold px-8 py-4 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(223,183,34,0.3)] hover:shadow-[0_0_30px_rgba(223,183,34,0.8)] active:scale-95 cursor-pointer text-sm tracking-wider uppercase"
+                className="flex-1 bg-[#DFB722] hover:bg-[#cdaf20] text-black font-extrabold px-3 sm:px-6 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(223,183,34,0.3)] hover:shadow-[0_0_30px_rgba(223,183,34,0.8)] active:scale-95 cursor-pointer text-[10px] sm:text-xs tracking-wider uppercase text-center whitespace-nowrap"
               >
                 Explore Services
               </button>
               <button
                 onClick={() => { setCurrentView('contact'); window.scrollTo(0, 0); }}
-                className="border border-[#DFB722]/30 text-[#DFB722] hover:bg-[#DFB722]/10 font-bold px-8 py-4 rounded-xl transition-all duration-300 active:scale-95 cursor-pointer text-sm tracking-wider uppercase"
+                className="flex-1 border border-[#DFB722]/30 text-[#DFB722] hover:bg-[#DFB722]/10 font-bold px-3 sm:px-6 py-3 sm:py-4 rounded-xl transition-all duration-300 active:scale-95 cursor-pointer text-[10px] sm:text-xs tracking-wider uppercase text-center whitespace-nowrap"
               >
                 Contact Us
               </button>
