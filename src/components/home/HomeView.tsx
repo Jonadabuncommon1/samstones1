@@ -264,7 +264,14 @@ export const HomeView = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20"
       >
-        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center rounded-[2.5rem] p-8 lg:p-16 shadow-2xl overflow-hidden bg-gradient-to-br from-[#031505] via-[#094711] to-[#010B02] border border-[#DFB722]/30">
+        <div 
+          className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center rounded-[2.5rem] p-8 lg:p-16 shadow-2xl overflow-hidden border border-[#DFB722]/30"
+          style={{ 
+            backgroundImage: "url('/core_services_bg.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        >
           {/* Dynamic Background Blur Effects */}
           <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#DFB722]/10 blur-[120px] rounded-full pointer-events-none -z-10" />
           <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#109121]/15 blur-[120px] rounded-full pointer-events-none -z-10" />
