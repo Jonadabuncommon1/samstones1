@@ -60,62 +60,57 @@ export const Navbar = () => {
             </div>
           </div>
 
-          {/* Right: Desktop Links & Mobile Menu Button */}
+          {/* Middle: Links & Search */}
+          <div className="hidden lg:flex items-center justify-center flex-1 space-x-5 px-8">
+            <button onClick={() => handleNavClick('home')} className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group">
+              Home
+              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+            </button>
+            <button onClick={() => handleNavClick('about')} className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group">
+              About
+              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+            </button>
+            <button onClick={() => handleNavClick('categories')} className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group">
+              Product Categories
+              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+            </button>
+            <button onClick={() => handleNavClick('wishlist')} className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group">
+              Wishlist {wishlist.length > 0 ? `(${wishlist.length})` : ''}
+              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+            </button>
+            <button onClick={() => window.open('https://wa.me/2348065179554', '_blank')} className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group">
+              Support
+              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+            </button>
+
+            {/* Very small search function */}
+            <form onSubmit={(e) => { e.preventDefault(); if (navSearch.trim()) submitSearch(navSearch); }} className="relative flex items-center ml-4">
+              <input 
+                type="text" 
+                value={navSearch}
+                onChange={(e) => setNavSearch(e.target.value)}
+                placeholder="Search..." 
+                className="w-32 h-6 pl-6 pr-2 text-[10px] bg-gray-100 dark:bg-gray-800 rounded-full outline-none focus:ring-1 focus:ring-[#109121] transition-all"
+              />
+              <Search size={10} className="absolute left-2 text-gray-400" />
+            </form>
+          </div>
+
+          {/* Right: Cart (pic 2) & Sign Out & Mobile Menu */}
           <div className="flex items-center space-x-5 md:space-x-6">
-            {/* Desktop Menu links (Size 12px, words, no icons) */}
             <div className="hidden lg:flex items-center space-x-5">
-              {/* Home */}
-              <button
-                onClick={() => handleNavClick('home')}
-                className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group"
-              >
-                Home
-                <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
-              </button>
-
-              {/* About */}
-              <button
-                onClick={() => handleNavClick('about')}
-                className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group"
-              >
-                About
-                <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
-              </button>
-
-              {/* Product Categories */}
-              <button
-                onClick={() => handleNavClick('categories')}
-                className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group"
-              >
-                Product Categories
-                <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
-              </button>
-
-              {/* Your Cart */}
+              {/* Cart as Pic 2 */}
               <button
                 onClick={() => setCartOpen(true)}
-                className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group"
+                className="relative group flex items-center justify-center hover:scale-105 transition-transform"
+                title="Your Cart"
               >
-                Your Cart {cartItemsCount > 0 ? `(${cartItemsCount})` : ''}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
-              </button>
-
-              {/* Wishlist */}
-              <button
-                onClick={() => handleNavClick('wishlist')}
-                className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group"
-              >
-                Wishlist {wishlist.length > 0 ? `(${wishlist.length})` : ''}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
-              </button>
-
-              {/* Support */}
-              <button
-                onClick={() => window.open('https://wa.me/2348065179554', '_blank')}
-                className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group"
-              >
-                Support
-                <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+                <img src="/pic2.png" alt="Cart" className="w-5 h-5 object-contain" />
+                {cartItemsCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-bold px-1 rounded-full">
+                    {cartItemsCount}
+                  </span>
+                )}
               </button>
               
               {/* Sign In / Sign Out */}
@@ -127,10 +122,9 @@ export const Navbar = () => {
                     supabase.auth.signOut();
                   }
                 }}
-                className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative group"
+                className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative group flex items-center"
               >
                 {user ? 'Sign Out' : 'Sign In'}
-                <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
               </button>
             </div>
 

@@ -165,30 +165,6 @@ export const HomeView = () => {
               Discover the Finest Assets & Supplies.
             </motion.h1>
 
-            <motion.form
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              onSubmit={handleSearch}
-              className="flex w-full bg-white rounded-full p-1.5 shadow-lg border border-gray-200/80 hover:border-gray-300 transition-colors"
-            >
-              <div className="flex items-center pl-4 pr-2 w-full">
-                <Search size={20} className="text-gray-400 mr-3" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search for premium items..."
-                  className="w-full bg-transparent border-none outline-none text-gray-900 placeholder:text-gray-400 font-medium"
-                />
-              </div>
-              <button
-                type="submit"
-                className="bg-[#109121] hover:bg-[#0c6c19] text-white px-6 py-3 rounded-full font-bold transition-colors shadow-md active:scale-95"
-              >
-                Search
-              </button>
-            </motion.form>
           </motion.div>
 
           {/* Right Column - Kept empty to display the luxury house, car, phones, and brand stripes of the collage background */}

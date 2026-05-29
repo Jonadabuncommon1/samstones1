@@ -239,18 +239,18 @@ export const AIChatWidget = () => {
           setIsOpen(prev => !prev);
           setUnreadCount(0);
         }}
-        className="fixed bottom-6 right-4 md:right-6 z-50 w-14 h-14 bg-gradient-to-br from-[#109121] to-[#0a6b18] rounded-full shadow-lg flex items-center justify-center text-white"
-        style={{ boxShadow: '0 4px 24px rgba(16,145,33,0.4)' }}
+        className="fixed bottom-6 right-4 md:right-6 z-50 w-14 h-14 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 border border-gray-100 dark:border-gray-800"
+        style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.1)' }}
         aria-label="Open AI Chat Assistant"
       >
         <AnimatePresence mode="wait">
           {isOpen && !isMinimized ? (
             <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
-              <X size={22} />
+              <X size={22} className="text-gray-600" />
             </motion.div>
           ) : (
             <motion.div key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }}>
-              <MessageCircle size={22} />
+              <img src="/pic4.png" alt="AI Chat" className="w-8 h-8 object-contain" />
             </motion.div>
           )}
         </AnimatePresence>
