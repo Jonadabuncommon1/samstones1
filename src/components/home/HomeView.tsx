@@ -129,7 +129,7 @@ export const HomeView = () => {
 
       <section className="relative pt-24 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div 
-          className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-center rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden border border-[#DFB722]/30 bg-white min-h-[500px] xl:min-h-[550px]"
+          className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-start rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden border border-[#DFB722]/30 bg-white min-h-[500px] xl:min-h-[550px]"
           style={{ 
             backgroundImage: "url('/premium_marketplace.png')", 
             backgroundSize: 'cover', 
@@ -140,12 +140,15 @@ export const HomeView = () => {
           {/* Subtle overlay to enhance contrast slightly if needed */}
           <div className="absolute inset-0 bg-white/10 pointer-events-none z-0" />
 
-          {/* Left Column - Premium Floating Frosted Glass Panel for 100% Legibility */}
+          {/* Left Column - Kept empty to display the luxury products on the left side of the background collage */}
+          <div className="hidden xl:block w-full h-full pointer-events-none" />
+
+          {/* Right Column - Premium Text overlay pushed to the top right to avoid overlap */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="relative z-20 flex flex-col justify-center text-left max-w-xl"
+            className="relative z-20 flex flex-col justify-start text-left max-w-xl xl:ml-auto"
           >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -190,9 +193,6 @@ export const HomeView = () => {
               </button>
             </motion.form>
           </motion.div>
-
-          {/* Right Column - Kept empty to display the luxury house, car, phones, and brand stripes of the collage background */}
-          <div className="hidden xl:block w-full h-full pointer-events-none" />
 
         </div>
       </section>
