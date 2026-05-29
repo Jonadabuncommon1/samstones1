@@ -210,32 +210,7 @@ export const HomeView = () => {
         </motion.div>
       </section>
 
-      <section className="py-8 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div 
-          className="w-full rounded-3xl p-8 md:p-12 border border-[#109121]/30 flex flex-col md:flex-row items-center justify-between shadow-2xl bg-[#109121]"
-          style={{ 
-            backgroundImage: "url('/provisions_banner_bg.png')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        >
-          <div className="mb-6 md:mb-0">
-            <span className="bg-[#109121]/10 text-[#109121] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-4 inline-block border border-[#109121]/30">
-              Limited Offer
-            </span>
-            <h2 className="text-3xl md:text-4xl font-serif font-black text-[#DFB722] mb-2">Curated Essentials. Everyday Convenience</h2>
-            <p className="text-white max-w-md">Quality provisions and lifestyle products for modern living.</p>
-          </div>
-          <button
-            onClick={() => { setCurrentView('category'); window.scrollTo(0, 0); }}
-            className="bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-gray-200 transition-colors flex items-center space-x-2 shrink-0 shadow-lg"
-          >
-            <ShoppingBag size={20} />
-            <span>Shop Now</span>
-          </button>
-        </div>
-      </section>
+
 
       <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
