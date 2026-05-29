@@ -391,17 +391,17 @@ export const HomeView = () => {
           </div>
 
           {/* Right Side (40% width) - Text Content & CTAs (lg:col-span-5) */}
-          <div className="lg:col-span-5 flex flex-col text-left relative z-10 lg:pl-6">
-            <span className="text-[#DFB722] font-serif font-extrabold uppercase tracking-[0.25em] text-xs mb-3 block">
+          <div className="lg:col-span-5 flex flex-col text-left relative z-10 lg:pl-8 bg-black/40 p-6 md:p-8 rounded-3xl backdrop-blur-sm border border-black/20 shadow-2xl">
+            <span className="text-[#DFB722] font-serif font-black uppercase tracking-[0.25em] text-sm mb-3 block drop-shadow-md">
               Core Services
             </span>
-            <h2 className="text-3xl md:text-5xl font-serif font-black text-[#DFB722] mb-6 leading-tight">
+            <h2 className="text-3xl md:text-5xl font-serif font-black text-[#DFB722] mb-6 leading-tight drop-shadow-xl" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.5)' }}>
               Redefining Modern Commerce & Lifestyle.
             </h2>
-            <p className="text-white/80 text-sm md:text-base leading-relaxed mb-6">
+            <p className="text-white font-extrabold text-base md:text-lg leading-relaxed mb-6 drop-shadow-lg" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
               At Samstones International Resources Ltd, we provide premium products and reliable services designed to meet modern lifestyle and everyday needs with quality, elegance, and convenience.
             </p>
-            <p className="text-white/70 text-sm leading-relaxed mb-8">
+            <p className="text-white font-bold text-sm md:text-base leading-relaxed mb-8 drop-shadow-lg" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)' }}>
               We deliver premium fashion, automobiles, beauty products, lifestyle essentials, and real estate solutions with a commitment to quality, trust, and customer satisfaction. Designed for modern living. Delivered with excellence.
             </p>
 
