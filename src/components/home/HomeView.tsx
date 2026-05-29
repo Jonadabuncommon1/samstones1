@@ -242,7 +242,7 @@ export const HomeView = () => {
         <div 
           className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center rounded-[2.5rem] p-8 lg:p-16 shadow-2xl overflow-hidden border border-[#DFB722]/30"
           style={{ 
-            backgroundImage: "url('/core_services_bg.png')",
+            backgroundImage: "url('/footer_bg_new.png')",
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
