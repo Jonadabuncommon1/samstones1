@@ -212,24 +212,6 @@ export const HomeView = () => {
 
 
 
-      <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-8">
-          <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900">
-            Popular <span className="text-[#109121]">Items</span>
-          </h2>
-        </div>
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {trendingProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </motion.div>
-      </section>
 
       {/* Modern Premium "Core Services" Section inspired by Interlink */}
       <motion.section 
