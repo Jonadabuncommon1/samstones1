@@ -28,7 +28,6 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-[#e6f4e8]">Universes</h3>
             <ul className="space-y-4 text-sm font-medium">
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Fashion & Apparel</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Automobiles</a></li>
