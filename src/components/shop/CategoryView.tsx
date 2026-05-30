@@ -111,22 +111,16 @@ export const CategoryView = () => {
           </div>
         ) : activeCategory === 'shoes' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
-            {[
-              '/shoes/slide1.jpg',
-              '/shoes/slide2.jpg',
-              '/shoes/slide3.jpg',
-              '/shoes/slide4.jpg',
-              '/shoes/slide5.jpg'
-            ].map((imgSrc, idx) => (
-              <img
-                key={imgSrc}
-                src={imgSrc}
-                alt={`Shoes slide ${idx + 1}`}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                  currentSlideIndex === idx ? 'opacity-70' : 'opacity-0'
-                }`}
-              />
-            ))}
+            <img
+              src="/cat_shoes_hero.png"
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+            />
+            <img
+              src="/cat_shoes_hero.png"
+              alt="Shoes hero"
+              className="absolute inset-0 w-full h-full object-contain opacity-90"
+            />
           </div>
         ) : activeCategory === 'bags' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
