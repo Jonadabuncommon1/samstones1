@@ -6,7 +6,7 @@ export const Footer = () => {
 
   const handleCategoryClick = (categoryId: string) => {
     setActiveCategory(categoryId);
-    setCurrentView('categories');
+    setCurrentView('category');
     window.scrollTo(0, 0);
   };
 
