@@ -253,6 +253,12 @@ export const PrivacyView = () => {
                   Chat on WhatsApp
                 </a>
               </p>
+              <p className="text-gray-700 flex items-center gap-2">
+                <span>✉️</span>
+                <a href="mailto:info@samstonesresources.com" className="hover:text-[#109121] transition-colors font-semibold">
+                  info@samstonesresources.com
+                </a>
+              </p>
             </div>
           </Section>
 

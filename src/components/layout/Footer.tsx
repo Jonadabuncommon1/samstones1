@@ -44,9 +44,9 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h3 className="font-sans text-xs font-bold tracking-widest uppercase mb-6 text-[#e6f4e8]">Customer Support</h3>
             <ul className="space-y-4 text-sm font-medium">
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">WhatsApp Support</a></li>
+              <li><a href="mailto:info@samstonesresources.com" className="text-white/80 hover:text-white transition-colors">Email Support</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Secure Shipping</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Global Network</a></li>
             </ul>

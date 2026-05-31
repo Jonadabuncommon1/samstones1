@@ -117,7 +117,15 @@ export const AboutView = () => {
     <div className="pt-24 pb-24 min-h-screen bg-white dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100 transition-colors duration-500">
 
       {/* Hero Banner */}
-      <div className="relative h-[60vh] w-full overflow-hidden mb-20 bg-gradient-to-br from-[#0B5C15] via-[#109121] to-[#073D0E] flex flex-col items-center justify-center text-center px-4 shadow-xl">
+      <div 
+        className="relative h-[60vh] w-full overflow-hidden mb-20 flex flex-col items-center justify-center text-center px-4 shadow-xl"
+        style={{
+          backgroundImage: 'url("/about_bg_pattern_v2.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      >
+        <div className="absolute inset-0 bg-[#073d0e]/60 pointer-events-none mix-blend-multiply" />
         {/* Decorative blobs and radial glows */}
         <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full -translate-x-1/3 -translate-y-1/3 pointer-events-none filter blur-2xl" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full translate-x-1/4 translate-y-1/4 pointer-events-none filter blur-3xl" />
@@ -181,9 +189,14 @@ export const AboutView = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="bg-[#e6f4e8] rounded-3xl p-8 border border-[#109121]/10"
+            className="rounded-3xl p-8 border border-[#109121]/10 relative overflow-hidden"
+            style={{
+              backgroundImage: 'url("/about_commitment_bg.png")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
           >
-            <div className="grid grid-cols-2 gap-6 text-center">
+            <div className="relative z-10 grid grid-cols-2 gap-6 text-center">
               {[
                 { value: '10+', label: 'Product Categories' },
                 { value: 'Lagos', label: 'Based In, Nigeria' },
@@ -222,10 +235,10 @@ export const AboutView = () => {
                   key={item.title}
                   variants={itemVariants}
                   onClick={() => setActiveProductIdx(isExpanded ? null : idx)}
-                  className={`rounded-2xl p-5 border transition-all duration-300 select-none ${
+                  className={`border rounded-2xl p-4 md:p-5 cursor-pointer transition-all duration-300 ${
                     isExpanded 
                       ? 'bg-gradient-to-r from-[#e6f4e8] to-[#f4fbf5] dark:from-[#109121]/20 dark:to-[#109121]/5 border-[#109121] shadow-md scale-[1.01]' 
-                      : 'bg-white dark:bg-[#111] border-gray-200 dark:border-gray-800 hover:border-[#109121]/30 hover:shadow-sm'
+                      : 'bg-[#e6f4e8] dark:bg-[#109121]/15 border-[#109121]/30 dark:border-gray-800 hover:border-[#109121]/50 hover:bg-[#d8edd9] dark:hover:bg-[#109121]/25 hover:shadow-sm'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -301,12 +314,19 @@ export const AboutView = () => {
         </section>
 
         {/* Our Commitment */}
-        <section className="bg-[#e6f4e8] rounded-3xl p-8 md:p-12 border border-[#109121]/10">
-          <div className="text-center mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-[#109121] mb-3 block">Our Commitment</span>
+        <section 
+          className="rounded-3xl p-8 md:p-12 border border-[#109121]/10 relative overflow-hidden"
+          style={{
+            backgroundImage: 'url("/about_commitment_bg.png")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        >
+          <div className="relative z-10 text-center mb-8">
+            <span className="text-sm font-black uppercase tracking-widest text-white mb-3 block drop-shadow-md">Our Commitment</span>
             <h2 className="text-3xl font-serif font-bold text-gray-900">What We Stand For</h2>
           </div>
-          <div className="max-w-xl mx-auto space-y-4">
+          <div className="relative z-10 max-w-xl mx-auto space-y-4">
             {commitments.map((item) => (
               <div key={item} className="flex items-start gap-3 bg-white rounded-xl px-5 py-4 shadow-sm">
                 <CheckCircle size={18} className="text-[#109121] mt-0.5 flex-shrink-0" />

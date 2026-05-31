@@ -31,19 +31,19 @@ export const ContactView = () => {
           <h3 className="font-serif text-xl mb-4 text-gray-900">Email</h3>
           <p className="text-gray-600 text-sm mb-6 flex-1">For press, partnerships, and general inquiries.</p>
           <a
-            href="#"
+            href="mailto:info@samstonesresources.com"
             className="uppercase tracking-widest text-xs font-semibold hover:text-[#109121] transition-colors pb-1 border-b border-gray-300 hover:border-[#109121] inline-block text-gray-900"
           >
-            info@samstones.com
+            info@samstonesresources.com
           </a>
         </div>
 
         <div className="border border-gray-200 bg-[#e6f4e8]/50 p-8 flex flex-col items-center hover:border-[#109121] transition-colors rounded-2xl">
           <MapPin className="text-[#109121] mb-6" size={32} />
-          <h3 className="font-serif text-xl mb-4 text-gray-900">Atelier</h3>
-          <p className="text-gray-600 text-sm mb-6 flex-1">Visit our flagship atelier in Lagos for fittings (By Appointment Only).</p>
-          <span className="uppercase tracking-widest text-xs font-semibold text-gray-900">
-            Lagos, Nigeria
+          <h3 className="font-serif text-xl mb-4 text-gray-900">Headquarters</h3>
+          <p className="text-gray-600 text-sm mb-6 flex-1">Visit our Lagos headquarters to explore our exclusive luxury collections and services (By Appointment Only).</p>
+          <span className="text-xs font-semibold text-gray-900 px-2 leading-relaxed">
+            Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State, Nigeria
           </span>
         </div>
       </div>
@@ -107,62 +107,62 @@ export const ContactView = () => {
       </div>
 
       <div className="max-w-4xl mx-auto mb-20 text-left space-y-6">
-        <h2 className="text-3xl font-serif text-gray-900 mb-6 border-b pb-4">ATELIER</h2>
-        <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Samstones Atelier</h3>
+        <h2 className="text-3xl font-serif text-gray-900 mb-6 border-b pb-4">THE SAMSTONES MARKETPLACE</h2>
+        <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">A Premier Luxury Destination</h3>
         <p className="text-gray-600 leading-relaxed">
-          The Samstones Atelier represents the creative and luxury fashion division of Samstones International Resources Ltd, dedicated to style, elegance, quality craftsmanship, and modern fashion excellence.
+          Samstones International Resources Ltd represents the pinnacle of luxury, converging premium fashion, real estate, automotive, and contemporary lifestyle services into one seamless digital marketplace.
         </p>
         <p className="text-gray-600 leading-relaxed">
-          Our atelier focuses on delivering carefully selected and fashion-forward products that reflect sophistication, confidence, and contemporary lifestyle trends.
+          Our headquarters in Lagos serves as the central hub for delivering carefully curated products and services that reflect sophistication, confidence, and modern excellence.
         </p>
         
         <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">What We Offer</h3>
         <p className="text-gray-600 leading-relaxed">
-          The Samstones Atelier specialises in:
+          Our comprehensive marketplace specialises in:
         </p>
         <ul className="list-disc pl-6 text-gray-600 space-y-2">
-          <li>Premium shoes and footwear</li>
-          <li>Luxury bags and fashion accessories</li>
-          <li>Stylish clothing and fashion pieces</li>
-          <li>Jewellery and luxury accessories</li>
-          <li>Beauty and cosmetic products</li>
+          <li>Exclusive real estate properties and consultations</li>
+          <li>Premium automobiles and vehicle procurement</li>
+          <li>Luxury fashion, footwear, and designer accessories</li>
+          <li>Fine jewellery and elegant timepieces</li>
+          <li>High-end beauty, cosmetics, and lifestyle products</li>
         </ul>
         <p className="text-gray-600 leading-relaxed">
-          Each item is selected with attention to quality, durability, comfort, and style to meet the needs of modern fashion-conscious individuals.
+          Each offering is selected with meticulous attention to quality, durability, and style to meet the diverse needs of our discerning clientele.
         </p>
 
-        <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Our Fashion Philosophy</h3>
+        <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Our Philosophy</h3>
         <p className="text-gray-600 leading-relaxed">
-          At Samstones Atelier, we believe fashion is more than appearance — it is a reflection of identity, confidence, creativity, and lifestyle. We are committed to providing products that combine elegance, comfort, and affordability without compromising quality.
+          At Samstones, we believe that true luxury is more than just acquisition — it is a reflection of identity, achievement, and elevated living. We are committed to providing an exceptional portfolio that combines elegance and reliability without ever compromising on quality.
         </p>
 
-        <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Quality & Craftsmanship</h3>
+        <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Quality & Excellence</h3>
         <p className="text-gray-600 leading-relaxed">
-          We place strong emphasis on:
+          We place a strong emphasis on:
         </p>
         <ul className="list-disc pl-6 text-gray-600 space-y-2">
-          <li>Premium quality materials</li>
-          <li>Modern and timeless designs</li>
-          <li>Attention to detail</li>
-          <li>Excellent finishing and presentation</li>
-          <li>Customer satisfaction and comfort</li>
+          <li>Rigorous verification and authentication of all products</li>
+          <li>Modern, timeless, and sophisticated selections</li>
+          <li>Uncompromising attention to detail</li>
+          <li>Transparent and secure transactions</li>
+          <li>Unrivaled customer satisfaction and comfort</li>
         </ul>
 
         <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Our Vision</h3>
         <p className="text-gray-600 leading-relaxed">
-          To establish Samstones Atelier as a recognised fashion and lifestyle brand known for quality, elegance, innovation, and customer satisfaction across Nigeria and beyond.
+          To establish Samstones International Resources Ltd as the most trusted and recognised luxury marketplace for lifestyle, automotive, and real estate excellence across Nigeria and beyond.
         </p>
 
         <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Client Experience</h3>
         <p className="text-gray-600 leading-relaxed">
-          We aim to create a refined and enjoyable shopping experience through:
+          We aim to create a refined, enjoyable, and seamless experience through:
         </p>
         <ul className="list-disc pl-6 text-gray-600 space-y-2">
-          <li>Professional customer service</li>
-          <li>Carefully curated collections</li>
-          <li>Reliable delivery services</li>
-          <li>Personalised customer attention</li>
-          <li>Consistent product quality</li>
+          <li>Dedicated and professional client relations</li>
+          <li>Carefully curated, world-class collections</li>
+          <li>Reliable logistics and delivery services</li>
+          <li>Personalised and confidential customer attention</li>
+          <li>Consistent and dependable quality across all divisions</li>
         </ul>
 
         <h3 className="text-xl font-bold text-gray-900 mt-8 mb-4">Contact Information</h3>
@@ -170,6 +170,7 @@ export const ContactView = () => {
           <p className="font-bold text-gray-900">Samstones International Resources Ltd</p>
           <p>📍 Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State, Nigeria</p>
           <p>📞 Phone/WhatsApp: +234 708 293 0862 / +234 806 517 9554</p>
+          <p>✉️ Email: <a href="mailto:info@samstonesresources.com" className="hover:text-[#109121] transition-colors font-medium">info@samstonesresources.com</a></p>
         </div>
       </div>
     </div>

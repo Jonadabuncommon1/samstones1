@@ -70,7 +70,7 @@ export const CategoriesView = () => {
               <div className="p-6">
                 <p className="text-gray-600 text-sm mb-6 line-clamp-2">{category.description}</p>
                 <div className="uppercase tracking-widest text-xs font-bold text-[#109121] group-hover:text-[#0a5f15] transition-colors flex items-center space-x-2">
-                  <span>Explore Category</span>
+                  <span>Explore Product</span>
                   <span className="transform translate-x-0 group-hover:translate-x-2 transition-transform">&rarr;</span>
                 </div>
               </div>

@@ -5,7 +5,7 @@ import { useAppContext } from '../../store/AppContext';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const Navbar = () => {
-  const { cart, wishlist, setCurrentView, setCartOpen, submitSearch, user } = useAppContext();
+  const { cart, wishlist, currentView, setCurrentView, setCartOpen, submitSearch, user } = useAppContext();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -62,25 +62,25 @@ export const Navbar = () => {
 
           {/* Middle: Links & Search */}
           <div className="hidden lg:flex items-center justify-center flex-1 space-x-5 px-8">
-            <button onClick={() => handleNavClick('home')} className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group">
+            <button onClick={() => handleNavClick('home')} className={`text-[12px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'home' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
               Home
-              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+              <span className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#109121] transition-all duration-300 ${currentView === 'home' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
-            <button onClick={() => handleNavClick('about')} className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group">
+            <button onClick={() => handleNavClick('about')} className={`text-[12px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'about' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
               About
-              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+              <span className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#109121] transition-all duration-300 ${currentView === 'about' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
-            <button onClick={() => handleNavClick('categories')} className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group">
+            <button onClick={() => handleNavClick('categories')} className={`text-[12px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'categories' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
               Product Categories
-              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+              <span className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#109121] transition-all duration-300 ${currentView === 'categories' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
-            <button onClick={() => handleNavClick('wishlist')} className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group">
+            <button onClick={() => handleNavClick('wishlist')} className={`text-[12px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'wishlist' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
               Wishlist {wishlist.length > 0 ? `(${wishlist.length})` : ''}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+              <span className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#109121] transition-all duration-300 ${currentView === 'wishlist' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
-            <button onClick={() => window.open('https://wa.me/2348065179554', '_blank')} className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors relative group">
+            <button onClick={() => handleNavClick('contact')} className={`text-[12px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'contact' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
               Support
-              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#109121] transition-all duration-300 group-hover:w-full"></span>
+              <span className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#109121] transition-all duration-300 ${currentView === 'contact' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
 
             {/* Very small search function */}
@@ -237,8 +237,7 @@ export const Navbar = () => {
                 {/* Support */}
                 <button
                   onClick={() => {
-                    setMobileMenuOpen(false);
-                    window.open('https://wa.me/2348065179554', '_blank');
+                    handleNavClick('contact');
                   }}
                   className="text-left text-[12px] font-sans font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors py-1.5 w-full"
                 >

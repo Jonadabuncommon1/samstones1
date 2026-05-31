@@ -35,14 +35,21 @@ export const CategoryView = () => {
 
   React.useEffect(() => {
     let slidesCount = 0;
-    if (activeCategory === 'clothes') slidesCount = 6;
-    else if (activeCategory === 'shoes') slidesCount = 5;
-    else if (activeCategory === 'bags') slidesCount = 5;
+    if (activeCategory === 'clothes') slidesCount = 7;
+    else if (activeCategory === 'shoes') slidesCount = 8;
+    else if (activeCategory === 'bags') slidesCount = 10;
+    else if (activeCategory === 'jewelries') slidesCount = 11;
+    else if (activeCategory === 'cars') slidesCount = 9;
+    else if (activeCategory === 'phone-accessories') slidesCount = 8;
+    else if (activeCategory === 'drinks') slidesCount = 12;
+    else if (activeCategory === 'cosmetics') slidesCount = 9;
+    else if (activeCategory === 'provisions') slidesCount = 7;
+    else if (activeCategory === 'real-estates') slidesCount = 6;
 
     if (slidesCount > 0) {
       const interval = setInterval(() => {
         setCurrentSlideIndex((prev) => (prev + 1) % slidesCount);
-      }, 3000);
+      }, 5000);
       return () => clearInterval(interval);
     }
   }, [activeCategory]);
@@ -92,53 +99,318 @@ export const CategoryView = () => {
         {activeCategory === 'clothes' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/clothes/slide1.jpg',
-              '/clothes/slide2.jpg',
-              '/clothes/slide3.jpg',
-              '/clothes/slide4.jpg',
-              '/clothes/slide5.jpg',
-              '/clothes/slide6.jpg'
+              '/clothes_banner/475129829461745168.jfif',
+              '/clothes_banner/7036943163674607.jfif',
+              '/clothes_banner/8725793022364305.jfif',
+              '/clothes_banner/8725793022525261.jfif',
+              '/clothes_banner/Boost your clothing brands online presence with….jfif',
+              '/clothes_banner/Neste inverno vão apostar nas possíveis cores….jfif',
+              '/clothes_banner/Showcase stunning women\'s clothing with this sleek….jfif'
             ].map((imgSrc, idx) => (
-              <img
+              <div
                 key={imgSrc}
-                src={imgSrc}
-                alt={`Clothes slide ${idx + 1}`}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                  currentSlideIndex === idx ? 'opacity-70' : 'opacity-0'
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 }`}
-              />
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Clothes slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
             ))}
           </div>
         ) : activeCategory === 'shoes' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
-            <img
-              src="/cat_shoes_hero.png"
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
-            />
-            <img
-              src="/cat_shoes_hero.png"
-              alt="Shoes hero"
-              className="absolute inset-0 w-full h-full object-contain opacity-90"
-            />
+            {[
+              '/shoes_banner/23784704275095894.jfif',
+              '/shoes_banner/269301252720455208.jfif',
+              '/shoes_banner/8725793019860175.jfif',
+              '/shoes_banner/Grenson is a brand with a rich history_ Read more….jfif',
+              '/shoes_banner/Sapato Calçado Sapatos Couro Background.jfif',
+              '/shoes_banner/Thrilled to team up with Symbol Premium on this… (1).jfif',
+              '/shoes_banner/Thrilled to team up with Symbol Premium on this….jfif',
+              '/shoes_banner/shoes,promotion,banner,hand painted shoes,casual….jfif'
+            ].map((imgSrc, idx) => (
+              <div
+                key={imgSrc}
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Shoes slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
+            ))}
           </div>
         ) : activeCategory === 'bags' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/bags/slide1.jpg',
-              '/bags/slide2.jpg',
-              '/bags/slide3.jpg',
-              '/bags/slide4.jpg',
-              '/bags/slide5.jpg'
+              '/bags_banner/#SOLIDO #LeatherSet #LuxuryGift #GenuineLeather….jfif',
+              '/bags_banner/35536284552701188.jfif',
+              '/bags_banner/40673202880283899.jfif',
+              '/bags_banner/4151824649955901.jfif',
+              '/bags_banner/475411304427336233.jfif',
+              '/bags_banner/Because how you carry yourself should look this….jfif',
+              '/bags_banner/Coach purse collection_ credit_ mj_heyzhou.jfif',
+              '/bags_banner/Discover how to choose between a bold orange or a….jfif',
+              '/bags_banner/Luxury Handbags & Jewellery for Women _ USA UK….jfif',
+              '/bags_banner/To be honest, I always tell myself I will be calm….jfif'
             ].map((imgSrc, idx) => (
-              <img
+              <div
                 key={imgSrc}
-                src={imgSrc}
-                alt={`Bags slide ${idx + 1}`}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                  currentSlideIndex === idx ? 'opacity-70' : 'opacity-0'
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
                 }`}
-              />
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Bags slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
+            ))}
+          </div>
+        ) : activeCategory === 'jewelries' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/jewelry_banner/#ads #graphiac #design #designer #rolex #watch….jfif',
+              '/jewelry_banner/10133167906819409.jfif',
+              '/jewelry_banner/342836590411457201.jfif',
+              '/jewelry_banner/7177680652812627.jfif',
+              '/jewelry_banner/Cabochonsforyou - Etsy.jfif',
+              '/jewelry_banner/Check out new work on my @Behance profile_ _Luxury….jfif',
+              '/jewelry_banner/Elegance is not standing out, but being….jfif',
+              '/jewelry_banner/Every jewel tells a story of beauty and grace….jfif',
+              '/jewelry_banner/Explore our bold Men’s Jewelry Collection in rich….jfif',
+              '/jewelry_banner/Luxury watches for women - Explore how their….jfif',
+              '/jewelry_banner/ست پولکی موجود شد ✨♥️  وزن ست ~ 7_690 گرم   طلا ١٨….jfif'
+            ].map((imgSrc, idx) => (
+              <div
+                key={imgSrc}
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Jewelry slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
+            ))}
+          </div>
+        ) : activeCategory === 'cars' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/cars_banner/1085226841442819628.jfif',
+              '/cars_banner/140033869660053313.jfif',
+              '/cars_banner/185562447142309321.jfif',
+              '/cars_banner/330099847704768797.jfif',
+              '/cars_banner/617274692714101964.jfif',
+              '/cars_banner/8725793024795439.jfif',
+              '/cars_banner/G-Class_ A Sparkling declaration of love in….jfif',
+              '/cars_banner/Social media marketing.jfif',
+              '/cars_banner/Toyota C-HR luxury showcase poster.jfif'
+            ].map((imgSrc, idx) => (
+              <div
+                key={imgSrc}
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Cars slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
+            ))}
+          </div>
+        ) : activeCategory === 'phone-accessories' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/phone_accessories_banner/1618549863575624.jfif',
+              '/phone_accessories_banner/637822365989565620.jfif',
+              '/phone_accessories_banner/8SECVANTAGE AUDIO 🎧 _ Hear The Future….jfif',
+              '/phone_accessories_banner/Gadget Guard Black Ice Cornice Curved Edition….jfif',
+              '/phone_accessories_banner/Phone Cases & Phone Cover & Cell Phone Cases….jfif',
+              '/phone_accessories_banner/Planning your next trip_ Discover the best travel….jfif',
+              '/phone_accessories_banner/Upgrade your mobile experience with these….jfif',
+              '/phone_accessories_banner/we buy phones we sale phones  we swap phones.jfif'
+            ].map((imgSrc, idx) => (
+              <div
+                key={imgSrc}
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Phone Accessories slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
+            ))}
+          </div>
+        ) : activeCategory === 'drinks' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/drinks_banner/1057008975022101832.jfif',
+              '/drinks_banner/1090434128553582279.jfif',
+              '/drinks_banner/16 Unique Travel Souvenirs That Will Actually Get….jfif',
+              '/drinks_banner/18507048459343603.jfif',
+              '/drinks_banner/33284484740558832.jfif',
+              '/drinks_banner/386394843039365447.jfif',
+              '/drinks_banner/571394271460425029.jfif',
+              '/drinks_banner/739364463866770394.jfif',
+              '/drinks_banner/940126490982445638.jfif',
+              '/drinks_banner/Most Expensive Whiskey _ दुनिया की सबसे महंगी शराब.jfif',
+              '/drinks_banner/Search Images _ Photos, videos, logos….jfif',
+              '/drinks_banner/The Booze That Came Before.jfif'
+            ].map((imgSrc, idx) => (
+              <div
+                key={imgSrc}
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Drinks slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
+            ))}
+          </div>
+        ) : activeCategory === 'cosmetics' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/cosmetics_banner/#banner #Banner design #Cosmetic banner #product….jfif',
+              '/cosmetics_banner/128141551892472686.jfif',
+              '/cosmetics_banner/16818198597842986.jfif',
+              '/cosmetics_banner/196469602488323973.jfif',
+              '/cosmetics_banner/978829300280184490.jfif',
+              '/cosmetics_banner/Best care of the skin with scented almond oil_.jfif',
+              '/cosmetics_banner/Natural family skincare products_ Available for….jfif',
+              '/cosmetics_banner/The latest report by IMARC Group, titled “Color….jfif',
+              '/cosmetics_banner/….jfif'
+            ].map((imgSrc, idx) => (
+              <div
+                key={imgSrc}
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Cosmetics slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
+            ))}
+          </div>
+        ) : activeCategory === 'provisions' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/provisions_banner/104216178873361808.jfif',
+              '/provisions_banner/111675265755964422.jfif',
+              '/provisions_banner/36521446970895902.jfif',
+              '/provisions_banner/36521446970899870.jfif',
+              '/provisions_banner/683702787222699867.jfif',
+              '/provisions_banner/957296464533939491.jfif',
+              '/provisions_banner/Is your red meat intake harming your health_ Use….jfif'
+            ].map((imgSrc, idx) => (
+              <div
+                key={imgSrc}
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Provisions slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
+            ))}
+          </div>
+        ) : activeCategory === 'real-estates' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/real_estates_banner/140806231468527.jfif',
+              '/real_estates_banner/652810908524685883.jfif',
+              '/real_estates_banner/8022105582125257.jfif',
+              '/real_estates_banner/JASMINE ESTATE A pristine expanse of prime land….jfif',
+              '/real_estates_banner/Seneca Property and Asset Management _ Real estate….jfif',
+              '/real_estates_banner/अब 3BHK घर सिर्फ सपना नहीं, हकीकत है! 🏡 जयपुर के….jfif'
+            ].map((imgSrc, idx) => (
+              <div
+                key={imgSrc}
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Real Estates slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
             ))}
           </div>
         ) : (
@@ -148,24 +420,7 @@ export const CategoryView = () => {
             className="w-full h-full object-cover opacity-60"
           />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-        <div className="absolute inset-0 flex flex-col items-start justify-end text-left px-6 md:px-12 pb-6 md:pb-10">
-          <motion.h1 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-2xl md:text-3xl font-bold text-white tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] mb-1"
-          >
-            {categoryName}
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-[12px] md:text-xs font-semibold text-white/90 tracking-wide drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] max-w-xl"
-          >
-            {categoryData?.description || 'Explore our comprehensive collection of luxury assets.'}
-          </motion.p>
-        </div>
+
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

@@ -16,7 +16,7 @@ Your personality: warm, helpful, enthusiastic about fashion and luxury, professi
 
 Your capabilities:
 - Help customers find products by category, price range, or description
-- Answer questions about the store (Samstones is based in Nigeria, CAC registration number is 1836199, open Monday-Saturday from 8am to 10pm, payments via order through WhatsApp, checkout via WhatsApp chat)
+- Answer questions about the store (Samstones is based in Nigeria. HQ: Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State. Phone: +234 806 517 9554. Email: info@samstonesresources.com. CAC Reg: 1836199, open Mon-Sat 8am-10pm, checkout via WhatsApp)
 - Suggest trending/new arrival products
 - Explain how ordering works (add to cart → checkout on WhatsApp)
 - Give general fashion/style advice
@@ -55,8 +55,9 @@ function findPredefinedAnswer(message: string): string | null {
   }
 
   // 2. Location / address / base
-  if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'lekki')) {
-    return `We are proudly based in **Nigeria**!     
+  if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'lekki', 'headquarters')) {
+    return `We are proudly based in **Nigeria**!
+Our headquarters is located at **Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State, Nigeria** (Visits by appointment only).
 Our luxury physical items (shoes, bags, clothes, cosmetics, etc.) are available for prompt nationwide delivery directly to your doorstep.
 For our luxury investments:
 - 🚗 **Premium Cars** are available in **Lagos**.
@@ -71,9 +72,12 @@ Once you place your order via **Checkout on WhatsApp**, our representative will 
   }
 
   // 4. Contact / phone / whatsapp / number / call
-  if (containsAny('contact', 'phone', 'whatsapp', 'number', 'call you', 'reach you', 'support', 'instagram', 'facebook')) {
+  if (containsAny('contact', 'phone', 'whatsapp', 'number', 'call you', 'reach you', 'support', 'instagram', 'facebook', 'email')) {
     return `You can reach our team instantly by clicking the **Checkout on WhatsApp** button in your Cart! 
-If you have a general inquiry or want to chat with us directly, you can click on the WhatsApp icon on any product page, or send a message to our store number. We are online and happy to assist you! 💬
+If you have a general inquiry or want to chat with us directly, you can click on the WhatsApp icon on any product page, or contact us at:
+- 📱 **Phone/WhatsApp:** +234 806 517 9554
+- ✉️ **Email:** info@samstonesresources.com
+
 Our support is fully active during opening hours: **Monday to Saturday, 8am - 10pm** (CAC Reg No: 1836199).`;
   }
 
