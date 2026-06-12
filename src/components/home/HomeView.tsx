@@ -125,7 +125,15 @@ export const HomeView = () => {
 
   const dynamicCoreServices = React.useMemo(() => {
     return coreServices.map(service => {
-      const categoryProducts = products.filter(p => p.category === service.id);
+      const mkCategory = marketplaceCategories.find(c => c.id === service.id);
+      const targetCategoryName = mkCategory ? mkCategory.name : service.id;
+
+      const categoryProducts = products.filter(p => 
+        p.category === targetCategoryName || 
+        p.category === service.id || 
+        p.category.toLowerCase() === service.id.toLowerCase() ||
+        p.category.toLowerCase() === service.title.toLowerCase()
+      );
       
       categoryProducts.sort((a, b) => {
         const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
