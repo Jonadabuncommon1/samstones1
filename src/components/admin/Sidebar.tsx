@@ -1,5 +1,6 @@
 import React from 'react';
 import { LayoutDashboard, ShoppingBag, FolderTree, Image as ImageIcon, Settings as SettingsIcon, LogOut, X } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useAppContext } from '../../store/AppContext';
 import { AdminView } from './AdminLayout';
 
@@ -21,10 +22,10 @@ export const Sidebar = ({ currentView, onChangeView, closeSidebar }: SidebarProp
   ];
 
   return (
-    <div className="h-full flex flex-col pt-4">
+    <div className="h-full flex flex-col pt-4 bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-gray-100 transition-colors duration-500">
       <div className="px-6 flex justify-between items-center mb-8">
         <h2 className="font-serif text-xl font-bold">Admin Panel</h2>
-        <button onClick={closeSidebar} className="md:hidden text-gray-500 hover:text-black">
+        <button onClick={closeSidebar} className="text-gray-500 dark:text-gray-400 dark:text-white hover:text-black dark:hover:text-white transition-colors">
           <X size={20} />
         </button>
       </div>
@@ -39,8 +40,8 @@ export const Sidebar = ({ currentView, onChangeView, closeSidebar }: SidebarProp
             }}
             className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
               currentView === item.id 
-                ? 'bg-[#e6f4e8] text-[#109121]' 
-                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                ? 'bg-[#e6f4e8] dark:bg-[#109121]/20 text-[#109121]' 
+                : 'text-gray-600 dark:text-gray-400 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
             }`}
           >
             <item.icon size={18} />
@@ -49,10 +50,13 @@ export const Sidebar = ({ currentView, onChangeView, closeSidebar }: SidebarProp
         ))}
       </nav>
 
-      <div className="p-4 border-t">
+      <div className="p-4 border-t border-gray-200 dark:border-white/10">
         <button 
-          onClick={() => logoutAdmin()}
-          className="w-full flex items-center space-x-3 px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+          onClick={() => {
+            logoutAdmin();
+            toast.success('Exited admin panel');
+          }}
+          className="w-full flex items-center space-x-3 px-4 py-3 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
         >
           <LogOut size={18} />
           <span>Exit Admin</span>

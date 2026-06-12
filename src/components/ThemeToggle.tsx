@@ -55,7 +55,7 @@ export const ThemeToggle = () => {
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/50'
                 }`}
               >
-                <opt.icon size={14} className={theme === opt.value ? 'text-[#109121] dark:text-[#16C72E]' : 'text-gray-500'} />
+                <opt.icon size={14} className={theme === opt.value ? 'text-[#109121] dark:text-[#16C72E]' : 'text-gray-500 dark:text-white'} />
                 <span>{opt.label}</span>
               </button>
             ))}

@@ -3,20 +3,24 @@ import { supabase } from '../lib/supabase';
 import { products as seedProducts } from '../data';
 
 export async function fetchProductsFromDB(): Promise<Product[]> {
+  // Always try Supabase first
   try {
-    const { data, error } = await supabase.from('products').select('*');
-    if (error) {
-      console.error('Error fetching products:', error);
-      return [];
-    }
-    if (data && data.length > 0) {
-      return data as Product[];
+    const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
+    if (!error && data) {
+      // Supabase responded successfully — use it (even if empty)
+      // Also sync localStorage with the fresh Supabase data
+      try {
+        localStorage.setItem('samstones_products', JSON.stringify(data));
+      } catch {}
+      if (data.length > 0) return data as Product[];
+    } else if (error) {
+      console.error('Supabase fetch error:', error.message);
     }
   } catch (err) {
     console.error('Supabase fetch failed:', err);
   }
   
-  // Fallback to local storage if supabase isn't configured yet
+  // Fallback to local storage only if Supabase is completely unreachable
   const STORAGE_KEY = 'samstones_products';
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -29,26 +33,63 @@ export async function fetchProductsFromDB(): Promise<Product[]> {
 }
 
 export async function addProductToDB(product: Product): Promise<void> {
-  const dbProduct = { ...product };
-  delete dbProduct.colors;
-  delete dbProduct.sizes;
-
-  const { error } = await supabase.from('products').insert([dbProduct]);
-  if (error) console.error('Error adding product:', error);
+  try {
+    const { error } = await supabase.from('products').insert([product]);
+    if (error) throw error;
+    // Sync localStorage with successful Supabase write
+    try {
+      const raw = localStorage.getItem('samstones_products');
+      const existing = raw ? JSON.parse(raw) : [];
+      localStorage.setItem('samstones_products', JSON.stringify([product, ...existing]));
+    } catch {}
+  } catch (error: any) {
+    console.error('Error adding product to Supabase:', error);
+    // Supabase failed — still save to localStorage as fallback
+    try {
+      const raw = localStorage.getItem('samstones_products');
+      const products = raw ? JSON.parse(raw) : [...seedProducts];
+      localStorage.setItem('samstones_products', JSON.stringify([product, ...products]));
+    } catch (e) {}
+    throw error; // Re-throw so the UI can show the error
+  }
 }
 
 export async function updateProductInDB(id: string, updates: Partial<Product>): Promise<void> {
-  const dbUpdates = { ...updates };
-  delete dbUpdates.colors;
-  delete dbUpdates.sizes;
+  try {
+    const { error } = await supabase.from('products').update(updates).eq('id', id);
+    if (error) throw error;
+  } catch (error) {
+    console.error('Error updating product:', error);
+  }
 
-  const { error } = await supabase.from('products').update(dbUpdates).eq('id', id);
-  if (error) console.error('Error updating product:', error);
+  // LocalStorage Fallback
+  try {
+    const raw = localStorage.getItem('samstones_products');
+    if (raw) {
+      let products = JSON.parse(raw);
+      products = products.map((p: any) => p.id === id ? { ...p, ...updates } : p);
+      localStorage.setItem('samstones_products', JSON.stringify(products));
+    }
+  } catch (e) {}
 }
 
 export async function deleteProductFromDB(id: string): Promise<void> {
-  const { error } = await supabase.from('products').delete().eq('id', id);
-  if (error) console.error('Error deleting product:', error);
+  try {
+    const { error } = await supabase.from('products').delete().eq('id', id);
+    if (error) throw error;
+  } catch (error) {
+    console.error('Error deleting product:', error);
+  }
+
+  // LocalStorage Fallback
+  try {
+    const raw = localStorage.getItem('samstones_products');
+    if (raw) {
+      let products = JSON.parse(raw);
+      products = products.filter((p: any) => p.id !== id);
+      localStorage.setItem('samstones_products', JSON.stringify(products));
+    }
+  } catch (e) {}
 }
 
 export function createProductId(): string {

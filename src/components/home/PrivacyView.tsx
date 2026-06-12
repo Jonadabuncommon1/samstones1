@@ -22,7 +22,7 @@ export const PrivacyView = () => {
         >
           <img
             src="/logo.png.jpg"
-            alt="Samstones International Resources Ltd"
+            alt="Samstones International Resources Limited"
             className="w-56 md:w-72 h-auto mx-auto drop-shadow-2xl rounded-2xl"
           />
         </motion.div>
@@ -59,20 +59,20 @@ export const PrivacyView = () => {
 
         {/* Header */}
         <div className="border-b-2 border-[#109121] pb-8 mb-10">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-3">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-3">
             Privacy Policy
           </h1>
           <p className="text-[#109121] font-semibold text-sm uppercase tracking-widest">
-            Samstones International Resources Ltd
+            Samstones International Resources Limited
           </p>
-          <p className="text-gray-500 text-sm mt-2">Effective Date: 20 May 2026</p>
+          <p className="text-gray-500 dark:text-white text-sm mt-2">Effective Date: 20 May 2026</p>
         </div>
 
         {/* Intro */}
-        <p className="text-gray-600 leading-relaxed mb-4 text-base">
-          Samstones International Resources Ltd ("Company", "We", "Us", or "Our") respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, store, and protect your information when you visit our website, contact us, or purchase products and services from us.
+        <p className="text-gray-600 dark:text-white leading-relaxed mb-4 text-base">
+          Samstones International Resources Limited ("Company", "We", "Us", or "Our") respects your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, store, and protect your information when you visit our website, contact us, or purchase products and services from us.
         </p>
-        <p className="text-gray-600 leading-relaxed mb-10 text-base">
+        <p className="text-gray-600 dark:text-white leading-relaxed mb-10 text-base">
           By using our services, you agree to the terms of this Privacy Policy.
         </p>
 
@@ -80,7 +80,7 @@ export const PrivacyView = () => {
 
           {/* Section 1 */}
           <Section num="1" title="INFORMATION WE COLLECT">
-            <p className="text-gray-600 leading-relaxed mb-4">We may collect the following types of personal information:</p>
+            <p className="text-gray-600 dark:text-white leading-relaxed mb-4">We may collect the following types of personal information:</p>
             <SubSection title="1.1 Personal Identification Information">
               <ul className="list-disc pl-5 space-y-1">
                 <li>Full name</li>
@@ -112,8 +112,8 @@ export const PrivacyView = () => {
 
           {/* Section 2 */}
           <Section num="2" title="HOW WE USE YOUR INFORMATION">
-            <p className="text-gray-600 leading-relaxed mb-3">We use your information for the following purposes:</p>
-            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+            <p className="text-gray-600 dark:text-white leading-relaxed mb-3">We use your information for the following purposes:</p>
+            <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-white">
               <li>Processing and fulfilling orders</li>
               <li>Delivering goods and services</li>
               <li>Providing customer support</li>
@@ -122,18 +122,18 @@ export const PrivacyView = () => {
               <li>Sending order updates and important notifications</li>
               <li>Complying with legal and regulatory obligations</li>
             </ul>
-            <p className="text-gray-600 leading-relaxed mt-4 font-semibold">
+            <p className="text-gray-600 dark:text-white leading-relaxed mt-4 font-semibold">
               We do not sell or rent your personal information to third parties.
             </p>
           </Section>
 
           {/* Section 3 */}
           <Section num="3" title="PAYMENT INFORMATION">
-            <p className="text-gray-600 leading-relaxed mb-3">
-              All payments must be made through authorised accounts belonging to <strong>Samstones International Resources Ltd</strong>.
+            <p className="text-gray-600 dark:text-white leading-relaxed mb-3">
+              All payments must be made through authorised accounts belonging to <strong>Samstones International Resources Limited</strong>.
             </p>
-            <p className="text-gray-600 leading-relaxed mb-2">For security purposes, we may request:</p>
-            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+            <p className="text-gray-600 dark:text-white leading-relaxed mb-2">For security purposes, we may request:</p>
+            <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-white">
               <li>Proof of payment,</li>
               <li>Valid identification, or</li>
               <li>Additional verification for high-value transactions such as vehicles, jewellery, and real estate.</li>
@@ -142,68 +142,68 @@ export const PrivacyView = () => {
 
           {/* Section 4 */}
           <Section num="4" title="SHARING OF INFORMATION">
-            <p className="text-gray-600 leading-relaxed mb-3">We may share your information only where necessary with:</p>
-            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+            <p className="text-gray-600 dark:text-white leading-relaxed mb-3">We may share your information only where necessary with:</p>
+            <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-white">
               <li>Delivery and logistics partners</li>
               <li>Payment service providers</li>
               <li>Legal or regulatory authorities where required by law</li>
               <li>Professional advisers or service providers assisting our business operations</li>
             </ul>
-            <p className="text-gray-600 leading-relaxed mt-4">
+            <p className="text-gray-600 dark:text-white leading-relaxed mt-4">
               All third parties handling customer information are expected to maintain confidentiality and security standards.
             </p>
           </Section>
 
           {/* Section 5 */}
           <Section num="5" title="DATA SECURITY">
-            <p className="text-gray-600 leading-relaxed mb-3">
+            <p className="text-gray-600 dark:text-white leading-relaxed mb-3">
               We implement reasonable administrative, technical, and physical safeguards to protect your personal information against:
             </p>
-            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+            <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-white">
               <li>Unauthorised access,</li>
               <li>Loss,</li>
               <li>Misuse,</li>
               <li>Alteration, or</li>
               <li>Disclosure.</li>
             </ul>
-            <p className="text-gray-600 leading-relaxed mt-4">
+            <p className="text-gray-600 dark:text-white leading-relaxed mt-4">
               However, no method of electronic storage or transmission over the internet is completely secure, and we cannot guarantee absolute security.
             </p>
           </Section>
 
           {/* Section 6 */}
           <Section num="6" title="COOKIES AND WEBSITE ANALYTICS">
-            <p className="text-gray-600 leading-relaxed mb-3">Our website may use cookies and similar technologies to:</p>
-            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+            <p className="text-gray-600 dark:text-white leading-relaxed mb-3">Our website may use cookies and similar technologies to:</p>
+            <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-white">
               <li>Improve website performance,</li>
               <li>Remember user preferences,</li>
               <li>Analyse traffic and usage patterns, and</li>
               <li>Enhance customer experience.</li>
             </ul>
-            <p className="text-gray-600 leading-relaxed mt-4">
+            <p className="text-gray-600 dark:text-white leading-relaxed mt-4">
               You may disable cookies through your browser settings, although some website features may not function properly.
             </p>
           </Section>
 
           {/* Section 7 */}
           <Section num="7" title="CUSTOMER RIGHTS">
-            <p className="text-gray-600 leading-relaxed mb-3">You may have the right to:</p>
-            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+            <p className="text-gray-600 dark:text-white leading-relaxed mb-3">You may have the right to:</p>
+            <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-white">
               <li>Request access to your personal information,</li>
               <li>Correct inaccurate information,</li>
               <li>Request deletion of your data where applicable,</li>
               <li>Withdraw consent to marketing communications, and</li>
               <li>Request clarification regarding how your information is used.</li>
             </ul>
-            <p className="text-gray-600 leading-relaxed mt-4">
+            <p className="text-gray-600 dark:text-white leading-relaxed mt-4">
               Requests may be subject to legal or operational limitations.
             </p>
           </Section>
 
           {/* Section 8 */}
           <Section num="8" title="RETENTION OF INFORMATION">
-            <p className="text-gray-600 leading-relaxed mb-3">We retain customer information only for as long as necessary to:</p>
-            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+            <p className="text-gray-600 dark:text-white leading-relaxed mb-3">We retain customer information only for as long as necessary to:</p>
+            <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-white">
               <li>Fulfil transactions,</li>
               <li>Provide services,</li>
               <li>Resolve disputes,</li>
@@ -214,59 +214,32 @@ export const PrivacyView = () => {
 
           {/* Section 9 */}
           <Section num="9" title="THIRD-PARTY LINKS">
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 dark:text-white leading-relaxed">
               Our website or social media pages may contain links to third-party websites. We are not responsible for the privacy practices, policies, or content of external websites or services.
             </p>
           </Section>
 
           {/* Section 10 */}
           <Section num="10" title="CHILDREN'S PRIVACY">
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 dark:text-white leading-relaxed">
               Our products and services are not intended for individuals under the age of 18 without parental or guardian supervision. We do not knowingly collect personal information from minors unlawfully.
             </p>
           </Section>
 
           {/* Section 11 */}
           <Section num="11" title="CHANGES TO THIS PRIVACY POLICY">
-            <p className="text-gray-600 leading-relaxed">
+            <p className="text-gray-600 dark:text-white leading-relaxed">
               We reserve the right to update or amend this Privacy Policy at any time. Any changes shall become effective immediately upon publication on our website or official platforms.
             </p>
           </Section>
 
-          {/* Contact */}
-          <Section num="12" title="CONTACT INFORMATION">
-            <div className="bg-[#e6f4e8] border border-[#109121]/20 rounded-2xl p-6 space-y-2">
-              <p className="font-bold text-gray-900 text-lg">Samstones International Resources Ltd</p>
-              <p className="text-gray-700 flex items-start gap-2">
-                <span>📍</span>
-                <span>Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State, Nigeria</span>
-              </p>
-              <p className="text-gray-700 flex items-center gap-2">
-                <span>📞</span>
-                <a href="tel:+2347082930862" className="hover:text-[#109121] transition-colors">+234 708 293 0862</a>
-                <span>/</span>
-                <a href="tel:+2348065179554" className="hover:text-[#109121] transition-colors">+234 806 517 9554</a>
-              </p>
-              <p className="text-gray-700 flex items-center gap-2">
-                <span>💬</span>
-                <a href="https://wa.me/2348065179554" target="_blank" rel="noopener noreferrer" className="hover:text-[#109121] transition-colors font-semibold">
-                  Chat on WhatsApp
-                </a>
-              </p>
-              <p className="text-gray-700 flex items-center gap-2">
-                <span>✉️</span>
-                <a href="mailto:info@samstonesresources.com" className="hover:text-[#109121] transition-colors font-semibold">
-                  info@samstonesresources.com
-                </a>
-              </p>
-            </div>
-          </Section>
+
 
         </div>
 
         {/* Footer note */}
-        <div className="mt-16 pt-8 border-t border-gray-200 text-center text-xs text-gray-400">
-          © {new Date().getFullYear()} Samstones International Resources Ltd. All rights reserved.
+        <div className="mt-16 pt-8 border-t border-gray-200 text-center text-xs text-gray-400 dark:text-white">
+          © {new Date().getFullYear()} Samstones International Resources Limited. All rights reserved.
         </div>
       </div>
       </div>
@@ -281,7 +254,7 @@ const Section = ({ num, title, children }: { num: string; title: string; childre
       <span className="flex-shrink-0 w-9 h-9 rounded-full bg-[#109121] text-white text-sm font-bold flex items-center justify-center">
         {num}
       </span>
-      <h2 className="text-xl font-serif font-bold text-gray-900 tracking-tight">{title}</h2>
+      <h2 className="text-xl font-serif font-bold text-gray-900 dark:text-white tracking-tight">{title}</h2>
     </div>
     <div className="space-y-5" style={{ paddingLeft: '3.25rem' }}>
       {children}
@@ -291,7 +264,7 @@ const Section = ({ num, title, children }: { num: string; title: string; childre
 
 const SubSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div>
-    <h3 className="text-sm font-bold text-gray-800 uppercase tracking-wider mb-2">{title}</h3>
-    <div className="text-gray-600 leading-relaxed space-y-2 text-[0.95rem]">{children}</div>
+    <h3 className="text-sm font-bold text-gray-800 dark:text-white uppercase tracking-wider mb-2">{title}</h3>
+    <div className="text-gray-600 dark:text-white leading-relaxed space-y-2 text-[0.95rem]">{children}</div>
   </div>
 );

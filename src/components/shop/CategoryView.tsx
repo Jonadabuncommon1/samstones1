@@ -4,7 +4,7 @@ import { marketplaceCategories } from '../../data';
 import { ProductCard } from './ProductCard';
 import { useAppContext } from '../../store/AppContext';
 import { searchProducts } from '../../utils/searchProducts';
-import { Search, SlidersHorizontal, ChevronDown } from 'lucide-react';
+import { Search, SlidersHorizontal, ChevronDown, ArrowLeft, ChevronRight } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -28,31 +28,51 @@ export const CategoryView = () => {
     submitSearch,
     clearSearch,
     searchProductsGlobally,
+    goBack,
   } = useAppContext();
 
   const [sortMode, setSortMode] = useState<string>('default');
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+  let effectiveCategory = activeCategory;
+  if (searchSubmitted && searchQuery.trim().length > 0 && !activeCategory) {
+    const q = searchQuery.toLowerCase().trim();
+    if (q.includes('cloth') || q.includes('suit') || q.includes('senator')) effectiveCategory = 'clothes';
+    else if (q.includes('shoe') || q.includes('sneaker')) effectiveCategory = 'shoes';
+    else if (q.includes('bag') || q.includes('clutch')) effectiveCategory = 'bags';
+    else if (q.includes('jewel') || q.includes('ring') || q.includes('neck')) effectiveCategory = 'jewelries';
+    else if (q.includes('car') || q.includes('benz') || q.includes('lexus')) effectiveCategory = 'cars';
+    else if (q.includes('phone') || q.includes('airpod') || q.includes('accessor')) effectiveCategory = 'phone-accessories';
+    else if (q.includes('drink') || q.includes('wine') || q.includes('champagne')) effectiveCategory = 'drinks';
+    else if (q.includes('cosmetic') || q.includes('perfume') || q.includes('cologne')) effectiveCategory = 'cosmetics';
+    else if (q.includes('provision') || q.includes('rice') || q.includes('food')) effectiveCategory = 'provisions';
+    else if (q.includes('real') || q.includes('estate') || q.includes('land') || q.includes('house')) effectiveCategory = 'real-estates';
+  }
 
   React.useEffect(() => {
     let slidesCount = 0;
-    if (activeCategory === 'clothes') slidesCount = 7;
-    else if (activeCategory === 'shoes') slidesCount = 8;
-    else if (activeCategory === 'bags') slidesCount = 10;
-    else if (activeCategory === 'jewelries') slidesCount = 11;
-    else if (activeCategory === 'cars') slidesCount = 9;
-    else if (activeCategory === 'phone-accessories') slidesCount = 8;
-    else if (activeCategory === 'drinks') slidesCount = 12;
-    else if (activeCategory === 'cosmetics') slidesCount = 9;
-    else if (activeCategory === 'provisions') slidesCount = 7;
-    else if (activeCategory === 'real-estates') slidesCount = 6;
+    let delay = 5000;
+    if (effectiveCategory === 'clothes') slidesCount = 7;
+    else if (effectiveCategory === 'trending') { slidesCount = 3; delay = 7000; }
+    else if (effectiveCategory === 'shoes') slidesCount = 8;
+    else if (effectiveCategory === 'bags') slidesCount = 10;
+    else if (effectiveCategory === 'jewelries') slidesCount = 11;
+    else if (effectiveCategory === 'cars') slidesCount = 9;
+    else if (effectiveCategory === 'phone-accessories') slidesCount = 8;
+    else if (effectiveCategory === 'drinks') slidesCount = 12;
+    else if (effectiveCategory === 'cosmetics') slidesCount = 9;
+    else if (effectiveCategory === 'provisions') slidesCount = 7;
+    else if (effectiveCategory === 'real-estates') slidesCount = 6;
 
     if (slidesCount > 0) {
       const interval = setInterval(() => {
         setCurrentSlideIndex((prev) => (prev + 1) % slidesCount);
-      }, 5000);
+      }, delay);
       return () => clearInterval(interval);
     }
-  }, [activeCategory]);
+  }, [effectiveCategory]);
 
   const categoryData = marketplaceCategories.find(
     c => c.id === activeCategory || c.name === activeCategory
@@ -96,16 +116,16 @@ export const CategoryView = () => {
        
       {/* Category Hero */}
       <div className="relative h-[40vh] md:h-[50vh] w-full mb-12 border-b border-white/5">
-        {activeCategory === 'clothes' ? (
+        {effectiveCategory === 'clothes' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/clothes_banner/475129829461745168.jfif',
-              '/clothes_banner/7036943163674607.jfif',
-              '/clothes_banner/8725793022364305.jfif',
-              '/clothes_banner/8725793022525261.jfif',
-              '/clothes_banner/Boost your clothing brands online presence with….jfif',
-              '/clothes_banner/Neste inverno vão apostar nas possíveis cores….jfif',
-              '/clothes_banner/Showcase stunning women\'s clothing with this sleek….jfif'
+              '/clothes_banner/clothes_banner_img_1.jfif',
+              '/clothes_banner/clothes_banner_img_2.jfif',
+              '/clothes_banner/clothes_banner_img_3.jfif',
+              '/clothes_banner/clothes_banner_img_4.jfif',
+              '/clothes_banner/clothes_banner_img_5.jfif',
+              '/clothes_banner/clothes_banner_img_6.jfif',
+              '/clothes_banner/clothes_banner_img_7.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -126,17 +146,17 @@ export const CategoryView = () => {
               </div>
             ))}
           </div>
-        ) : activeCategory === 'shoes' ? (
+        ) : effectiveCategory === 'shoes' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/shoes_banner/23784704275095894.jfif',
-              '/shoes_banner/269301252720455208.jfif',
-              '/shoes_banner/8725793019860175.jfif',
-              '/shoes_banner/Grenson is a brand with a rich history_ Read more….jfif',
-              '/shoes_banner/Sapato Calçado Sapatos Couro Background.jfif',
-              '/shoes_banner/Thrilled to team up with Symbol Premium on this… (1).jfif',
-              '/shoes_banner/Thrilled to team up with Symbol Premium on this….jfif',
-              '/shoes_banner/shoes,promotion,banner,hand painted shoes,casual….jfif'
+              '/shoes_banner/shoes_banner_img_1.jfif',
+              '/shoes_banner/shoes_banner_img_2.jfif',
+              '/shoes_banner/shoes_banner_img_3.jfif',
+              '/shoes_banner/shoes_banner_img_4.jfif',
+              '/shoes_banner/shoes_banner_img_5.jfif',
+              '/shoes_banner/shoes_banner_img_6.jfif',
+              '/shoes_banner/shoes_banner_img_7.jfif',
+              '/shoes_banner/shoes_banner_img_8.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -157,19 +177,19 @@ export const CategoryView = () => {
               </div>
             ))}
           </div>
-        ) : activeCategory === 'bags' ? (
+        ) : effectiveCategory === 'bags' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/bags_banner/#SOLIDO #LeatherSet #LuxuryGift #GenuineLeather….jfif',
-              '/bags_banner/35536284552701188.jfif',
-              '/bags_banner/40673202880283899.jfif',
-              '/bags_banner/4151824649955901.jfif',
-              '/bags_banner/475411304427336233.jfif',
-              '/bags_banner/Because how you carry yourself should look this….jfif',
-              '/bags_banner/Coach purse collection_ credit_ mj_heyzhou.jfif',
-              '/bags_banner/Discover how to choose between a bold orange or a….jfif',
-              '/bags_banner/Luxury Handbags & Jewellery for Women _ USA UK….jfif',
-              '/bags_banner/To be honest, I always tell myself I will be calm….jfif'
+              '/bags_banner/bags_banner_img_1.jfif',
+              '/bags_banner/bags_banner_img_2.jfif',
+              '/bags_banner/bags_banner_img_3.jfif',
+              '/bags_banner/bags_banner_img_4.jfif',
+              '/bags_banner/bags_banner_img_5.jfif',
+              '/bags_banner/bags_banner_img_6.jfif',
+              '/bags_banner/bags_banner_img_7.jfif',
+              '/bags_banner/bags_banner_img_8.jfif',
+              '/bags_banner/bags_banner_img_9.jfif',
+              '/bags_banner/bags_banner_img_10.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -190,20 +210,20 @@ export const CategoryView = () => {
               </div>
             ))}
           </div>
-        ) : activeCategory === 'jewelries' ? (
+        ) : effectiveCategory === 'jewelries' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/jewelry_banner/#ads #graphiac #design #designer #rolex #watch….jfif',
-              '/jewelry_banner/10133167906819409.jfif',
-              '/jewelry_banner/342836590411457201.jfif',
-              '/jewelry_banner/7177680652812627.jfif',
-              '/jewelry_banner/Cabochonsforyou - Etsy.jfif',
-              '/jewelry_banner/Check out new work on my @Behance profile_ _Luxury….jfif',
-              '/jewelry_banner/Elegance is not standing out, but being….jfif',
-              '/jewelry_banner/Every jewel tells a story of beauty and grace….jfif',
-              '/jewelry_banner/Explore our bold Men’s Jewelry Collection in rich….jfif',
-              '/jewelry_banner/Luxury watches for women - Explore how their….jfif',
-              '/jewelry_banner/ست پولکی موجود شد ✨♥️  وزن ست ~ 7_690 گرم   طلا ١٨….jfif'
+              '/jewelry_banner/jewelry_banner_img_1.jfif',
+              '/jewelry_banner/jewelry_banner_img_2.jfif',
+              '/jewelry_banner/jewelry_banner_img_3.jfif',
+              '/jewelry_banner/jewelry_banner_img_4.jfif',
+              '/jewelry_banner/jewelry_banner_img_5.jfif',
+              '/jewelry_banner/jewelry_banner_img_6.jfif',
+              '/jewelry_banner/jewelry_banner_img_7.jfif',
+              '/jewelry_banner/jewelry_banner_img_8.jfif',
+              '/jewelry_banner/jewelry_banner_img_9.jfif',
+              '/jewelry_banner/jewelry_banner_img_10.jfif',
+              '/jewelry_banner/jewelry_banner_img_11.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -224,18 +244,18 @@ export const CategoryView = () => {
               </div>
             ))}
           </div>
-        ) : activeCategory === 'cars' ? (
+        ) : effectiveCategory === 'cars' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/cars_banner/1085226841442819628.jfif',
-              '/cars_banner/140033869660053313.jfif',
-              '/cars_banner/185562447142309321.jfif',
-              '/cars_banner/330099847704768797.jfif',
-              '/cars_banner/617274692714101964.jfif',
-              '/cars_banner/8725793024795439.jfif',
-              '/cars_banner/G-Class_ A Sparkling declaration of love in….jfif',
-              '/cars_banner/Social media marketing.jfif',
-              '/cars_banner/Toyota C-HR luxury showcase poster.jfif'
+              '/cars_banner/cars_banner_img_1.jfif',
+              '/cars_banner/cars_banner_img_2.jfif',
+              '/cars_banner/cars_banner_img_3.jfif',
+              '/cars_banner/cars_banner_img_4.jfif',
+              '/cars_banner/cars_banner_img_5.jfif',
+              '/cars_banner/cars_banner_img_6.jfif',
+              '/cars_banner/cars_banner_img_7.jfif',
+              '/cars_banner/cars_banner_img_8.jfif',
+              '/cars_banner/cars_banner_img_9.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -256,17 +276,17 @@ export const CategoryView = () => {
               </div>
             ))}
           </div>
-        ) : activeCategory === 'phone-accessories' ? (
+        ) : effectiveCategory === 'phone-accessories' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/phone_accessories_banner/1618549863575624.jfif',
-              '/phone_accessories_banner/637822365989565620.jfif',
-              '/phone_accessories_banner/8SECVANTAGE AUDIO 🎧 _ Hear The Future….jfif',
-              '/phone_accessories_banner/Gadget Guard Black Ice Cornice Curved Edition….jfif',
-              '/phone_accessories_banner/Phone Cases & Phone Cover & Cell Phone Cases….jfif',
-              '/phone_accessories_banner/Planning your next trip_ Discover the best travel….jfif',
-              '/phone_accessories_banner/Upgrade your mobile experience with these….jfif',
-              '/phone_accessories_banner/we buy phones we sale phones  we swap phones.jfif'
+              '/phone_accessories_banner/phone_accessories_banner_img_1.jfif',
+              '/phone_accessories_banner/phone_accessories_banner_img_2.jfif',
+              '/phone_accessories_banner/phone_accessories_banner_img_3.jfif',
+              '/phone_accessories_banner/phone_accessories_banner_img_4.jfif',
+              '/phone_accessories_banner/phone_accessories_banner_img_5.jfif',
+              '/phone_accessories_banner/phone_accessories_banner_img_6.jfif',
+              '/phone_accessories_banner/phone_accessories_banner_img_7.jfif',
+              '/phone_accessories_banner/phone_accessories_banner_img_8.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -287,21 +307,21 @@ export const CategoryView = () => {
               </div>
             ))}
           </div>
-        ) : activeCategory === 'drinks' ? (
+        ) : effectiveCategory === 'drinks' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/drinks_banner/1057008975022101832.jfif',
-              '/drinks_banner/1090434128553582279.jfif',
-              '/drinks_banner/16 Unique Travel Souvenirs That Will Actually Get….jfif',
-              '/drinks_banner/18507048459343603.jfif',
-              '/drinks_banner/33284484740558832.jfif',
-              '/drinks_banner/386394843039365447.jfif',
-              '/drinks_banner/571394271460425029.jfif',
-              '/drinks_banner/739364463866770394.jfif',
-              '/drinks_banner/940126490982445638.jfif',
-              '/drinks_banner/Most Expensive Whiskey _ दुनिया की सबसे महंगी शराब.jfif',
-              '/drinks_banner/Search Images _ Photos, videos, logos….jfif',
-              '/drinks_banner/The Booze That Came Before.jfif'
+              '/drinks_banner/drinks_banner_img_1.jfif',
+              '/drinks_banner/drinks_banner_img_2.jfif',
+              '/drinks_banner/drinks_banner_img_3.jfif',
+              '/drinks_banner/drinks_banner_img_4.jfif',
+              '/drinks_banner/drinks_banner_img_5.jfif',
+              '/drinks_banner/drinks_banner_img_6.jfif',
+              '/drinks_banner/drinks_banner_img_7.jfif',
+              '/drinks_banner/drinks_banner_img_8.jfif',
+              '/drinks_banner/drinks_banner_img_9.jfif',
+              '/drinks_banner/drinks_banner_img_10.jfif',
+              '/drinks_banner/drinks_banner_img_11.jfif',
+              '/drinks_banner/drinks_banner_img_12.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -322,18 +342,18 @@ export const CategoryView = () => {
               </div>
             ))}
           </div>
-        ) : activeCategory === 'cosmetics' ? (
+        ) : effectiveCategory === 'cosmetics' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/cosmetics_banner/#banner #Banner design #Cosmetic banner #product….jfif',
-              '/cosmetics_banner/128141551892472686.jfif',
-              '/cosmetics_banner/16818198597842986.jfif',
-              '/cosmetics_banner/196469602488323973.jfif',
-              '/cosmetics_banner/978829300280184490.jfif',
-              '/cosmetics_banner/Best care of the skin with scented almond oil_.jfif',
-              '/cosmetics_banner/Natural family skincare products_ Available for….jfif',
-              '/cosmetics_banner/The latest report by IMARC Group, titled “Color….jfif',
-              '/cosmetics_banner/….jfif'
+              '/cosmetics_banner/cosmetics_banner_img_1.jfif',
+              '/cosmetics_banner/cosmetics_banner_img_2',
+              '/cosmetics_banner/cosmetics_banner_img_3.jfif',
+              '/cosmetics_banner/cosmetics_banner_img_4.jfif',
+              '/cosmetics_banner/cosmetics_banner_img_5.jfif',
+              '/cosmetics_banner/cosmetics_banner_img_6.jfif',
+              '/cosmetics_banner/cosmetics_banner_img_7.jfif',
+              '/cosmetics_banner/cosmetics_banner_img_8.jfif',
+              '/cosmetics_banner/cosmetics_banner_img_9.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -354,16 +374,16 @@ export const CategoryView = () => {
               </div>
             ))}
           </div>
-        ) : activeCategory === 'provisions' ? (
+        ) : effectiveCategory === 'provisions' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/provisions_banner/104216178873361808.jfif',
-              '/provisions_banner/111675265755964422.jfif',
-              '/provisions_banner/36521446970895902.jfif',
-              '/provisions_banner/36521446970899870.jfif',
-              '/provisions_banner/683702787222699867.jfif',
-              '/provisions_banner/957296464533939491.jfif',
-              '/provisions_banner/Is your red meat intake harming your health_ Use….jfif'
+              '/provisions_banner/provisions_banner_img_1.jfif',
+              '/provisions_banner/provisions_banner_img_2.jfif',
+              '/provisions_banner/provisions_banner_img_3.jfif',
+              '/provisions_banner/provisions_banner_img_4.jfif',
+              '/provisions_banner/provisions_banner_img_5.jfif',
+              '/provisions_banner/provisions_banner_img_6.jfif',
+              '/provisions_banner/provisions_banner_img_7.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -384,15 +404,15 @@ export const CategoryView = () => {
               </div>
             ))}
           </div>
-        ) : activeCategory === 'real-estates' ? (
+        ) : effectiveCategory === 'real-estates' ? (
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
             {[
-              '/real_estates_banner/140806231468527.jfif',
-              '/real_estates_banner/652810908524685883.jfif',
-              '/real_estates_banner/8022105582125257.jfif',
-              '/real_estates_banner/JASMINE ESTATE A pristine expanse of prime land….jfif',
-              '/real_estates_banner/Seneca Property and Asset Management _ Real estate….jfif',
-              '/real_estates_banner/अब 3BHK घर सिर्फ सपना नहीं, हकीकत है! 🏡 जयपुर के….jfif'
+              '/real_estates_banner/real_estates_banner_img_1.jfif',
+              '/real_estates_banner/real_estates_banner_img_2.jfif',
+              '/real_estates_banner/real_estates_banner_img_3.jfif',
+              '/real_estates_banner/real_estates_banner_img_4.jfif',
+              '/real_estates_banner/real_estates_banner_img_5.jfif',
+              '/real_estates_banner/real_estates_banner_img_6.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -413,12 +433,45 @@ export const CategoryView = () => {
               </div>
             ))}
           </div>
+        ) : effectiveCategory === 'trending' ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
+            {[
+              '/banner1.png',
+              '/banner2.png',
+              '/banner3.png'
+            ].map((imgSrc, idx) => (
+              <div
+                key={imgSrc}
+                className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ${
+                  currentSlideIndex === idx ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                }`}
+              >
+                <img
+                  src={imgSrc}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 blur-xl scale-110"
+                />
+                <img
+                  src={imgSrc}
+                  alt={`Trending slide ${idx + 1}`}
+                  className="absolute inset-0 w-full h-full object-contain opacity-90"
+                />
+              </div>
+            ))}
+          </div>
         ) : (
-          <img 
-            src={categoryData?.image || 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=2000'} 
-            alt={categoryName}
-            className="w-full h-full object-cover opacity-60"
-          />
+          <>
+            <img 
+              src={categoryData?.image || '/cart_laptop.jpg'} 
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover opacity-30 blur-xl scale-110"
+            />
+            <img 
+              src={categoryData?.image || '/cart_laptop.jpg'} 
+              alt={categoryName}
+              className="absolute inset-0 w-full h-full object-contain opacity-100"
+            />
+          </>
         )}
 
       </div>
@@ -426,13 +479,25 @@ export const CategoryView = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Breadcrumb & Navigation */}
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 pb-4">
-          <div className="flex space-x-2 text-xs uppercase tracking-widest font-semibold text-gray-500">
-            <button onClick={() => setCurrentView('home')} className="hover:text-[#109121] transition-colors">Home</button>
-            <span>/</span>
-            <button onClick={() => { setActiveCategory(null); setCurrentView('categories'); }} className="hover:text-[#109121] transition-colors">Explore</button>
-            <span>/</span>
-            <span className="text-[#109121] font-bold">{categoryName}</span>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 pb-4 border-b border-gray-100 dark:border-gray-800/80 w-full">
+          <div className="flex items-center justify-between w-full md:w-auto md:flex-1 mr-4">
+            <div className="flex items-center space-x-2 text-xs uppercase tracking-widest font-semibold text-gray-500 dark:text-white">
+              <button onClick={() => setCurrentView('home')} className="hover:text-[#109121] transition-colors">Home</button>
+              <ChevronRight size={10} />
+              <button onClick={() => { setActiveCategory(null); setCurrentView('categories'); }} className="hover:text-[#109121] transition-colors">Explore</button>
+              <ChevronRight size={10} />
+              <span className="text-[#109121] font-bold">{categoryName}</span>
+            </div>
+            <button 
+              onClick={() => {
+                goBack();
+                window.scrollTo(0, 0);
+              }} 
+              className="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-white hover:text-[#109121] transition-colors mr-4 md:mr-0"
+            >
+              <ArrowLeft size={14} />
+              <span>Back</span>
+            </button>
           </div>
 
           <div className="flex items-center w-full md:w-auto space-x-4">
@@ -445,40 +510,46 @@ export const CategoryView = () => {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') submitSearch(searchQuery);
                 }}
-                className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#109121] rounded-xl shadow-none placeholder-gray-400 transition-colors"
+                className="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#109121] rounded-xl shadow-none placeholder-gray-400 dark:placeholder-gray-500 transition-colors"
               />
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
             </div>
             
-            <div className="relative group">
-              <button className="flex items-center justify-between space-x-2 px-4 py-2 rounded-xl text-sm uppercase tracking-widest font-semibold text-gray-600 hover:text-[#109121] border border-gray-200 bg-white hover:border-[#109121] transition-colors h-full">
+            <div className="relative">
+              <button 
+                onClick={() => setIsSortOpen(!isSortOpen)}
+                className="flex items-center justify-between space-x-2 px-4 py-2 rounded-xl text-sm uppercase tracking-widest font-semibold text-gray-600 dark:text-white hover:text-[#109121] border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1a1a1a] hover:border-[#109121] transition-colors h-full">
                 <span>{sortMode === 'default' ? 'Sort' : sortMode === 'price-asc' ? 'Low to High' : sortMode === 'price-desc' ? 'High to Low' : sortMode === 'popularity' ? 'Popularity' : 'New Arrivals'}</span>
-                <ChevronDown size={14} />
+                <ChevronDown size={14} className={`transition-transform duration-200 ${isSortOpen ? 'rotate-180' : ''}`} />
               </button>
-              <div className="glass-card absolute right-0 top-full mt-2 w-48 rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-20 overflow-hidden border border-white/10 shadow-none">
-                <button onClick={() => setSortMode('default')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] ${sortMode === 'default' ? 'font-bold text-[#109121]' : 'text-gray-600'}`}>Default</button>
+              
+              {/* Dropdown Menu */}
+              <div className={`glass-card absolute right-0 top-full mt-2 w-48 rounded-xl transition-all z-50 overflow-hidden border border-white/10 shadow-lg dark:bg-[#1a1a1a] ${isSortOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-2'}`}>
+                <button onClick={() => { setSortMode('default'); setIsSortOpen(false); }} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] dark:hover:bg-[#109121]/20 ${sortMode === 'default' ? 'font-bold text-[#109121]' : 'text-gray-600 dark:text-white'}`}>Default</button>
                 <div className="h-px w-full bg-white/5" />
-                <button onClick={() => setSortMode('price-asc')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] ${sortMode === 'price-asc' ? 'font-bold text-[#109121]' : 'text-gray-600'}`}>Price: Low to High</button>
+                <button onClick={() => { setSortMode('price-asc'); setIsSortOpen(false); }} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] dark:hover:bg-[#109121]/20 ${sortMode === 'price-asc' ? 'font-bold text-[#109121]' : 'text-gray-600 dark:text-white'}`}>Price: Low to High</button>
                 <div className="h-px w-full bg-white/5" />
-                <button onClick={() => setSortMode('price-desc')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] ${sortMode === 'price-desc' ? 'font-bold text-[#109121]' : 'text-gray-600'}`}>Price: High to Low</button>
+                <button onClick={() => { setSortMode('price-desc'); setIsSortOpen(false); }} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] dark:hover:bg-[#109121]/20 ${sortMode === 'price-desc' ? 'font-bold text-[#109121]' : 'text-gray-600 dark:text-white'}`}>Price: High to Low</button>
                 <div className="h-px w-full bg-white/5" />
-                <button onClick={() => setSortMode('popularity')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] ${sortMode === 'popularity' ? 'font-bold text-[#109121]' : 'text-gray-600'}`}>Popularity</button>
+                <button onClick={() => { setSortMode('popularity'); setIsSortOpen(false); }} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] dark:hover:bg-[#109121]/20 ${sortMode === 'popularity' ? 'font-bold text-[#109121]' : 'text-gray-600 dark:text-white'}`}>Popularity</button>
                 <div className="h-px w-full bg-white/5" />
-                <button onClick={() => setSortMode('new')} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] ${sortMode === 'new' ? 'font-bold text-[#109121]' : 'text-gray-600'}`}>New Arrivals</button>
+                <button onClick={() => { setSortMode('new'); setIsSortOpen(false); }} className={`block w-full text-left px-4 py-3 text-sm hover:bg-[#e6f4e8] dark:hover:bg-[#109121]/20 ${sortMode === 'new' ? 'font-bold text-[#109121]' : 'text-gray-600 dark:text-white'}`}>New Arrivals</button>
               </div>
             </div>
             
-            <button className="glass flex items-center space-x-2 p-2 bg-white/5 border border-white/10 rounded-xl hover:border-[#109121] transition-colors md:hidden shadow-none">
-              <SlidersHorizontal size={18} className="text-gray-300" />
+            <button 
+              onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+              className="flex items-center space-x-2 p-2 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-800 rounded-xl hover:border-[#109121] transition-colors md:hidden shadow-sm">
+              <SlidersHorizontal size={18} className="text-gray-600 dark:text-white hover:text-[#109121]" />
             </button>
           </div>
         </div>
 
-        {/* Filters Sidebar (Desktop) and Main Content */}
+        {/* Filters Sidebar and Main Content */}
         <div className="flex flex-col md:flex-row gap-8 mt-8">
           {/* Filters */}
-          <div className="hidden md:block w-64 flex-shrink-0">
-            <h3 className="font-serif text-2xl font-bold mb-6 text-gray-900">Shop Categories</h3>
+          <div className={`${isMobileFilterOpen ? 'block' : 'hidden'} md:block w-full md:w-64 flex-shrink-0 mb-6 md:mb-0`}>
+            <h3 className="font-serif text-2xl font-bold mb-6 text-gray-900 dark:text-white">Shop Categories</h3>
             
             <div className="space-y-8 p-6 rounded-2xl border border-gray-200 bg-[#e6f4e8]/50 shadow-none">
               <div>
@@ -486,7 +557,7 @@ export const CategoryView = () => {
                   <li>
                     <button 
                       onClick={() => setActiveCategory('trending')}
-                      className={`text-sm tracking-wide transition-colors ${activeCategory === 'trending' ? 'text-[#109121] font-bold' : 'text-gray-400 hover:text-[#109121]'}`}
+                      className={`text-sm tracking-wide transition-colors ${activeCategory === 'trending' ? 'text-[#109121] font-bold' : 'text-gray-400 dark:text-white hover:text-[#109121]'}`}
                     >
                       Trending
                     </button>
@@ -495,7 +566,7 @@ export const CategoryView = () => {
                     <li key={cat.id}>
                       <button 
                         onClick={() => setActiveCategory(cat.id)}
-                        className={`text-sm tracking-wide transition-colors ${activeCategory === cat.id ? 'text-[#109121] font-bold' : 'text-gray-400 hover:text-[#109121]'}`}
+                        className={`text-sm tracking-wide transition-colors ${activeCategory === cat.id ? 'text-[#109121] font-bold' : 'text-gray-400 dark:text-white hover:text-[#109121]'}`}
                       >
                         {cat.name}
                       </button>
@@ -524,8 +595,8 @@ export const CategoryView = () => {
               <div className="text-center py-32 rounded-3xl border border-gray-200 bg-[#e6f4e8]/40 shadow-none px-6">
                 {searchQuery.trim() ? (
                   <>
-                    <h3 className="text-2xl font-serif text-gray-900 mb-2">Not available at this moment</h3>
-                    <p className="text-gray-600 font-medium max-w-md mx-auto">
+                    <h3 className="text-2xl font-serif text-gray-900 dark:text-white mb-2">Not available at this moment</h3>
+                    <p className="text-gray-600 dark:text-white font-medium max-w-md mx-auto">
                       We could not find &ldquo;{searchQuery}&rdquo; in our catalog right now. Try another search or browse categories.
                     </p>
                     <button
@@ -541,8 +612,8 @@ export const CategoryView = () => {
                   </>
                 ) : (
                   <>
-                    <h3 className="text-2xl font-serif text-gray-900 mb-2">No selections found.</h3>
-                    <p className="text-gray-400 font-medium">Try adjusting your filters.</p>
+                    <h3 className="text-2xl font-serif text-gray-900 dark:text-white mb-2">No selections found.</h3>
+                    <p className="text-gray-400 dark:text-white font-medium">Try adjusting your filters.</p>
                   </>
                 )}
               </div>

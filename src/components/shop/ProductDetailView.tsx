@@ -5,7 +5,7 @@ import { formatPrice } from '../../data';
 import { Heart, ChevronRight, MessageCircle, Star, ShoppingBag, ShieldCheck, Truck, Minus, Plus, ArrowLeft } from 'lucide-react';
 
 export const ProductDetailView = () => {
-  const { activeProductId, setCurrentView, addToCart, wishlist, toggleWishlist, getProductById } = useAppContext();
+  const { activeProductId, setCurrentView, goBack, addToCart, wishlist, toggleWishlist, getProductById, user } = useAppContext();
   const product = activeProductId ? getProductById(activeProductId) : undefined;
 
   const [selectedImage, setSelectedImage] = useState(0);
@@ -25,7 +25,7 @@ export const ProductDetailView = () => {
 
   if (!product) {
     return (
-      <div className="pt-32 pb-24 text-center min-h-[60vh] flex flex-col justify-center items-center bg-white text-gray-900 transition-colors duration-500">
+      <div className="pt-32 pb-24 text-center min-h-[60vh] flex flex-col justify-center items-center bg-white text-gray-900 dark:text-white transition-colors duration-500">
         <h2 className="text-2xl font-serif mb-4">Product Not Found</h2>
         <button 
           onClick={() => setCurrentView('category')}
@@ -49,13 +49,20 @@ export const ProductDetailView = () => {
   };
 
   const handleDirectWhatsApp = () => {
-    let message = `Hello, I want to order this product from the shop:\n\n`;
-    message += `*Product Name*: ${product.name}\n`;
-    if (selectedSize) message += `*Size*: ${selectedSize}\n`;
-    if (selectedColor) message += `*Color*: ${selectedColor}\n`;
-    message += `*Quantity*: ${quantity}\n`;
-    message += `*Total Price*: ${formatPrice(product.price * quantity)}\n\n`;
-    message += `Is it available?`;
+    if (!user) {
+      setCurrentView('auth');
+      return;
+    }
+
+    let message = "🌟 *SAMSTONES MARKETPLACE* 🌟\n";
+    message += "===========================================\n";
+    message += "Hello! I would like to inquire about and purchase this premium item:\n\n";
+    message += `🛍️ *Product*: *${product.name}*\n`;
+    message += `📏 *Size*: ${selectedSize || 'N/A'}\n`;
+    message += `🎨 *Color*: ${selectedColor || 'N/A'}\n`;
+    message += `🔢 *Quantity*: ${quantity}\n`;
+    message += `💰 *Total Price*: *${formatPrice(product.price * quantity)}*\n\n`;
+    message += "Please let me know if this item is currently available for purchase and delivery. Thank you!";
 
     const url = `https://wa.me/2348065179554?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
@@ -64,15 +71,25 @@ export const ProductDetailView = () => {
   return (
     <div className="pt-24 pb-24 min-h-screen bg-transparent text-gray-900 dark:text-gray-100 relative transition-colors duration-500">
 
-      {/* Breadcrumbs */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 relative z-10">
-        <div className="flex items-center space-x-2 text-xs uppercase tracking-widest text-gray-500 font-bold">
+      {/* Breadcrumbs & Back Button */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 relative z-10 flex items-center justify-between">
+        <div className="flex items-center space-x-2 text-xs uppercase tracking-widest text-gray-500 dark:text-white font-bold">
           <button onClick={() => setCurrentView('home')} className="hover:text-[#109121] transition-colors">Home</button>
           <ChevronRight size={12} />
           <button onClick={() => setCurrentView('category')} className="hover:text-[#109121] transition-colors">Shop Categories</button>
           <ChevronRight size={12} />
           <span className="text-[#109121]">{product.name}</span>
         </div>
+        <button 
+          onClick={() => {
+            goBack();
+            window.scrollTo(0, 0);
+          }} 
+          className="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-white hover:text-[#109121] transition-colors"
+        >
+          <ArrowLeft size={14} />
+          <span>Back</span>
+        </button>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -126,7 +143,7 @@ export const ProductDetailView = () => {
                  <Star size={14} className="text-yellow-500 fill-current" />
                  <Star size={14} className="text-yellow-500 fill-current" />
                  <Star size={14} className="text-yellow-500 fill-current" />
-                 <span className="text-xs text-gray-400 font-medium ml-1">(24)</span>
+                 <span className="text-xs text-gray-400 dark:text-white font-medium ml-1">(24)</span>
               </div>
             </div>
 
@@ -137,20 +154,20 @@ export const ProductDetailView = () => {
                 <ul className="mt-6 mb-4 space-y-3 border-t border-gray-200 pt-6">
                   {product.location && (
                     <li className="flex items-center justify-between glass p-3 rounded-lg shadow-none">
-                      <span className="text-xs uppercase tracking-widest font-bold text-gray-400">Location</span>
-                      <span className="font-semibold text-gray-900">{product.location}</span>
+                      <span className="text-xs uppercase tracking-widest font-bold text-gray-400 dark:text-white">Location</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">{product.location}</span>
                     </li>
                   )}
                   {product.year && (
                     <li className="flex items-center justify-between glass p-3 rounded-lg shadow-none">
-                      <span className="text-xs uppercase tracking-widest font-bold text-gray-400">Model Year</span>
-                      <span className="font-semibold text-gray-900">{product.year}</span>
+                      <span className="text-xs uppercase tracking-widest font-bold text-gray-400 dark:text-white">Model Year</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">{product.year}</span>
                     </li>
                   )}
                   {product.mileage && (
                     <li className="flex items-center justify-between glass p-3 rounded-lg shadow-none">
-                      <span className="text-xs uppercase tracking-widest font-bold text-gray-400">Mileage</span>
-                      <span className="font-semibold text-gray-900">{product.mileage}</span>
+                      <span className="text-xs uppercase tracking-widest font-bold text-gray-400 dark:text-white">Mileage</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">{product.mileage}</span>
                     </li>
                   )}
                 </ul>
@@ -159,30 +176,55 @@ export const ProductDetailView = () => {
 
             <div className="space-y-8 mb-10">
               {/* Colors */}
-              {product.colors && product.colors.length > 0 && (
-              <div>
-                <h3 className="text-xs uppercase tracking-widest font-bold text-gray-900 mb-4">Color: <span className="text-gray-400">{selectedColor}</span></h3>
-                <div className="flex flex-wrap gap-3">
-                  {product.colors.map(color => (
-                    <button
-                      key={color}
-                      onClick={() => setSelectedColor(color)}
-                      className={`px-4 py-2 text-sm border rounded-lg font-semibold transition-all duration-300 ${
-                        selectedColor === color ? 'border-[#109121] bg-[#109121]/10 text-white shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'border-gray-200 text-gray-400 hover:border-[#109121]/50 hover:text-[#109121]'
-                      }`}
-                    >
-                      {color}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              )}
+              {product.colors && product.colors.length > 0 && (() => {
+                const getColorCode = (colorName: string) => {
+                  const name = colorName.toLowerCase();
+                  if (name.includes('black')) return '#1a1a1a';
+                  if (name.includes('white')) return '#f8f9fa';
+                  if (name.includes('red')) return '#ef4444';
+                  if (name.includes('blue')) return '#3b82f6';
+                  if (name.includes('green')) return '#10b981';
+                  if (name.includes('yellow')) return '#f59e0b';
+                  if (name.includes('purple')) return '#8b5cf6';
+                  if (name.includes('pink')) return '#ec4899';
+                  if (name.includes('orange')) return '#f97316';
+                  if (name.includes('gray') || name.includes('grey') || name.includes('silver')) return '#9ca3af';
+                  if (name.includes('gold')) return '#d4af37';
+                  if (name.includes('brown')) return '#8b4513';
+                  if (name.includes('navy')) return '#1e3a8a';
+                  if (name.includes('coral')) return '#ff7f50';
+                  return name;
+                };
+
+                return (
+                  <div>
+                    <h3 className="text-xs uppercase tracking-widest font-bold text-gray-900 dark:text-white mb-4">Color: <span className="text-gray-400 dark:text-white">{selectedColor}</span></h3>
+                    <div className="flex flex-wrap gap-3">
+                      {product.colors.map(color => (
+                        <button
+                          key={color}
+                          onClick={() => setSelectedColor(color)}
+                          className={`px-3 py-2 text-sm border rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 ${
+                            selectedColor === color ? 'border-[#109121] bg-[#109121]/10 text-gray-900 dark:text-white shadow-[0_0_15px_rgba(16,145,33,0.2)]' : 'border-gray-200 text-gray-400 dark:text-white hover:border-[#109121]/50 hover:text-[#109121]'
+                          }`}
+                        >
+                          <span 
+                            className="w-4 h-4 rounded-full border border-gray-300 shadow-sm"
+                            style={{ backgroundColor: getColorCode(color) }}
+                          />
+                          <span>{color}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* Sizes */}
               {product.sizes && product.sizes.length > 0 && (
               <div>
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xs uppercase tracking-widest font-bold text-gray-900">Size: <span className="text-gray-400">{selectedSize}</span></h3>
+                  <h3 className="text-xs uppercase tracking-widest font-bold text-gray-900 dark:text-white">Size: <span className="text-gray-400 dark:text-white">{selectedSize}</span></h3>
                   {(product.category === "Shoes" || product.category === "Clothes") && (
                     <button className="text-xs uppercase font-bold tracking-widest text-[#109121] border-b border-[#109121]/30 hover:border-[#109121] transition-colors">Size Guide</button>
                   )}
@@ -193,7 +235,7 @@ export const ProductDetailView = () => {
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={`min-w-[3rem] h-12 flex items-center justify-center text-sm border font-semibold rounded-lg transition-all duration-300 px-3 ${
-                        selectedSize === size ? 'border-[#109121] bg-[#109121]/10 text-white shadow-[0_0_15px_rgba(236,72,153,0.2)]' : 'border-gray-200 text-gray-400 hover:border-[#109121]/50 hover:text-[#109121]'
+                        selectedSize === size ? 'border-[#109121] bg-[#109121]/10 text-white shadow-[0_0_15px_rgba(236,72,153,0.2)]' : 'border-gray-200 text-gray-400 dark:text-white hover:border-[#109121]/50 hover:text-[#109121]'
                       }`}
                     >
                       {size}
@@ -205,18 +247,18 @@ export const ProductDetailView = () => {
 
               {/* Quantity */}
               <div>
-                <h3 className="text-xs uppercase tracking-widest font-bold text-gray-900 mb-4">Quantity</h3>
+                <h3 className="text-xs uppercase tracking-widest font-bold text-gray-900 dark:text-white mb-4">Quantity</h3>
                 <div className="flex items-center space-x-6 glass border border-white/5 p-2 rounded-xl inline-flex shadow-none">
                   <button 
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#e6f4e8] transition-colors text-gray-900"
+                    className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#e6f4e8] transition-colors text-gray-900 dark:text-white"
                   >
                     <Minus size={16} />
                   </button>
-                  <span className="font-bold text-lg w-8 text-center text-gray-900">{quantity}</span>
+                  <span className="font-bold text-lg w-8 text-center text-gray-900 dark:text-white">{quantity}</span>
                   <button 
                     onClick={() => setQuantity(quantity + 1)}
-                    className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#e6f4e8] transition-colors text-gray-900"
+                    className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#e6f4e8] transition-colors text-gray-900 dark:text-white"
                   >
                     <Plus size={16} />
                   </button>
@@ -237,7 +279,7 @@ export const ProductDetailView = () => {
                 <button 
                   onClick={() => toggleWishlist(product.id)}
                   className={`h-14 w-full sm:w-16 rounded-xl border flex items-center justify-center transition-colors ${
-                    isWishlisted ? 'border-[#109121] text-[#109121] bg-[#109121]/10 shadow-[0_0_15px_rgba(236,72,153,0.2)]' : 'border-gray-200 text-gray-400 hover:border-[#109121]/50 hover:text-[#109121] glass'
+                    isWishlisted ? 'border-[#109121] text-[#109121] bg-[#109121]/10 shadow-[0_0_15px_rgba(236,72,153,0.2)]' : 'border-gray-200 text-gray-400 dark:text-white hover:border-[#109121]/50 hover:text-[#109121] glass'
                   }`}
                 >
                   <Heart size={20} className={isWishlisted ? "fill-current" : ""} />
@@ -258,15 +300,15 @@ export const ProductDetailView = () => {
                <div className="flex items-center space-x-3 glass border border-white/5 p-4 rounded-xl shadow-none">
                  <ShieldCheck size={24} className="text-[#109121]" />
                  <div>
-                    <h4 className="text-sm font-bold text-gray-900">Genuine Quality</h4>
-                    <p className="text-xs text-gray-400">100% Authenticity</p>
+                    <h4 className="text-sm font-bold text-gray-900 dark:text-white">Genuine Quality</h4>
+                    <p className="text-xs text-gray-400 dark:text-white">100% Authenticity</p>
                  </div>
               </div>
               <div className="flex items-center space-x-3 glass border border-white/5 p-4 rounded-xl shadow-none">
                  <Truck size={24} className="text-[#109121]" />
                  <div>
-                    <h4 className="text-sm font-bold text-gray-900">Fast Delivery</h4>
-                    <p className="text-xs text-gray-400">Secure shipping</p>
+                    <h4 className="text-sm font-bold text-gray-900 dark:text-white">Fast Delivery</h4>
+                    <p className="text-xs text-gray-400 dark:text-white">Secure shipping</p>
                  </div>
               </div>
             </div>

@@ -13,14 +13,14 @@ export const CategoriesManager = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold mb-1">Shop Categories</h1>
-          <p className="text-gray-500 text-sm">Create and organize unlimited categories.</p>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">Create and organize unlimited categories.</p>
         </div>
       </div>
 
-      <div className="bg-white p-4 text-gray-900 rounded-2xl border shadow-sm space-y-4">
+      <div className="bg-white dark:bg-[#0a0a0a] p-4 text-gray-900 dark:text-white rounded-2xl border dark:border-white/10 shadow-sm space-y-4 transition-colors duration-500">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-gray-500">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+          <table className="w-full text-left text-sm text-gray-700 dark:text-gray-300">
+            <thead className="text-xs text-gray-900 dark:text-gray-100 uppercase bg-gray-50 dark:bg-white/5 border-b dark:border-white/10">
               <tr>
                 <th className="px-6 py-4">Category Name</th>
                 <th className="px-6 py-4">Items Count</th>
@@ -30,23 +30,22 @@ export const CategoriesManager = () => {
             </thead>
             <tbody>
               {categories.map((cat) => (
-                <tr key={cat.id} className="border-b hover:bg-gray-50">
+                <tr key={cat.id} className="border-b dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                   <td className="px-6 py-4 flex items-center space-x-3">
-                    <img src={cat.image} alt="" className="w-10 h-10 rounded shadow-sm object-cover" />
+                    <img src={cat.image} alt="" className="w-10 h-10 rounded shadow-sm object-cover border dark:border-white/10" />
                     <div>
-                      <div className="font-medium text-gray-900">{cat.name}</div>
-                      <div className="text-xs max-w-xs truncate">{cat.description}</div>
+                      <div className="font-medium text-gray-900 dark:text-white">{cat.name}</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400 dark:text-white max-w-xs truncate">{cat.description}</div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 font-medium">
+                  <td className="px-6 py-4 font-bold text-[#000000] dark:text-white">
                     {products.filter(p => p.category === cat.name).length}
                   </td>
                   <td className="px-6 py-4">
-                    <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded border border-green-200">Featured</span>
+                    <span className="bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium px-2.5 py-0.5 rounded border border-green-200 dark:border-green-800/30">Featured</span>
                   </td>
                   <td className="px-6 py-4 text-right space-x-2">
-                    <button className="text-gray-400 hover:text-[#109121]"><Edit size={16} /></button>
-                    <button className="text-gray-400 hover:text-red-500"><Trash2 size={16} /></button>
+                    <button className="text-gray-400 dark:text-white hover:text-[#109121] dark:hover:text-[#109121] transition-colors"><Edit size={16} /></button>
                   </td>
                 </tr>
               ))}

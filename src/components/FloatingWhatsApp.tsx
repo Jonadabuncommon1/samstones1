@@ -1,20 +1,31 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { MessageCircle } from 'lucide-react';
+import { useAppContext } from '../store/AppContext';
 
 export const FloatingWhatsApp = () => {
+  const { user, setCurrentView } = useAppContext();
+
+  const handleWhatsAppClick = (e: React.MouseEvent) => {
+    if (!user) {
+      e.preventDefault();
+      setCurrentView('auth');
+    }
+  };
+
   return (
     <motion.a
-      href="https://wa.me/2348065179554?text=Hello"
+      href={`https://wa.me/2348065179554?text=${encodeURIComponent("🌟 *SAMSTONES MARKETPLACE* 🌟\n===========================================\nHello! I am visiting your premium marketplace and would like to make an inquiry.")}`}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={handleWhatsAppClick}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 1, type: 'spring' }}
-      className="fixed bottom-28 right-4 md:right-6 z-40 w-14 h-14 bg-white rounded-full shadow-2xl hover:scale-105 transition-transform flex items-center justify-center group border border-gray-100 dark:border-gray-800 overflow-hidden"
-      style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.1)' }}
+      className="fixed bottom-28 right-4 md:right-6 z-40 w-14 h-14 bg-[#25D366] rounded-full shadow-2xl hover:scale-105 transition-transform flex items-center justify-center group overflow-hidden"
+      style={{ boxShadow: '0 4px 24px rgba(37,211,102,0.3)' }}
     >
-      <img src="/whatsapp-icon.jpg" alt="WhatsApp" className="w-full h-full object-cover" />
+      <MessageCircle size={28} className="text-white" />
       <span className="absolute right-full mr-4 bg-white dark:bg-[#1a1a1a] text-black dark:text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-lg border border-gray-100 dark:border-gray-800 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
         Chat to Buy
       </span>

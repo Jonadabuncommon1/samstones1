@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ShoppingBag, MessageCircle } from 'lucide-react';
 import { useAppContext } from '../store/AppContext';
 import { formatPrice } from '../data';
+import toast from 'react-hot-toast';
 
 export const WhatsAppCart = () => {
   const { cart, removeFromCart, updateQuantity, cartOpen, setCartOpen, user, setCurrentView } = useAppContext();
@@ -10,17 +11,21 @@ export const WhatsAppCart = () => {
   const totalAmount = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
   const generateWhatsAppMessage = () => {
-    let message = "Hello, I would like to order from the store:\n\n";
+    let message = "🌟 *SAMSTONES MARKETPLACE* 🌟\n";
+    message += "===========================================\n";
+    message += "Hello! I would like to place an order for the following items from your premium marketplace:\n\n";
 
-    cart.forEach(item => {
-      message += `* ${item.product.name} x${item.quantity}\n`;
-      if (item.selectedSize) message += `  Size: ${item.selectedSize}\n`;
-      if (item.selectedColor) message += `  Color: ${item.selectedColor}\n`;
-      message += `  Price: ${formatPrice(item.product.price * item.quantity)}\n\n`;
+    cart.forEach((item, idx) => {
+      message += `${idx + 1}. 🛍️ *${item.product.name}* (Qty: ${item.quantity})\n`;
+      if (item.selectedSize) message += `   📏 Size: ${item.selectedSize}\n`;
+      if (item.selectedColor) message += `   🎨 Color: ${item.selectedColor}\n`;
+      message += `   💰 Price: ${formatPrice(item.product.price * item.quantity)}\n\n`;
     });
 
-    message += `*Total Order Value: ${formatPrice(totalAmount)}*\n\n`;
-    message += "Please let me know the next steps for payment and delivery.";
+    message += "-------------------------------------------\n";
+    message += `💰 *Total Order Value*: *${formatPrice(totalAmount)}*\n`;
+    message += "-------------------------------------------\n\n";
+    message += "Please confirm availability and provide the next steps for payment and delivery. Thank you!";
 
     const encodedMessage = encodeURIComponent(message);
     return `https://wa.me/2348065179554?text=${encodedMessage}`;
@@ -42,18 +47,18 @@ export const WhatsAppCart = () => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white border-l border-gray-200 z-50 flex flex-col pointer-events-auto shadow-2xl text-gray-900 transition-colors"
+            className="fixed inset-y-0 right-0 w-full md:w-[450px] bg-white border-l border-gray-200 z-50 flex flex-col pointer-events-auto shadow-2xl text-gray-900 dark:text-white transition-colors"
           >
             <div className="flex items-center justify-between p-6 border-b border-gray-200 relative overflow-hidden bg-[#e6f4e8]">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#109121]/10 blur-2xl rounded-full transition-colors" />
               <div className="flex items-center space-x-2 relative z-10">
                 <ShoppingBag size={20} className="text-[#109121]" />
-                <h2 className="font-serif text-xl font-bold text-gray-900">Your Cart</h2>
+                <h2 className="font-serif text-xl font-bold text-gray-900 dark:text-white">Your Cart</h2>
                 <span className="bg-[#109121] text-white text-xs px-2 py-0.5 rounded-full">{cart.length}</span>
               </div>
               <button
                 onClick={() => setCartOpen(false)}
-                className="p-2 text-gray-500 hover:text-gray-900 hover:bg-white/80 rounded-full transition-colors relative z-10"
+                className="p-2 text-gray-500 dark:text-white hover:text-gray-900 dark:text-white hover:bg-white/80 rounded-full transition-colors relative z-10"
               >
                 <X size={20} />
               </button>
@@ -61,9 +66,9 @@ export const WhatsAppCart = () => {
 
             <div className="flex-1 overflow-y-auto p-6 relative bg-white">
               {cart.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-gray-500 space-y-4 relative z-10">
+                <div className="h-full flex flex-col items-center justify-center text-gray-500 dark:text-white space-y-4 relative z-10">
                   <ShoppingBag size={48} className="mb-2 text-[#e6f4e8]" />
-                  <p className="font-serif text-lg text-gray-900">Your cart is empty.</p>
+                  <p className="font-serif text-lg text-gray-900 dark:text-white">Your cart is empty.</p>
                   <button
                     onClick={() => setCartOpen(false)}
                     className="text-xs font-bold tracking-widest uppercase text-[#109121] hover:text-[#0a5f15] transition-colors"
@@ -90,16 +95,16 @@ export const WhatsAppCart = () => {
                       <div className="flex-1 flex flex-col justify-between py-1">
                         <div className="flex justify-between items-start">
                           <div>
-                            <h3 className="font-bold text-gray-900 text-sm line-clamp-1">{item.product.name}</h3>
+                            <h3 className="font-bold text-gray-900 dark:text-white text-sm line-clamp-1">{item.product.name}</h3>
                             {(item.selectedColor || item.selectedSize) && (
-                              <p className="text-xs text-gray-500 mt-1 uppercase tracking-wider font-semibold">
+                              <p className="text-xs text-gray-500 dark:text-white mt-1 uppercase tracking-wider font-semibold">
                                 {[item.selectedColor, item.selectedSize].filter(Boolean).join(' / ')}
                               </p>
                             )}
                           </div>
                           <button
                             onClick={() => removeFromCart(item.product.id)}
-                            className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                            className="p-1.5 text-gray-400 dark:text-white hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                           >
                             <Trash2 size={14} />
                           </button>
@@ -108,14 +113,14 @@ export const WhatsAppCart = () => {
                           <div className="flex items-center space-x-3 bg-[#e6f4e8] px-2 py-1 rounded-lg border border-gray-200">
                             <button
                               onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                              className="text-gray-700 hover:text-[#109121] transition-colors"
+                              className="text-gray-700 dark:text-white hover:text-[#109121] transition-colors"
                             >
                               <Minus size={12} />
                             </button>
-                            <span className="text-xs font-bold w-4 text-center text-gray-900">{item.quantity}</span>
+                            <span className="text-xs font-bold w-4 text-center text-gray-900 dark:text-white">{item.quantity}</span>
                             <button
                               onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                              className="text-gray-700 hover:text-[#109121] transition-colors"
+                              className="text-gray-700 dark:text-white hover:text-[#109121] transition-colors"
                             >
                               <Plus size={12} />
                             </button>
@@ -134,7 +139,7 @@ export const WhatsAppCart = () => {
             {cart.length > 0 && (
               <div className="p-6 border-t border-gray-200 bg-[#e6f4e8] relative z-10 transition-colors">
                 <div className="flex justify-between items-center mb-6">
-                  <span className="text-gray-600 text-sm font-bold uppercase tracking-widest">Subtotal</span>
+                  <span className="text-gray-600 dark:text-white text-sm font-bold uppercase tracking-widest">Subtotal</span>
                   <span className="font-serif font-bold text-xl text-[#000000]">{formatPrice(totalAmount)}</span>
                 </div>
                 <button
@@ -148,9 +153,25 @@ export const WhatsAppCart = () => {
                   }}
                   className="w-full bg-[#109121] text-white flex items-center justify-center space-x-3 py-4 rounded-xl uppercase text-sm font-bold tracking-widest transition-transform transform active:scale-95 hover:bg-[#0a5f15]"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.265-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.174-.3-.019-.465.13-.615.136-.135.301-.345.451-.523.146-.181.194-.301.297-.496.098-.203.048-.376-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.172-.015-.371-.015-.571-.015-.2 0-.523.076-.797.359-.273.3-1.045 1.02-1.045 2.475s1.07 2.865 1.219 3.075c.149.195 2.105 3.195 5.1 4.485.714.3 1.27.48 1.704.629.714.226 1.365.195 1.88.121.574-.09 1.767-.721 2.016-1.426.255-.705.255-1.29.18-1.425-.074-.135-.27-.21-.57-.345zM12.002 0C5.378 0 0 5.373 0 12c0 2.128.552 4.136 1.6 5.922L.15 23.85l6.082-1.597A11.954 11.954 0 0 0 12.002 24c6.621 0 12-5.373 12-12s-5.379-12-12-12zm0 21.996c-1.803 0-3.565-.48-5.112-1.396l-.367-.217-3.79 1.002.996-3.69-.239-.379A9.972 9.972 0 0 1 2.004 12c0-5.516 4.485-10 10-10s10 4.484 10 10-4.485 9.996-10 9.996z" /></svg>
+                  <MessageCircle size={20} className="text-white" />
                   <span>Checkout on WhatsApp</span>
                 </button>
+                
+                {user && (
+                  <div className="mt-5 text-center bg-white/50 dark:bg-black/10 p-3 rounded-lg border border-[#109121]/20">
+                    <p className="text-xs text-gray-700 dark:text-gray-300 mb-1.5 font-medium">Love Samstones? Invite friends and earn rewards!</p>
+                    <button 
+                      onClick={() => {
+                        const referralUrl = `${window.location.origin}/?ref=${user.uid}`;
+                        navigator.clipboard.writeText(referralUrl);
+                        toast.success('Referral link copied to clipboard!');
+                      }}
+                      className="text-xs font-extrabold text-[#DFB722] hover:text-yellow-600 uppercase tracking-widest underline transition-colors"
+                    >
+                      Copy My Referral Link
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </motion.div>

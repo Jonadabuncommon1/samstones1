@@ -32,7 +32,7 @@ export const MediaManager = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold mb-1">Media Library</h1>
-          <p className="text-gray-500 text-sm">Manage infinite uploads synced to your Supabase Cloud Storage.</p>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">Manage infinite uploads synced to your Supabase Cloud Storage.</p>
         </div>
         <label className="flex items-center space-x-2 bg-[#109121] hover:bg-[#0a5f15] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer">
           {isUploading ? <Loader2 size={16} className="animate-spin" /> : <UploadCloud size={16} />}
@@ -41,17 +41,17 @@ export const MediaManager = () => {
         </label>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl border shadow-sm">
+      <div className="bg-white dark:bg-[#0a0a0a] p-6 rounded-2xl border dark:border-white/10 shadow-sm transition-colors duration-500">
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-white" />
             <input 
               type="text" 
               placeholder="Search images..." 
-              className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#109121] rounded-lg"
+              className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white text-sm focus:outline-none focus:border-[#109121] rounded-lg transition-colors"
             />
           </div>
-          <button className="flex items-center space-x-2 px-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium text-gray-700">
+          <button className="flex items-center space-x-2 px-4 py-2 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-white/10 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 transition-colors hover:bg-gray-100 dark:hover:bg-white/5">
             <Folder size={16} />
             <span>Folders</span>
           </button>
@@ -59,7 +59,7 @@ export const MediaManager = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {allImages.map((img, i) => (
-            <div key={i} className="aspect-square bg-gray-100 rounded-lg border overflow-hidden relative group">
+            <div key={i} className="aspect-square bg-gray-100 dark:bg-[#1a1a1a] rounded-lg border dark:border-white/10 overflow-hidden relative group transition-colors">
               <img src={img} alt={`Media ${i}`} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-2">
                 <button className="bg-white/20 p-2 rounded-full text-white hover:bg-[#109121]"><ImageIcon size={16} /></button>

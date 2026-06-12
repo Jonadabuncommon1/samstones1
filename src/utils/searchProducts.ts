@@ -5,8 +5,8 @@ export function searchProducts(products: Product[], query: string): Product[] {
   if (!q) return products;
   return products.filter(
     (p) =>
-      p.name.toLowerCase().includes(q) ||
-      p.description.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q)
+      p.name?.toLowerCase().includes(q) ||
+      p.description?.toLowerCase().includes(q) ||
+      p.category?.toLowerCase().includes(q)
   );
 }

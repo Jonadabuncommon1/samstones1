@@ -19,7 +19,7 @@ const cardVariants = {
 };
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { setActiveProductId, setCurrentView, addToCart } = useAppContext();
+  const { setActiveProductId, setCurrentView, addToCart, user } = useAppContext();
 
   const handleView = () => {
     setActiveProductId(product.id);
@@ -48,15 +48,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-white dark:bg-[#141414]">
         {product.isNew && (
-          <span className="absolute top-4 left-4 z-10 bg-[#109121] text-gray-900 text-[10px] font-bold tracking-widest uppercase px-3 py-1 shadow-lg rounded-full">
+          <span className="absolute top-4 left-4 z-10 bg-[#109121] text-gray-900 dark:text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 shadow-lg rounded-full">
             New
           </span>
         )}
-        <img 
-          src={product.images[0]} 
-          alt={product.name}
-          className="object-cover w-full h-full transform transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
-        />
+        {product.images && product.images.length > 0 ? (
+          <img 
+            src={product.images[0]} 
+            alt={product.name}
+            className="object-cover w-full h-full transform transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-800 text-gray-500 text-sm">No Image</div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none" />
         
         {/* Actions Overlay */}
@@ -72,7 +76,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             href={`https://wa.me/2348065179554?text=Hello%20I%20am%20interested%20in%20this%20product:%20${encodeURIComponent(product.name)}`}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!user) {
+                e.preventDefault();
+                setCurrentView('auth');
+              }
+            }}
             className="bg-[#25D366] text-white p-3 flex items-center justify-center hover:bg-[#128C7E] transition-colors rounded-xl shadow-lg"
           >
              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.265-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.174-.3-.019-.465.13-.615.136-.135.301-.345.451-.523.146-.181.194-.301.297-.496.098-.203.048-.376-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.172-.015-.371-.015-.571-.015-.2 0-.523.076-.797.359-.273.3-1.045 1.02-1.045 2.475s1.07 2.865 1.219 3.075c.149.195 2.105 3.195 5.1 4.485.714.3 1.27.48 1.704.629.714.226 1.365.195 1.88.121.574-.09 1.767-.721 2.016-1.426.255-.705.255-1.29.18-1.425-.074-.135-.27-.21-.57-.345zM12.002 0C5.378 0 0 5.373 0 12c0 2.128.552 4.136 1.6 5.922L.15 23.85l6.082-1.597A11.954 11.954 0 0 0 12.002 24c6.621 0 12-5.373 12-12s-5.379-12-12-12zm0 21.996c-1.803 0-3.565-.48-5.112-1.396l-.367-.217-3.79 1.002.996-3.69-.239-.379A9.972 9.972 0 0 1 2.004 12c0-5.516 4.485-10 10-10s10 4.484 10 10-4.485 9.996-10 9.996z"/></svg>
@@ -83,14 +93,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <h3 className="font-serif text-lg font-bold tracking-wide text-[#16C72E] mb-2 transition-colors truncate">{product.name}</h3>
         
         {product.location && (
-          <p className="text-xs text-gray-400 dark:text-gray-500 mb-2 flex items-center">
+          <p className="text-xs text-gray-400 dark:text-gray-500 dark:text-white mb-2 flex items-center">
             <span className="inline-block w-1.5 h-1.5 bg-[#109121] rounded-full mr-2"></span>
             {product.location}
           </p>
         )}
         
         {(product.year || product.mileage) && (
-          <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 flex items-center space-x-2">
+          <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-white mb-2 flex items-center space-x-2">
             {product.year && <span>{product.year}</span>}
             {product.year && product.mileage && <span>&bull;</span>}
             {product.mileage && <span>{product.mileage}</span>}

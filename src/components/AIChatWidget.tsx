@@ -6,7 +6,7 @@ import { useAppContext } from '../store/AppContext';
 
 const WELCOME_MESSAGE: ChatMessage = {
   role: 'assistant',
-  content: "Hi there! 👋 I'm **Sam**, your personal Samstones shopping assistant (CAC No: **1836199**). We are open **Monday to Saturday, 8am - 10pm**! I can help you find products, answer questions, or guide you through our luxury collection. What can I help you find today? 🛍️",
+  content: "Hi there! 👋 I'm **Sam**, your personal Samstones Marketplace shopping assistant. We are open **Monday to Saturday, 8am - 10pm**! I can help you find products, answer questions, or guide you through our luxury collection. What can I help you find today? 🛍️",
 };
 
 function renderMarkdown(text: string): React.ReactNode {
@@ -223,7 +223,7 @@ export const AIChatWidget = () => {
                     {isLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                   </button>
                 </div>
-                <p className="text-center text-[10px] text-gray-400 dark:text-gray-600 mt-2">CAC Reg: 1836199 · Mon-Sat: 8am - 10pm · Powered by Gemini AI</p>
+                <p className="text-center text-[10px] text-gray-400 dark:text-gray-600 dark:text-white mt-2">Mon-Sat: 8am - 10pm</p>
               </div>
             </div>
           </motion.div>
@@ -239,14 +239,14 @@ export const AIChatWidget = () => {
           setIsOpen(prev => !prev);
           setUnreadCount(0);
         }}
-        className="fixed bottom-6 right-4 md:right-6 z-50 w-14 h-14 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 border border-gray-100 dark:border-gray-800"
+        className="fixed bottom-6 right-4 md:right-6 z-50 w-14 h-14 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 dark:text-white border border-gray-100 dark:border-gray-800"
         style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.1)' }}
         aria-label="Open AI Chat Assistant"
       >
         <AnimatePresence mode="wait">
           {isOpen && !isMinimized ? (
             <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
-              <X size={22} className="text-gray-600" />
+              <X size={22} className="text-gray-600 dark:text-white" />
             </motion.div>
           ) : (
             <motion.div key="open" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} className="w-full h-full rounded-full overflow-hidden">

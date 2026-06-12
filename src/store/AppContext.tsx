@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { Product, CartItem, ViewState } from '../types';
 import { fetchProductsFromDB, addProductToDB, updateProductInDB, deleteProductFromDB, createProductId } from './productStorage';
-import { isAdminSessionActive, setAdminSession, verifyAdminLogin } from './adminAuth';
-import { searchProducts } from '../utils/searchProducts';
 import { supabase } from '../lib/supabase';
-import type { User } from '@supabase/supabase-js';
+import { searchProducts } from '../utils/searchProducts';
+import { auth } from '../lib/firebase';
+import { onAuthStateChanged, User } from 'firebase/auth';
 
 interface AppContextProps {
   currentView: ViewState;
   setCurrentView: (view: ViewState) => void;
+  goBack: () => void;
   activeProductId: string | null;
   setActiveProductId: (id: string | null) => void;
   activeCategory: string | null;
@@ -23,7 +24,7 @@ interface AppContextProps {
   cartOpen: boolean;
   setCartOpen: (open: boolean) => void;
   products: Product[];
-  addProduct: (product: Omit<Product, 'id'>) => Product;
+  addProduct: (product: Omit<Product, 'id'>) => Promise<Product>;
   updateProduct: (id: string, updates: Partial<Product>) => void;
   deleteProduct: (id: string) => void;
   getProductById: (id: string) => Product | undefined;
@@ -34,8 +35,8 @@ interface AppContextProps {
   clearSearch: () => void;
   searchProductsGlobally: (query: string) => Product[];
   isAdminAuthenticated: boolean;
-  loginAdmin: (email: string, password: string) => { ok: boolean; error?: string };
-  logoutAdmin: () => void;
+  loginAdmin: (email: string, password: string) => Promise<{ ok: boolean; error?: string }>;
+  logoutAdmin: () => Promise<void>;
   openAdminPortal: () => void;
   user: User | null;
   loadingAuth: boolean;
@@ -44,12 +45,46 @@ interface AppContextProps {
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [currentView, _setCurrentView] = useState<ViewState>('home');
+  const getInitialView = (): ViewState => {
+    const path = window.location.pathname.replace(/^\/|\/$/g, '');
+    const validViews: ViewState[] = ['home', 'shop', 'categories', 'category', 'product', 'cart', 'wishlist', 'about', 'contact', 'admin', 'terms', 'privacy', 'auth'];
+    if (validViews.includes(path as ViewState)) {
+      return path as ViewState;
+    }
+    return 'home';
+  };
+
+  const [currentView, _setCurrentView] = useState<ViewState>(getInitialView);
+  const [viewHistory, setViewHistory] = useState<ViewState[]>([]);
 
   const setCurrentView = useCallback((view: ViewState) => {
-    _setCurrentView(view);
-    // Push state to browser history to prevent PWA from closing on back navigation
-    window.history.pushState({ view }, '', '');
+    _setCurrentView((prev) => {
+      if (prev !== view) {
+        setViewHistory((h) => [...h, prev]);
+      }
+      return view;
+    });
+    // Push state to browser history to sync URL
+    const url = view === 'home' ? '/' : `/${view}`;
+    const finalUrl = view === 'admin' ? `${url}${window.location.hash}` : url;
+    window.history.pushState({ view }, '', finalUrl);
+  }, []);
+
+  const goBack = useCallback(() => {
+    setViewHistory((h) => {
+      if (h.length === 0) {
+        _setCurrentView('home');
+        return [];
+      }
+      const newHistory = [...h];
+      const prevView = newHistory.pop();
+      if (prevView) {
+        _setCurrentView(prevView);
+        const url = prevView === 'home' ? '/' : `/${prevView}`;
+        window.history.pushState({ view: prevView }, '', url);
+      }
+      return newHistory;
+    });
   }, []);
 
   useEffect(() => {
@@ -57,9 +92,21 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     const handlePopState = (event: PopStateEvent) => {
       if (event.state && event.state.view) {
         _setCurrentView(event.state.view);
+        setViewHistory((h) => {
+          if (h.length > 0) {
+            const newHistory = [...h];
+            newHistory.pop();
+            return newHistory;
+          }
+          return h;
+        });
       } else {
-        // Fallback to home if no state (e.g., returned to initial load)
-        _setCurrentView('home');
+        // Fallback based on URL path
+        const path = window.location.pathname.replace('/', '') as ViewState;
+        const validViews: ViewState[] = ['home', 'shop', 'categories', 'category', 'product', 'cart', 'wishlist', 'about', 'contact', 'admin', 'terms', 'privacy', 'auth'];
+        const view = validViews.includes(path) ? path : 'home';
+        _setCurrentView(view);
+        setViewHistory([]);
       }
     };
     window.addEventListener('popstate', handlePopState);
@@ -73,33 +120,30 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchSubmitted, setSearchSubmitted] = useState(false);
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => isAdminSessionActive());
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
 
   useEffect(() => {
-    // Get initial session
+    // Check initial Supabase auth session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoadingAuth(false);
+      setIsAdminAuthenticated(!!session);
     });
 
     // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null);
-      setLoadingAuth(false);
-      
-      if (event === 'PASSWORD_RECOVERY') {
-        _setCurrentView('auth');
-        setTimeout(() => {
-          window.location.hash = 'update-password';
-        }, 100);
-      }
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAdminAuthenticated(!!session);
     });
 
-    return () => subscription.unsubscribe();
+    const unsubscribeFirebase = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+      setLoadingAuth(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+      unsubscribeFirebase();
+    };
   }, []);
 
   useEffect(() => {
@@ -108,19 +152,26 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const onHash = () => {
-      if (window.location.hash === '#admin') {
-        setCurrentView('admin');
+      if (window.location.hash.startsWith('#admin')) {
+        // Only set to admin if we're not already on the admin path
+        if (window.location.pathname !== '/admin') {
+          setCurrentView('admin');
+        }
       }
     };
     onHash();
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
-  }, []);
+  }, [setCurrentView]);
 
-  const addProduct = useCallback((product: Omit<Product, 'id'>) => {
-    const created: Product = { ...product, id: createProductId() };
+  const addProduct = useCallback(async (product: Omit<Product, 'id'>) => {
+    const created: Product = { 
+      ...product, 
+      id: createProductId(),
+      created_at: new Date().toISOString()
+    };
+    await addProductToDB(created);
     setProducts((prev) => [created, ...prev]);
-    addProductToDB(created);
     return created;
   }, []);
 
@@ -142,9 +193,50 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const submitSearch = useCallback((query: string) => {
-    const q = query.trim();
-    setSearchQuery(q);
-    setSearchSubmitted(!!q);
+    const q = query.trim().toLowerCase();
+    
+    // Keyword Navigation Routing
+    if (q === 'home') {
+      setCurrentView('home');
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (q === 'support' || q === 'contact' || q === 'contact us') {
+      setCurrentView('contact');
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (q === 'product categories' || q === 'categories' || q === 'all 10 categories' || q === 'all categories') {
+      setCurrentView('categories');
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (q === 'wishlist' || q === 'wish list') {
+      setCurrentView('wishlist');
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (q === 'shop' || q === 'store' || q === 'all products') {
+      setSearchQuery('');
+      setSearchSubmitted(false);
+      setActiveCategory(null);
+      setCurrentView('shop');
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (q === 'about' || q === 'about us') {
+      setCurrentView('about');
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (q === 'cart' || q === 'shopping cart') {
+      setCurrentView('cart');
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    setSearchQuery(query.trim());
+    setSearchSubmitted(!!query.trim());
     setActiveCategory(null);
     setCurrentView('shop');
     window.scrollTo(0, 0);
@@ -160,17 +252,22 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     [products]
   );
 
-  const loginAdmin = useCallback((email: string, password: string) => {
-    if (!verifyAdminLogin(email, password)) {
-      return { ok: false, error: 'Invalid email or password.' };
+  const loginAdmin = useCallback(async (email: string, password: string) => {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    });
+    
+    if (error) {
+      return { ok: false, error: error.message };
     }
-    setAdminSession(true);
+    
     setIsAdminAuthenticated(true);
     return { ok: true };
   }, []);
 
-  const logoutAdmin = useCallback(() => {
-    setAdminSession(false);
+  const logoutAdmin = useCallback(async () => {
+    await supabase.auth.signOut();
     setIsAdminAuthenticated(false);
     setCurrentView('home');
     window.location.hash = '';
@@ -221,6 +318,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       value={{
         currentView,
         setCurrentView,
+        goBack,
         activeProductId,
         setActiveProductId,
         activeCategory,

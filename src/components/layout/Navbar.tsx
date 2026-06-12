@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Heart, Menu, X, Search, LogOut, LogIn } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { ShoppingBag, Heart, Menu, X, Search, LogOut, LogIn, ArrowLeft, User } from 'lucide-react';
+import { auth } from '../../lib/firebase';
+import { signOut } from 'firebase/auth';
 import { useAppContext } from '../../store/AppContext';
 import { motion, AnimatePresence } from 'motion/react';
+import { ThemeToggle } from '../ThemeToggle';
+import toast from 'react-hot-toast';
 
 export const Navbar = () => {
-  const { cart, wishlist, currentView, setCurrentView, setCartOpen, submitSearch, user } = useAppContext();
+  const { cart, wishlist, currentView, setCurrentView, setCartOpen, submitSearch, user, goBack } = useAppContext();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -35,52 +38,63 @@ export const Navbar = () => {
   return (
     <>
       <nav
-        className={`fixed top-0 w-full z-40 transition-all duration-300 ${
-          isScrolled ? 'glass dark:glass shadow-lg py-4 border-b dark:border-gray-800' : 'bg-transparent py-6'
+        className={`fixed left-0 right-0 mx-auto z-50 transition-all duration-300 bg-white/90 dark:bg-[#0A0A0A]/90 backdrop-blur-xl border border-gray-200 dark:border-gray-800 rounded-2xl sm:rounded-full ${
+          isScrolled ? 'top-2 sm:top-4 shadow-xl py-2 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-7xl' : 'top-4 sm:top-8 shadow-lg py-3 sm:py-4 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-7xl'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          {/* Left: Logo Brand (Visible on both desktop & mobile) */}
-          <div 
-            className="flex items-center cursor-pointer group relative" 
-            onClick={() => handleNavClick('home')}
-          >
-            <img
-              src="/samstones-logo.jpg"
-              alt="Samstones Logo"
-              className="h-10 md:h-12 w-auto mr-2.5 md:mr-3.5 object-contain rounded-lg shadow-sm animate-fade-in"
-            />
-            <div className="flex flex-col justify-center leading-none">
-              <span className="font-sans text-lg md:text-xl font-extrabold tracking-tight text-gray-900 dark:text-white uppercase transition-colors duration-300">
-                SAMSTONES
-              </span>
-              <span className="font-sans text-[9px] md:text-[10px] font-bold tracking-widest text-[#109121] dark:text-[#16C72E] uppercase mt-0.5 transition-colors duration-300">
-                MARKETPLACE
-              </span>
+        <div className="w-full px-4 sm:px-6 flex justify-between items-center">
+          {/* Left: Back Button & Logo Brand */}
+          <div className="flex items-center space-x-2">
+            {currentView !== 'home' && (
+              <button 
+                onClick={() => {
+                  goBack();
+                  window.scrollTo(0, 0);
+                }} 
+                className="mr-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-colors flex items-center justify-center border border-gray-200 dark:border-gray-700"
+                title="Go Back"
+              >
+                <ArrowLeft size={18} />
+              </button>
+            )}
+            <div 
+              className="flex items-center cursor-pointer group relative" 
+              onClick={() => handleNavClick('home')}
+            >
+              <img
+                src="/logo.png"
+                alt="Samstones Logo"
+                className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+              />
+              <div className="flex flex-col justify-center leading-none">
+                <span className="font-sans text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-[#E8A317] dark:text-yellow-400 transition-colors duration-300">
+                  Samstones
+                </span>
+              </div>
             </div>
           </div>
 
           {/* Middle: Links & Search */}
-          <div className="hidden lg:flex items-center justify-center flex-1 space-x-5 px-8">
-            <button onClick={() => handleNavClick('home')} className={`text-[12px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'home' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
+          <div className="hidden lg:flex items-center justify-center flex-1 space-x-6 px-8">
+            <button onClick={() => handleNavClick('home')} className={`text-[10px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'home' ? 'text-[#109121] dark:text-[#16C72E]' : 'text-gray-800 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E]'}`}>
               Home
-              <span className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#109121] transition-all duration-300 ${currentView === 'home' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+              <span className={`absolute -bottom-1.5 left-0 h-[2px] bg-[#109121] transition-all duration-300 ${currentView === 'home' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
-            <button onClick={() => handleNavClick('about')} className={`text-[12px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'about' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
+            <button onClick={() => handleNavClick('about')} className={`text-[10px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'about' ? 'text-[#109121] dark:text-[#16C72E]' : 'text-gray-800 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E]'}`}>
               About
-              <span className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#109121] transition-all duration-300 ${currentView === 'about' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+              <span className={`absolute -bottom-1.5 left-0 h-[2px] bg-[#109121] transition-all duration-300 ${currentView === 'about' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
-            <button onClick={() => handleNavClick('categories')} className={`text-[12px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'categories' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
+            <button onClick={() => handleNavClick('categories')} className={`text-[10px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'categories' ? 'text-[#109121] dark:text-[#16C72E]' : 'text-gray-800 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E]'}`}>
               Product Categories
-              <span className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#109121] transition-all duration-300 ${currentView === 'categories' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+              <span className={`absolute -bottom-1.5 left-0 h-[2px] bg-[#109121] transition-all duration-300 ${currentView === 'categories' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
-            <button onClick={() => handleNavClick('wishlist')} className={`text-[12px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'wishlist' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
+            <button onClick={() => handleNavClick('wishlist')} className={`text-[10px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'wishlist' ? 'text-[#109121] dark:text-[#16C72E]' : 'text-gray-800 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E]'}`}>
               Wishlist {wishlist.length > 0 ? `(${wishlist.length})` : ''}
-              <span className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#109121] transition-all duration-300 ${currentView === 'wishlist' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+              <span className={`absolute -bottom-1.5 left-0 h-[2px] bg-[#109121] transition-all duration-300 ${currentView === 'wishlist' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
-            <button onClick={() => handleNavClick('contact')} className={`text-[12px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'contact' ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}>
+            <button onClick={() => handleNavClick('contact')} className={`text-[10px] font-bold tracking-widest uppercase transition-colors relative group ${currentView === 'contact' ? 'text-[#109121] dark:text-[#16C72E]' : 'text-gray-800 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E]'}`}>
               Support
-              <span className={`absolute -bottom-1 left-0 h-[1.5px] bg-[#109121] transition-all duration-300 ${currentView === 'contact' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+              <span className={`absolute -bottom-1.5 left-0 h-[2px] bg-[#109121] transition-all duration-300 ${currentView === 'contact' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
             </button>
 
             {/* Very small search function */}
@@ -92,22 +106,22 @@ export const Navbar = () => {
                 placeholder="Search..." 
                 className="w-32 h-6 pl-6 pr-2 text-[10px] bg-gray-100 dark:bg-gray-800 rounded-full outline-none focus:ring-1 focus:ring-[#109121] transition-all"
               />
-              <Search size={10} className="absolute left-2 text-gray-400" />
+              <Search size={10} className="absolute left-2 text-gray-400 dark:text-white" />
             </form>
           </div>
 
           {/* Right: Cart (pic 2) & Sign Out & Mobile Menu */}
           <div className="flex items-center space-x-5 md:space-x-6">
-            <div className="hidden lg:flex items-center space-x-5">
+            <div className="hidden lg:flex items-center space-x-8">
               {/* Cart as Pic 2 */}
               <button
                 onClick={() => setCartOpen(true)}
-                className="relative group flex items-center justify-center hover:scale-105 transition-transform"
+                className="relative group flex items-center justify-center hover:scale-[1.03] transition-transform duration-200"
                 title="Your Cart"
               >
-                <img src="/pic2.jpg" alt="Cart" className="w-5 h-5 object-contain" />
+                <ShoppingBag size={20} strokeWidth={2.25} className="text-gray-700 dark:text-gray-300 group-hover:text-[#18B64B] transition-colors" />
                 {cartItemsCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] font-bold px-1 rounded-full">
+                  <span className="absolute -top-1.5 -right-1.5 bg-[#E5484D] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
                     {cartItemsCount}
                   </span>
                 )}
@@ -119,13 +133,20 @@ export const Navbar = () => {
                   if (!user) {
                     setCurrentView('auth');
                   } else {
-                    supabase.auth.signOut();
+                    signOut(auth).then(() => {
+                      toast.success('Successfully signed out');
+                    });
                   }
                 }}
-                className="text-[12px] font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors relative group flex items-center"
+                className="btn-primary px-4 py-2 flex items-center space-x-2 text-sm font-semibold"
+                title={user ? 'Sign Out' : 'Sign In'}
               >
-                {user ? 'Sign Out' : 'Sign In'}
+                {user ? <LogOut size={18} strokeWidth={2.25} /> : <User size={18} strokeWidth={2.25} />}
+                <span>{user ? 'Sign Out' : 'Sign In'}</span>
               </button>
+
+              {/* Theme Toggle dropdown */}
+              <ThemeToggle />
             </div>
 
             {/* Mobile Menu Button (Positioned at the far right, styled with brand green icon matching Image 1) */}
@@ -159,26 +180,28 @@ export const Navbar = () => {
                   }}
                 >
                   <img
-                    src="/samstones-logo.jpg"
+                    src="/logo.png"
                     alt="Samstones Logo"
-                    className="h-10 w-auto mr-2.5 object-contain rounded-lg shadow-sm"
+                    className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
                   />
                   <div className="flex flex-col justify-center leading-none">
-                    <span className="font-sans text-lg font-extrabold tracking-tight text-gray-900 dark:text-white uppercase">
-                      SAMSTONES
-                    </span>
-                    <span className="font-sans text-[9px] font-bold tracking-widest text-[#109121] dark:text-[#16C72E] uppercase mt-0.5">
-                      MARKETPLACE
+                    <span className="font-sans text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-yellow-500 dark:text-yellow-400">
+                      Samstones
                     </span>
                   </div>
                 </div>
-                <button 
-                  onClick={() => setMobileMenuOpen(false)} 
-                  className="text-gray-400 hover:text-[#109121] dark:hover:text-[#16C72E] p-1 flex items-center justify-center"
-                  aria-label="Close Menu"
-                >
-                  <X size={26} className="text-[#109121] dark:text-[#16C72E]" strokeWidth={2.5} />
-                </button>
+                <div className="flex items-center space-x-4">
+                  {/* Mobile Theme Toggle */}
+                  <ThemeToggle />
+                  
+                  <button 
+                    onClick={() => setMobileMenuOpen(false)} 
+                    className="text-gray-400 dark:text-white hover:text-[#109121] dark:hover:text-[#16C72E] p-1 flex items-center justify-center"
+                    aria-label="Close Menu"
+                  >
+                    <X size={26} className="text-[#109121] dark:text-[#16C72E]" strokeWidth={2.5} />
+                  </button>
+                </div>
               </div>
               
               {/* Left-aligned navigation links matching user request (size 12 font) */}
@@ -251,7 +274,9 @@ export const Navbar = () => {
                     if (!user) {
                       setCurrentView('auth');
                     } else {
-                      supabase.auth.signOut();
+                      signOut(auth).then(() => {
+                        toast.success('Successfully signed out');
+                      });
                     }
                   }}
                   className="text-left text-[12px] font-sans font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors py-1.5 w-full"

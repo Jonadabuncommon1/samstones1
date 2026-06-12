@@ -8,7 +8,7 @@ function buildSystemPrompt(products: Product[]): string {
     `- ${p.name} (${p.category}): ${formatPrice(p.price)}${p.description ? ' — ' + p.description : ''}${p.isNew ? ' [NEW]' : ''}${p.isTrending ? ' [TRENDING]' : ''}`
   ).join('\n');
 
-  return `You are "Sam", a friendly and knowledgeable AI shopping assistant for SAMSTONES — a premium, legally registered Nigerian marketplace (legally registered as "Samstones International Resources Limited" with CAC Reg No: 1836199) selling luxury goods including Shoes, Bags, Clothes, Jewelries, Cars, Phone Accessories, Drinks, Cosmetics, Provisions, and Real Estates.
+  return `You are "Sam", a friendly and knowledgeable AI shopping assistant for SAMSTONES — a premium Nigerian marketplace (Samstones Marketplace) selling luxury goods including Shoes, Bags, Clothes, Jewelries, Cars, Phone Accessories, Drinks, Cosmetics, Provisions, and Real Estates.
 
 Our store opening hours are: 8am - 10pm, Monday to Saturday (Closed on Sundays).
 
@@ -16,7 +16,7 @@ Your personality: warm, helpful, enthusiastic about fashion and luxury, professi
 
 Your capabilities:
 - Help customers find products by category, price range, or description
-- Answer questions about the store (Samstones is based in Nigeria. HQ: Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State. Phone: +234 806 517 9554. Email: info@samstonesresources.com. CAC Reg: 1836199, open Mon-Sat 8am-10pm, checkout via WhatsApp)
+- Answer questions about the store (Samstones is based in Nigeria. HQ: Iledu Bustop Badagry-Express Way, Lagos State. Branch: Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State. Phone: +234 806 517 9554. Email: support@samstonesresources.com, open Mon-Sat 8am-10pm, checkout via WhatsApp)
 - Suggest trending/new arrival products
 - Explain how ordering works (add to cart → checkout on WhatsApp)
 - Give general fashion/style advice
@@ -39,11 +39,101 @@ export interface ChatMessage {
   content: string;
 }
 
-function findPredefinedAnswer(message: string): string | null {
+function parsePriceQuery(message: string): { limit: number; type: 'under' | 'over' } | null {
+  // Strip currency symbols and commas
+  const cleanMsg = message.toLowerCase().replace(/[,₦]/g, '');
+  
+  // Match patterns like "50k", "50 k", "50000"
+  const match = cleanMsg.match(/(\d+)\s*k\b|(\d+)/);
+  if (!match) return null;
+  
+  let limit = 0;
+  if (match[1]) {
+    limit = parseInt(match[1]) * 1000;
+  } else if (match[2]) {
+    limit = parseInt(match[2]);
+  }
+  
+  if (limit <= 0) return null;
+  
+  let type: 'under' | 'over' = 'under';
+  
+  if (cleanMsg.includes('under') || 
+      cleanMsg.includes('below') || 
+      cleanMsg.includes('less than') || 
+      cleanMsg.includes('budget') || 
+      cleanMsg.includes('max') || 
+      cleanMsg.includes('cheap') || 
+      cleanMsg.includes('within')) {
+    type = 'under';
+  } else if (cleanMsg.includes('more than') || 
+             cleanMsg.includes('above') || 
+             cleanMsg.includes('over') || 
+             cleanMsg.includes('greater than') || 
+             cleanMsg.includes('not lower') || 
+             cleanMsg.includes('not below') || 
+             cleanMsg.includes('min') || 
+             cleanMsg.includes('higher') || 
+             cleanMsg.includes('expensive') || 
+             cleanMsg.includes('from')) {
+    type = 'over';
+  } else {
+    // Context fallback: if asking for "best [price]" or "show me [price]"
+    if (cleanMsg.includes('best') || cleanMsg.includes('show') || cleanMsg.includes('find')) {
+      type = 'under';
+    } else {
+      return null; // Not a clear price constraint
+    }
+  }
+  
+  return { limit, type };
+}
+
+function findPredefinedAnswer(message: string, products: Product[]): string | null {
   const normalized = message.toLowerCase().trim();
+
+  // 0. Intercept and handle price queries first (Request 3: best under 50k, more than 50k)
+  const priceQuery = parsePriceQuery(normalized);
+  if (priceQuery) {
+    const { limit, type } = priceQuery;
+    let filtered = products.filter(p => type === 'under' ? p.price <= limit : p.price >= limit);
+    
+    if (type === 'under') {
+      filtered.sort((a, b) => b.price - a.price); // Show best (most premium but within budget) first
+    } else {
+      filtered.sort((a, b) => a.price - b.price); // Show starting from budget floor first
+    }
+    
+    if (filtered.length > 0) {
+      let reply = `Here are our finest premium items **${type === 'under' ? 'under or up to' : 'starting from'} ${formatPrice(limit)}**:\n\n`;
+      filtered.slice(0, 8).forEach(p => {
+        reply += `- **${p.name}** (${p.category}) — **${formatPrice(p.price)}**\n`;
+        if (p.description) reply += `  _${p.description.slice(0, 80)}..._\n`;
+      });
+      reply += `\nWould you like me to help you add any of these to your cart? 🛍️`;
+      return reply;
+    } else {
+      return `We don't currently have items in stock that are exactly ${type === 'under' ? 'under' : 'above'} **${formatPrice(limit)}**, but here are some of our trending pieces: \n- **Italian Leather Oxfords** (₦85,000)\n- **Heritage Beaded Clutch** (₦45,000)\n\nFeel free to explore our homepage to see our full premium collection! 😊`;
+    }
+  }
 
   // Helper helpers to check if a message matches keywords
   const containsAny = (...words: string[]) => words.some(word => normalized.includes(word));
+
+  if (containsAny('lowest price', 'cheapest', 'minimum price', 'least expensive', 'lowest')) {
+    if (products.length > 0) {
+      const minProduct = [...products].sort((a, b) => a.price - b.price)[0];
+      return `Our most affordable premium item currently in stock is the **${minProduct.name}** at **${formatPrice(minProduct.price)}**. It's located in the ${minProduct.category} category!`;
+    }
+  }
+
+  if (containsAny('highest price', 'most expensive', 'maximum price', 'priciest', 'highest')) {
+    if (products.length > 0) {
+      const maxProduct = [...products].sort((a, b) => b.price - a.price)[0];
+      return `Our most premium item currently in stock is the **${maxProduct.name}** at **${formatPrice(maxProduct.price)}**. It's located in the ${maxProduct.category} category!`;
+    }
+  }
+
 
   // 1. How to order / buy / checkout
   if (containsAny('order', 'buy', 'purchase', 'checkout', 'how to shop', 'how do i shop', 'how can i shop', 'how do i buy', 'how to buy')) {
@@ -57,7 +147,7 @@ function findPredefinedAnswer(message: string): string | null {
   // 2. Location / address / base
   if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'lekki', 'headquarters')) {
     return `We are proudly based in **Nigeria**!
-Our headquarters is located at **Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State, Nigeria** (Visits by appointment only).
+Our headquarters is located at **Iledu Bustop Badagry-Express Way, Lagos Nigeria** and our branch office is at **Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State, Nigeria**.
 Our luxury physical items (shoes, bags, clothes, cosmetics, etc.) are available for prompt nationwide delivery directly to your doorstep.
 For our luxury investments:
 - 🚗 **Premium Cars** are available in **Lagos**.
@@ -76,9 +166,9 @@ Once you place your order via **Checkout on WhatsApp**, our representative will 
     return `You can reach our team instantly by clicking the **Checkout on WhatsApp** button in your Cart! 
 If you have a general inquiry or want to chat with us directly, you can click on the WhatsApp icon on any product page, or contact us at:
 - 📱 **Phone/WhatsApp:** +234 806 517 9554
-- ✉️ **Email:** info@samstonesresources.com
+- ✉️ **Email:** support@samstonesresources.com
 
-Our support is fully active during opening hours: **Monday to Saturday, 8am - 10pm** (CAC Reg No: 1836199).`;
+Our support is fully active during opening hours: **Monday to Saturday, 8am - 10pm**.`;
   }
 
   // 5. Trending / best / popular / hot
@@ -184,10 +274,10 @@ Feel free to click any category on our homepage to see our full inventory! 🛍�
 Please note that we are closed on Sundays. You can still browse our site and add items to your cart anytime, and we will process your WhatsApp order first thing Monday morning!`;
   }
 
-  // 18. Registration number / CAC / RC / legal / company number
-  if (containsAny('registration', 'register', 'cac', 'rc', 'number', 'legal', 'company', 'licensed')) {
-    return `Yes, **Samstones International Resources Limited** is a fully registered and legal company in Nigeria! 🇳🇬 
-Our official CAC registration number is **1836199**. You can shop with absolute trust and peace of mind!`;
+  // 18. Registration number / legal / company number
+  if (containsAny('registration', 'register', 'number', 'legal', 'company', 'licensed')) {
+    return `We are a proudly established and professional organization operating in Nigeria as **Samstones Marketplace**. 
+You can shop with absolute trust and peace of mind!`;
   }
 
   return null;
@@ -199,7 +289,7 @@ export async function sendChatMessage(
   products: Product[]
 ): Promise<string> {
   // 1. Try local FAQ matcher first to give instant, bulletproof replies even if offline/blocked
-  const faqAnswer = findPredefinedAnswer(message);
+  const faqAnswer = findPredefinedAnswer(message, products);
   if (faqAnswer) {
     return faqAnswer;
   }
@@ -207,7 +297,7 @@ export async function sendChatMessage(
   const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
   if (!API_KEY || API_KEY.trim() === '') {
-    return "Hi! I'm Sam 👋 The AI assistant is almost ready — the Gemini API key just needs to be added to Vercel environment variables. In the meantime, feel free to browse the store or contact us on WhatsApp for help!";
+    return "Hi! I'm Sam 👋 I am here to help you explore our collection! Feel free to browse our categories, add items to your cart, and checkout on WhatsApp. You can also chat directly with our team anytime! 🛍️";
   }
 
   try {
@@ -236,7 +326,7 @@ export async function sendChatMessage(
     const msg = error?.message || '';
     
     if (msg.includes('API_KEY') || msg.includes('api key') || msg.includes('API key')) {
-      return "⚠️ The API key seems invalid. Please double-check that VITE_GEMINI_API_KEY is set correctly in Vercel and redeploy.";
+      return "Hi! I'm Sam 👋 I am here to help you explore our collection! Feel free to browse our categories, add items to your cart, and checkout on WhatsApp. You can also chat directly with our team anytime! 🛍️";
     }
     if (msg.includes('quota') || msg.includes('QUOTA')) {
       return "I've hit my usage limit for now. Please try again in a few minutes! 😊";

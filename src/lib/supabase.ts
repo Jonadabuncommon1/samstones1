@@ -3,16 +3,26 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Missing Supabase environment variables. Please check your .env file.');
-}
-
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export async function uploadImage(file: File): Promise<string | null> {
+  if (!file) return null;
+
+  const toBase64 = (f: File): Promise<string> => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(f);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = error => reject(error);
+  });
+
   try {
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.warn('Supabase not configured, falling back to base64 encoding for image.');
+      return await toBase64(file);
+    }
+
     const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
+    const fileName = `${Math.random()}.${fileExt}`;
     const filePath = `${fileName}`;
 
     const { error: uploadError } = await supabase.storage
@@ -20,14 +30,14 @@ export async function uploadImage(file: File): Promise<string | null> {
       .upload(filePath, file);
 
     if (uploadError) {
-      console.error('Error uploading image:', uploadError.message);
-      throw uploadError;
+      console.error('Error uploading image to Supabase:', uploadError.message);
+      return await toBase64(file);
     }
 
     const { data } = supabase.storage.from('product-images').getPublicUrl(filePath);
     return data.publicUrl;
-  } catch (error: any) {
-    console.error('Unexpected error during image upload:', error);
-    throw error;
+  } catch (err) {
+    console.error('Unexpected error during Supabase upload:', err);
+    return await toBase64(file).catch(() => null);
   }
 }

@@ -3,7 +3,8 @@ import { motion } from 'motion/react';
 import { useAppContext } from '../../store/AppContext';
 import { marketplaceCategories, formatPrice } from '../../data';
 import { ProductCard } from '../shop/ProductCard';
-import { Search, ArrowRight, ShieldCheck, Zap, Globe, ShoppingBag, Shirt, Footprints, Briefcase, Gem, Car, Home, Sparkles, Wine, Headphones, ArrowUpRight, ArrowLeft } from 'lucide-react';
+import { Search, ArrowRight, ShieldCheck, Zap, Globe, ShoppingBag, Shirt, Footprints, Briefcase, Gem, Car, Home, Sparkles, Wine, Headphones, ArrowUpRight, ArrowLeft, Target, Eye, Lightbulb } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -34,6 +35,30 @@ export const HomeView = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [stepWidth, setStepWidth] = useState(304);
   const carouselRef = React.useRef<HTMLDivElement>(null);
+  const categoriesRef = React.useRef<HTMLDivElement>(null);
+  const [servicesHintOffset, setServicesHintOffset] = useState(0);
+
+  // Animation hint to show slideability
+  React.useEffect(() => {
+    const timer1 = setTimeout(() => {
+      if (categoriesRef.current) {
+        categoriesRef.current.scrollBy({ left: 80, behavior: 'smooth' });
+      }
+      setServicesHintOffset(-60);
+    }, 1200);
+
+    const timer2 = setTimeout(() => {
+      if (categoriesRef.current) {
+        categoriesRef.current.scrollBy({ left: -80, behavior: 'smooth' });
+      }
+      setServicesHintOffset(0);
+    }, 1600);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, []);
 
   const coreServices = [
     {
@@ -98,6 +123,28 @@ export const HomeView = () => {
     }
   ];
 
+  const dynamicCoreServices = React.useMemo(() => {
+    return coreServices.map(service => {
+      const categoryProducts = products.filter(p => p.category === service.id);
+      
+      categoryProducts.sort((a, b) => {
+        const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return timeB - timeA;
+      });
+
+      const mostRecentProduct = categoryProducts[0];
+      const dynamicImage = (mostRecentProduct && mostRecentProduct.images && mostRecentProduct.images.length > 0) 
+        ? mostRecentProduct.images[0] 
+        : service.image;
+
+      return {
+        ...service,
+        image: dynamicImage
+      };
+    });
+  }, [products]);
+
   React.useEffect(() => {
     const handleResize = () => {
       setStepWidth(window.innerWidth >= 768 ? 304 : 256);
@@ -110,10 +157,10 @@ export const HomeView = () => {
   React.useEffect(() => {
     if (isHovered || isDragging) return;
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % coreServices.length);
+      setCurrentIndex((prev) => (prev + 1) % dynamicCoreServices.length);
     }, 3500);
     return () => clearInterval(interval);
-  }, [isHovered, isDragging, coreServices.length]);
+  }, [isHovered, isDragging, dynamicCoreServices.length]);
 
   const trendingProducts = products.filter(p => p.isTrending).slice(0, 4);
 
@@ -150,10 +197,11 @@ export const HomeView = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center space-x-2 bg-[#109121]/10 px-4 py-2 rounded-full mb-6 w-fit border border-[#109121]/20"
+              className="inline-flex items-center space-x-2 bg-[#109121]/10 px-4 py-2 rounded-full mb-6 w-fit border border-[#109121]/20 hover:border-[#109121]/60 hover:shadow-[0_0_20px_rgba(16,145,33,0.4)] transition-all duration-300 cursor-default animate-shine"
             >
-              <span className="text-xs font-black uppercase tracking-widest text-[#109121]">WE MEET YOUR NEEDS</span>
+              <span className="text-xs font-black uppercase tracking-widest text-[#109121] relative z-10">WE MEET YOUR NEEDS</span>
             </motion.div>
 
             <motion.h1
@@ -178,36 +226,63 @@ export const HomeView = () => {
           <h2 className="text-2xl md:text-3xl font-serif font-bold text-[#109121]">
             Categories
           </h2>
-          <button
-            onClick={() => { setCurrentView('category'); window.scrollTo(0, 0); }}
-            className="flex items-center space-x-2 text-sm font-medium text-gray-400 hover:text-gray-900 transition-colors"
-          >
-            <span>View All</span>
-            <ArrowRight size={16} />
-          </button>
         </div>
 
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-flow-col auto-cols-[calc(50%-0.5rem)] sm:auto-cols-[calc(33.333%-0.666rem)] lg:auto-cols-[calc(20%-0.8rem)] gap-4 overflow-x-auto snap-x snap-mandatory pb-4 no-scrollbar"
-        >
-          {marketplaceCategories.map((category) => (
-            <motion.div
-              key={category.id}
-              variants={cardVariants}
-              onClick={() => { setActiveCategory(category.id); setCurrentView('category'); window.scrollTo(0, 0); }}
-              className="snap-start bg-white/5 border border-white/10 rounded-2xl p-6 text-center cursor-pointer hover:bg-white/10 group shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="w-24 h-24 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform shadow-lg border border-[#109121]/20">
-                <img src={category.image} alt={category.name} className="w-20 h-20 rounded-full object-cover shadow-sm" />
-              </div>
-              <h3 className="font-black text-[#109121] text-base group-hover:text-green-700 group-hover:underline transition-colors">{category.name}</h3>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="relative group">
+          <button 
+            onClick={() => {
+              if (categoriesRef.current) {
+                categoriesRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+              }
+            }}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -ml-2 sm:-ml-5 z-40 w-10 h-10 rounded-full bg-white dark:bg-[#1a1a1a] shadow-md border border-gray-100 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-all md:opacity-0 md:group-hover:opacity-100"
+            aria-label="Scroll left"
+          >
+            <ArrowLeft size={18} />
+          </button>
+
+          <motion.div 
+            ref={categoriesRef}
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-flow-col auto-cols-[calc(50%-0.5rem)] sm:auto-cols-[calc(33.333%-0.666rem)] lg:auto-cols-[calc(20%-0.8rem)] gap-4 overflow-x-auto snap-x snap-mandatory pb-4 no-scrollbar scroll-smooth relative z-10"
+          >
+            {marketplaceCategories.map((category) => (
+              <motion.div
+                key={category.id}
+                variants={cardVariants}
+                className="snap-start relative bg-white/5 border border-white/10 rounded-2xl p-6 text-center group/card shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+              >
+                <button 
+                  className="absolute inset-0 w-full h-full z-20 cursor-pointer opacity-0" 
+                  onClick={() => { setActiveCategory(category.id); setCurrentView('category'); window.scrollTo(0, 0); }}
+                  aria-label={`View ${category.name}`}
+                />
+                <div className="relative z-10 w-24 h-24 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 group-hover/card:scale-110 transition-all duration-300 shadow-lg border border-[#109121]/20 text-[#109121] group-hover/card:text-[#0a5f15] group-hover/card:bg-[#109121]/20">
+                  {(() => {
+                    const IconComp = (LucideIcons as any)[category.icon || 'HelpCircle'];
+                    return <IconComp size={56} />;
+                  })()}
+                  <span className="sr-only">{category.name}</span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <button 
+            onClick={() => {
+              if (categoriesRef.current) {
+                categoriesRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+              }
+            }}
+            className="absolute right-0 top-1/2 -translate-y-1/2 -mr-2 sm:-mr-5 z-40 w-10 h-10 rounded-full bg-white dark:bg-[#1a1a1a] shadow-md border border-gray-100 dark:border-gray-800 flex items-center justify-center text-gray-600 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-all md:opacity-0 md:group-hover:opacity-100"
+            aria-label="Scroll right"
+          >
+            <ArrowRight size={18} />
+          </button>
+        </div>
       </section>
 
 
@@ -244,7 +319,7 @@ export const HomeView = () => {
                 <motion.div
                   drag="x"
                   dragConstraints={{ 
-                    left: -(coreServices.length * stepWidth - (carouselRef.current?.offsetWidth || 0) - 24), 
+                    left: -(dynamicCoreServices.length * stepWidth - (carouselRef.current?.offsetWidth || 0) - 24), 
                     right: 0 
                   }}
                   dragElastic={0.2}
@@ -254,16 +329,16 @@ export const HomeView = () => {
                     const dragOffset = info.offset.x;
                     const threshold = 50;
                     if (dragOffset < -threshold) {
-                      setCurrentIndex((prev) => Math.min(prev + 1, coreServices.length - 1));
+                      setCurrentIndex((prev) => Math.min(prev + 1, dynamicCoreServices.length - 1));
                     } else if (dragOffset > threshold) {
                       setCurrentIndex((prev) => Math.max(prev - 1, 0));
                     }
                   }}
-                  animate={{ x: -currentIndex * stepWidth }}
+                  animate={{ x: -currentIndex * stepWidth + servicesHintOffset }}
                   transition={{ type: "spring", stiffness: 85, damping: 17 }}
                   className="flex gap-6 cursor-grab active:cursor-grabbing w-max py-2 px-1"
                 >
-                  {coreServices.map((service, index) => {
+                  {dynamicCoreServices.map((service, index) => {
                     const IconComponent = service.icon;
                     const isActive = index === currentIndex;
                     return (
@@ -326,7 +401,7 @@ export const HomeView = () => {
                   <ArrowLeft size={18} />
                 </button>
                 <div className="flex space-x-1.5">
-                  {coreServices.map((_, i) => (
+                  {dynamicCoreServices.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => setCurrentIndex(i)}
@@ -337,8 +412,8 @@ export const HomeView = () => {
                   ))}
                 </div>
                 <button 
-                  onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, coreServices.length - 1))}
-                  disabled={currentIndex === coreServices.length - 1}
+                  onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, dynamicCoreServices.length - 1))}
+                  disabled={currentIndex === dynamicCoreServices.length - 1}
                   className="w-10 h-10 rounded-full border border-white/20 hover:border-[#DFB722] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
                 >
                   <ArrowRight size={18} />
@@ -349,14 +424,11 @@ export const HomeView = () => {
 
           {/* Right Side (40% width) - Text Content & CTAs (lg:col-span-5) */}
           <div className="lg:col-span-5 flex flex-col text-left relative z-10 lg:pl-8">
-            <span className="text-[#DFB722] font-black uppercase tracking-[0.25em] text-sm mb-3 block drop-shadow-md" style={{ WebkitTextStroke: '2px #DFB722' }}>
-              Core Services
-            </span>
             <h2 className="text-3xl md:text-5xl font-serif font-black text-[#DFB722] mb-6 leading-tight">
               Redefining Modern Commerce & Lifestyle.
             </h2>
             <p className="text-white font-bold text-sm md:text-base leading-relaxed mb-6 drop-shadow-md">
-              At Samstones International Resources Ltd, we provide premium products and reliable services designed to meet modern lifestyle and everyday needs with quality, elegance, and convenience.
+              At Samstones Marketplace, we provide premium products and reliable services designed to meet modern lifestyle and everyday needs with quality, elegance, and convenience.
             </p>
             <p className="text-white font-bold text-sm leading-relaxed mb-8 drop-shadow-md">
               We deliver premium fashion, automobiles, beauty products, lifestyle essentials, and real estate solutions with a commitment to quality, trust, and customer satisfaction. Designed for modern living. Delivered with excellence.
@@ -384,17 +456,18 @@ export const HomeView = () => {
       <section className="py-12 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <div className="text-center mb-8">
           <h2 className="text-xs font-semibold tracking-widest text-[#109121] uppercase dark:text-green-400">
-            About Samstones International Resources Ltd
+            About Samstones Marketplace
           </h2>
         </div>
         
         <div className="grid grid-cols-3 gap-3 sm:gap-6 mb-6">
           {[
-            { id: 'mission', title: 'Mission', icon: '🎯' },
-            { id: 'vision', title: 'Vision', icon: '✨' },
-            { id: 'motto', title: 'Motto', icon: '💎' }
+            { id: 'mission', title: 'Mission', icon: Target },
+            { id: 'vision', title: 'Vision', icon: Eye },
+            { id: 'motto', title: 'Motto', icon: Lightbulb }
           ].map((sec) => {
             const isActive = activeTab === sec.id;
+            const IconComp = sec.icon;
             return (
               <button
                 key={sec.id}
@@ -405,7 +478,7 @@ export const HomeView = () => {
                     : 'bg-white dark:bg-[#111] border-gray-200 dark:border-gray-800 text-gray-800 dark:text-gray-100 hover:border-[#109121] hover:shadow-md'
                 }`}
               >
-                <span className="text-xl sm:text-2xl mb-2">{sec.icon}</span>
+                <IconComp size={48} strokeWidth={2} className={`mb-3 ${isActive ? 'text-white' : 'text-[#109121]'}`} />
                 <span className="font-bold text-xs sm:text-sm tracking-wider uppercase">{sec.title}</span>
               </button>
             );
@@ -424,7 +497,7 @@ export const HomeView = () => {
                 <div>
                   <h3 className="text-sm font-bold text-[#109121] dark:text-[#16C72E] mb-3 uppercase tracking-widest">Our Mission</h3>
                   <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm sm:text-base">
-                    To provide high-quality products and dependable services that enhance everyday living through excellence, affordability, trust, and convenience. At <strong>Samstones International Resources Ltd</strong>, we are committed to delivering exceptional value across fashion, automobiles, beauty, lifestyle essentials, and real estate while maintaining professionalism, customer satisfaction, and integrity in every aspect of our business.
+                    To provide high-quality products and dependable services that enhance everyday living through excellence, affordability, trust, and convenience. At <strong>Samstones Marketplace</strong>, we are committed to delivering exceptional value across fashion, automobiles, beauty, lifestyle essentials, and real estate while maintaining professionalism, customer satisfaction, and integrity in every aspect of our business.
                   </p>
                 </div>
               )}
@@ -456,26 +529,22 @@ export const HomeView = () => {
               <div className="w-16 h-16 bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 text-[#109121]">
                 <ShieldCheck size={32} />
               </div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Quality Guarantee</h3>
-              <p className="text-gray-400 text-sm">Verified luxury assets and fresh provisions.</p>
+              <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">Quality Guarantee</h3>
+              <p className="text-gray-600 dark:text-white text-sm">Verified luxury assets and fresh provisions.</p>
             </div>
             <div className="text-center flex flex-col items-center">
               <div className="w-16 h-16 bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 text-[#109121]">
                 <Zap size={32} />
               </div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Fast Delivery</h3>
-              <p className="text-gray-400 text-sm">Swift and reliable shipping directly to your doorstep.</p>
+              <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">Fast Delivery</h3>
+              <p className="text-gray-600 dark:text-white text-sm">Swift and reliable shipping directly to your doorstep.</p>
             </div>
             <div className="text-center flex flex-col items-center">
               <div className="w-16 h-16 bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 text-[#109121] overflow-hidden">
-                <img
-                  src="/samstones-logo.jpg"
-                  alt="Samstones Logo"
-                  className="w-10 h-10 object-contain rounded-full shadow-sm"
-                />
+                <Globe size={32} />
               </div>
-              <h3 className="font-bold text-gray-900 text-lg mb-2">Global Support</h3>
-              <p className="text-gray-400 text-sm">Dedicated customer support available 24/7 globally.</p>
+              <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-2">Global Support</h3>
+              <p className="text-gray-600 dark:text-white text-sm">Dedicated customer support available 24/7 globally.</p>
             </div>
           </div>
         </div>
