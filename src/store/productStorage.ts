@@ -7,12 +7,12 @@ export async function fetchProductsFromDB(): Promise<Product[]> {
   try {
     const { data, error } = await supabase.from('products').select('*').order('created_at', { ascending: false });
     if (!error && data) {
-      // Supabase responded successfully — use it (even if empty)
-      // Also sync localStorage with the fresh Supabase data
-      try {
-        localStorage.setItem('samstones_products', JSON.stringify(data));
-      } catch {}
-      if (data.length > 0) return data as Product[];
+      if (data.length > 0) {
+        try {
+          localStorage.setItem('samstones_products', JSON.stringify(data));
+        } catch {}
+        return data as Product[];
+      }
     } else if (error) {
       console.error('Supabase fetch error:', error.message);
     }
