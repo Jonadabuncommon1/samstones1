@@ -2,6 +2,18 @@ import { Product } from '../types';
 import { supabase } from '../lib/supabase';
 import { products as seedProducts } from '../data';
 
+export function getInitialProductsFromStorage(): Product[] {
+  const STORAGE_KEY = 'samstones_products';
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as Product[];
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch {}
+  return [...seedProducts];
+}
+
 export async function fetchProductsFromDB(): Promise<Product[]> {
   // Always try Supabase first
   try {
@@ -21,15 +33,7 @@ export async function fetchProductsFromDB(): Promise<Product[]> {
   }
   
   // Fallback to local storage only if Supabase is completely unreachable
-  const STORAGE_KEY = 'samstones_products';
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as Product[];
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-    }
-  } catch {}
-  return [...seedProducts];
+  return getInitialProductsFromStorage();
 }
 
 export async function addProductToDB(product: Product): Promise<void> {

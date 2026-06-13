@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { Product, CartItem, ViewState } from '../types';
-import { fetchProductsFromDB, addProductToDB, updateProductInDB, deleteProductFromDB, createProductId } from './productStorage';
+import { fetchProductsFromDB, getInitialProductsFromStorage, addProductToDB, updateProductInDB, deleteProductFromDB, createProductId } from './productStorage';
 import { supabase } from '../lib/supabase';
 import { searchProducts } from '../utils/searchProducts';
 import { auth } from '../lib/firebase';
@@ -117,7 +117,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(getInitialProductsFromStorage());
   const [searchQuery, setSearchQuery] = useState('');
   const [searchSubmitted, setSearchSubmitted] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);

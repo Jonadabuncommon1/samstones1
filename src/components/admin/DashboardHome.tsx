@@ -50,15 +50,16 @@ export const DashboardHome = ({ onChangeView }: { onChangeView: (view: AdminView
     return () => unsubscribe();
   }, []);
 
-  const handleEnableNotifications = async () => {
-    const token = await requestNotificationPermission();
-    if (token) {
-      setNotificationsEnabled(true);
-      toast.success('Push notifications enabled! You will be alerted on this device.');
-    } else {
-      toast.error('Could not enable push notifications. Please allow notifications in your browser settings.');
-    }
-  };
+  useEffect(() => {
+    const enableNotifications = async () => {
+      const token = await requestNotificationPermission();
+      if (token) {
+        setNotificationsEnabled(true);
+      }
+    };
+    // Automatically try to enable notifications without requiring a button click
+    enableNotifications();
+  }, []);
 
   const overview = useMemo(() => {
     const totalValue = products.reduce((sum, p) => sum + p.price, 0);
@@ -126,17 +127,6 @@ export const DashboardHome = ({ onChangeView }: { onChangeView: (view: AdminView
               <p className="text-xs text-gray-500 dark:text-gray-400">{visitors.length} sign-in{visitors.length !== 1 ? 's' : ''} recorded</p>
             </div>
           </div>
-          <button
-            onClick={handleEnableNotifications}
-            className={`flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border transition-all ${
-              notificationsEnabled
-                ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border-green-200 dark:border-green-800'
-                : 'bg-[#109121]/10 text-[#109121] border-[#109121]/30 hover:bg-[#109121]/20'
-            }`}
-          >
-            {notificationsEnabled ? <Bell size={15} /> : <BellOff size={15} />}
-            {notificationsEnabled ? 'Notifications On' : 'Enable Push Alerts'}
-          </button>
         </div>
 
         {visitors.length === 0 ? (
