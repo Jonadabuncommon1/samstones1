@@ -90,9 +90,9 @@ function AppContent() {
       </main>
 
       {currentView === 'home' && <Footer />}
-      {currentView !== 'auth' && (
+      {currentView !== 'auth' && <WhatsAppCart />}
+      {currentView === 'home' && (
         <>
-          <WhatsAppCart />
           <FloatingWhatsApp />
           <React.Suspense fallback={null}>
             <AIChatWidget />
