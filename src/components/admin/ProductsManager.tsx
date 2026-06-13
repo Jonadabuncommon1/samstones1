@@ -57,8 +57,7 @@ export const ProductsManager = () => {
       images: product.images || [],
       isNew: !!product.isNew,
       isTrending: !!product.isTrending,
-      primaryColor: product.colors?.[0] || '',
-      secondaryColor: product.colors?.[1] || '',
+      colors: product.colors || [],
     });
     setIsModalOpen(true);
   };
