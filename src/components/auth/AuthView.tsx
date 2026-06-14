@@ -26,6 +26,7 @@ export const AuthView = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -63,6 +64,9 @@ export const AuthView = () => {
     setMessage(null);
 
     try {
+      if (!isResetPassword && !isUpdatePassword && !termsAccepted) {
+        throw new Error('You must accept the Privacy Policy and Terms of Service to continue.');
+      }
       if (isUpdatePassword) {
         if (!password) throw new Error('Please enter a new password.');
         if (!auth.currentUser) throw new Error('You must be logged in to update your password.');
@@ -109,6 +113,10 @@ export const AuthView = () => {
   };
 
   const handleGoogleSignIn = async () => {
+    if (!termsAccepted) {
+      setError('You must accept the Privacy Policy and Terms of Service to continue.');
+      return;
+    }
     setLoading(true);
     setError(null);
     setMessage(null);
@@ -172,6 +180,29 @@ export const AuthView = () => {
     </div>
   );
 
+  const TermsCheckbox = () => {
+    const idSuffix = Math.random().toString(36).substring(7);
+    return (
+      <div className="flex items-start space-x-3 p-4 bg-gray-50 dark:bg-[#1a1a1a] rounded-xl border border-gray-200 dark:border-gray-800 transition-colors">
+        <div className="flex items-center h-5">
+          <input
+            id={`terms-${idSuffix}`}
+            type="checkbox"
+            checked={termsAccepted}
+            onChange={(e) => setTermsAccepted(e.target.checked)}
+            className="w-5 h-5 text-[#109121] bg-white border-gray-300 rounded focus:ring-[#109121] dark:bg-[#111] dark:border-gray-600 focus:ring-2 cursor-pointer mt-0.5"
+          />
+        </div>
+        <label htmlFor={`terms-${idSuffix}`} className="text-sm text-gray-600 dark:text-gray-400 cursor-pointer">
+          I have read and agree to the{' '}
+          <button type="button" onClick={() => { setCurrentView('terms'); window.scrollTo(0,0); }} className="text-[#109121] hover:underline font-semibold">Terms of Service</button>
+          {' '}and{' '}
+          <button type="button" onClick={() => { setCurrentView('privacy'); window.scrollTo(0,0); }} className="text-[#109121] hover:underline font-semibold">Privacy Policy</button>.
+        </label>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0A0A0A] text-gray-900 dark:text-gray-100 flex items-center justify-center p-4 pt-24 transition-colors duration-500 relative overflow-hidden">
       
@@ -221,6 +252,8 @@ export const AuthView = () => {
               </div>
             )}
 
+            {!isResetPassword && !isUpdatePassword && <TermsCheckbox />}
+
             <button type="submit" disabled={loading} className="w-full bg-[#109121] hover:bg-[#0a5f15] text-white py-3.5 rounded-2xl font-bold uppercase tracking-widest text-sm transition-colors shadow-lg shadow-[#109121]/20">
               {loading ? 'Processing...' : isResetPassword ? 'Send Link' : isUpdatePassword ? 'Update' : 'Sign In'}
             </button>
@@ -258,6 +291,8 @@ export const AuthView = () => {
             <InputField icon={User} type="text" name="name" value={name} onChange={(e: any) => setName(e.target.value)} placeholder="Full Name" />
             <InputField icon={Mail} type="email" name="email" value={email} onChange={(e: any) => setEmail(e.target.value)} placeholder="Email address" />
             <InputField icon={Lock} type={showPassword ? "text" : "password"} name="password" value={password} onChange={(e: any) => setPassword(e.target.value)} placeholder="Password" showToggle />
+
+            <TermsCheckbox />
 
             <button type="submit" disabled={loading} className="w-full bg-[#109121] hover:bg-[#0a5f15] text-white py-3.5 rounded-2xl font-bold uppercase tracking-widest text-sm transition-colors shadow-lg shadow-[#109121]/20">
               {loading ? 'Processing...' : 'Sign Up'}
@@ -371,6 +406,8 @@ export const AuthView = () => {
                 )}
               </div>
             )}
+
+            {!isResetPassword && !isUpdatePassword && <TermsCheckbox />}
 
             <button type="submit" disabled={loading} className="w-full mt-2 bg-[#109121] hover:bg-[#0a5f15] text-white py-3.5 rounded-2xl font-bold uppercase tracking-widest text-sm transition-colors shadow-lg shadow-[#109121]/20">
               {loading ? 'Processing...' : isResetPassword ? 'Send Link' : isUpdatePassword ? 'Update' : isSignUp ? 'Sign Up' : 'Sign In'}
