@@ -89,23 +89,31 @@ function parsePriceQuery(message: string): { limit: number; type: 'under' | 'ove
   return { limit, type };
 }
 
+function getCategoryProducts(products: Product[], categoryNames: string[], limit = 4): string {
+  const matches = products.filter(p =>
+    categoryNames.some(cat => p.category?.toLowerCase().includes(cat.toLowerCase()))
+  );
+  if (matches.length === 0) return '';
+  return matches.slice(0, limit).map(p =>
+    `- **${p.name}** — ${formatPrice(p.price)}${p.description ? ` _(${p.description.slice(0, 70)}...)_` : ''}`
+  ).join('\n');
+}
+
 function findPredefinedAnswer(message: string, products: Product[]): string | null {
   const normalized = message.toLowerCase().trim();
 
-  // 0. Intercept and handle price queries first (Request 3: best under 50k, more than 50k)
+  // 0. Price queries
   const priceQuery = parsePriceQuery(normalized);
   if (priceQuery) {
     const { limit, type } = priceQuery;
     let filtered = products.filter(p => type === 'under' ? p.price <= limit : p.price >= limit);
-    
     if (type === 'under') {
-      filtered.sort((a, b) => b.price - a.price); // Show best (most premium but within budget) first
+      filtered.sort((a, b) => b.price - a.price);
     } else {
-      filtered.sort((a, b) => a.price - b.price); // Show starting from budget floor first
+      filtered.sort((a, b) => a.price - b.price);
     }
-    
     if (filtered.length > 0) {
-      let reply = `Here are our finest premium items **${type === 'under' ? 'under or up to' : 'starting from'} ${formatPrice(limit)}**:\n\n`;
+      let reply = `Here are our finest items **${type === 'under' ? 'under or up to' : 'starting from'} ${formatPrice(limit)}**:\n\n`;
       filtered.slice(0, 8).forEach(p => {
         reply += `- **${p.name}** (${p.category}) — **${formatPrice(p.price)}**\n`;
         if (p.description) reply += `  _${p.description.slice(0, 80)}..._\n`;
@@ -113,29 +121,28 @@ function findPredefinedAnswer(message: string, products: Product[]): string | nu
       reply += `\nWould you like me to help you add any of these to your cart? 🛍️`;
       return reply;
     } else {
-      return `We don't currently have items in stock that are exactly ${type === 'under' ? 'under' : 'above'} **${formatPrice(limit)}**, but here are some of our trending pieces: \n- **Italian Leather Oxfords** (₦85,000)\n- **Heritage Beaded Clutch** (₦45,000)\n\nFeel free to explore our homepage to see our full premium collection! 😊`;
+      return `We don't currently have items in that price range, but feel free to browse our full collection on the homepage! 😊`;
     }
   }
 
-  // Helper helpers to check if a message matches keywords
   const containsAny = (...words: string[]) => words.some(word => normalized.includes(word));
 
+  // Lowest / highest price
   if (containsAny('lowest price', 'cheapest', 'minimum price', 'least expensive', 'lowest')) {
     if (products.length > 0) {
-      const minProduct = [...products].sort((a, b) => a.price - b.price)[0];
-      return `Our most affordable premium item currently in stock is the **${minProduct.name}** at **${formatPrice(minProduct.price)}**. It's located in the ${minProduct.category} category!`;
+      const p = [...products].sort((a, b) => a.price - b.price)[0];
+      return `Our most affordable item right now is the **${p.name}** at **${formatPrice(p.price)}** in the ${p.category} category!`;
     }
   }
 
   if (containsAny('highest price', 'most expensive', 'maximum price', 'priciest', 'highest')) {
     if (products.length > 0) {
-      const maxProduct = [...products].sort((a, b) => b.price - a.price)[0];
-      return `Our most premium item currently in stock is the **${maxProduct.name}** at **${formatPrice(maxProduct.price)}**. It's located in the ${maxProduct.category} category!`;
+      const p = [...products].sort((a, b) => b.price - a.price)[0];
+      return `Our most premium item right now is the **${p.name}** at **${formatPrice(p.price)}** in the ${p.category} category!`;
     }
   }
 
-
-  // 1. How to order / buy / checkout
+  // 1. How to order
   if (containsAny('order', 'buy', 'purchase', 'checkout', 'how to shop', 'how do i shop', 'how can i shop', 'how do i buy', 'how to buy')) {
     return `To order from **SAMSTONES**, simply follow these easy steps:
 1. Browse our categories and click on any product you love.
@@ -144,8 +151,8 @@ function findPredefinedAnswer(message: string, products: Product[]): string | nu
 4. This will open a pre-filled WhatsApp chat with our sales team so we can finalize delivery details with you! 🛍️`;
   }
 
-  // 2. Location / address / base
-  if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'lekki', 'headquarters')) {
+  // 2. Location
+  if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'headquarters')) {
     return `We are proudly based in **Nigeria**!
 Our headquarters is located at **Iledu Bustop Badagry-Express Way, Lagos Nigeria** and our branch office is at **Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State, Nigeria**.
 Our luxury physical items (shoes, bags, clothes, cosmetics, etc.) are available for prompt nationwide delivery directly to your doorstep.
@@ -155,133 +162,116 @@ For our luxury investments:
 We are open **Monday to Saturday, from 8am to 10pm** (Closed on Sundays).`;
   }
 
-  // 3. Delivery / shipping / duration
+  // 3. Delivery
   if (containsAny('deliver', 'shipping', 'courier', 'send to', 'dispatch', 'transport')) {
     return `Yes, we offer reliable **nationwide delivery** across Nigeria! 📦 
 Once you place your order via **Checkout on WhatsApp**, our representative will confirm your delivery address and provide you with direct delivery rates and timelines. For luxury cars and real estate properties, we arrange physical site inspections and secure handovers.`;
   }
 
-  // 4. Contact / phone / whatsapp / number / call
-  if (containsAny('contact', 'phone', 'whatsapp', 'number', 'call you', 'reach you', 'support', 'instagram', 'facebook', 'email')) {
+  // 4. Contact
+  if (containsAny('contact', 'phone', 'whatsapp', 'call you', 'reach you', 'support', 'email')) {
     return `You can reach our team instantly by clicking the **Checkout on WhatsApp** button in your Cart! 
-If you have a general inquiry or want to chat with us directly, you can click on the WhatsApp icon on any product page, or contact us at:
 - 📱 **Phone/WhatsApp:** +234 806 517 9554
 - ✉️ **Email:** support@samstonesresources.com
 
-Our support is fully active during opening hours: **Monday to Saturday, 8am - 10pm**.`;
+Our support is fully active: **Monday to Saturday, 8am - 10pm**.`;
   }
 
-  // 5. Trending / best / popular / hot
-  if (containsAny('trending', 'trend', 'best', 'popular', 'hot', 'recommend', 'favorite', 'new')) {
-    return `Here are some of our hottest and most popular items at **SAMSTONES** right now:
-- 👟 **Italian Leather Oxfords** (₦85,000) — Handcrafted and ultra-sleek
-- 👗 **Onyx Black Senator Suit** (₦150,000) — Impeccably tailored Italian wool
-- 🚗 **2023 Mercedes-Benz G-Class** (₦150,000,000) — Luxury SUV, pristine condition
-- 🏠 **Luxury Detached Duplex** (₦350,000,000) — 5-Bedroom smart home in Lagos (with premium properties/lands available across Nigeria)
-- 🎧 **AirPods Pro (2nd Gen)** (₦180,000) — Personalized spatial audio
-- 🧴 **Tom Ford Oud Wood** (₦220,000) — Rare, exotic, and distinctive fragrance
-
-Which of these would you like to know more about? or you can add them directly to your cart! 😊`;
+  // 5. Trending / new arrivals — dynamic from real products
+  if (containsAny('trending', 'trend', 'popular', 'hot', 'new arrival', 'new arrivals', 'latest', 'what\'s new')) {
+    const trending = products.filter(p => p.isTrending || p.isNew).slice(0, 6);
+    if (trending.length > 0) {
+      let reply = `🔥 Here are our **hottest and newest items** at SAMSTONES right now:\n\n`;
+      trending.forEach(p => {
+        const badge = p.isNew ? ' 🆕' : p.isTrending ? ' 🔥' : '';
+        reply += `- **${p.name}** (${p.category}) — **${formatPrice(p.price)}**${badge}\n`;
+      });
+      reply += `\nWhich of these would you like to know more about? 😊`;
+      return reply;
+    }
+    // fallback: show a selection across categories
+    const sample = products.slice(0, 6);
+    if (sample.length > 0) {
+      let reply = `Here are some of our featured items right now:\n\n`;
+      sample.forEach(p => {
+        reply += `- **${p.name}** (${p.category}) — **${formatPrice(p.price)}**\n`;
+      });
+      reply += `\nExplore our full collection on the homepage! 🛍️`;
+      return reply;
+    }
   }
 
-  // 6. Shoes
-  if (containsAny('shoes', 'shoe', 'footwear', 'sneakers', 'heels', 'sandals', 'oxford', 'oxfords')) {
-    return `We have an elite collection of luxury footwear! 👟
-Our trending item is the **Italian Leather Oxfords** (₦85,000) — handcrafted from premium leather for gentlemen.
-You can view our complete footwear collection by clicking the **Shoes** category on our homepage!`;
+  // 6–15. Category-specific — fully dynamic
+  if (containsAny('shoes', 'shoe', 'footwear', 'sneakers', 'heels', 'sandals', 'oxford')) {
+    const items = getCategoryProducts(products, ['shoes', 'footwear']);
+    if (items) return `We have an elite collection of luxury footwear! 👟\n\n${items}\n\nClick the **Shoes** category on our homepage to see the full collection!`;
   }
 
-  // 7. Bags
-  if (containsAny('bags', 'bag', 'handbag', 'handbags', 'backpack', 'backpacks', 'purse', 'clutch')) {
-    return `We offer premium luxury bags and clutches! 👜
-Check out our gorgeous **Heritage Beaded Clutch** (₦45,000) which features stunning traditional beadwork.
-Click the **Bags** category on our homepage to view the full designer collection!`;
+  if (containsAny('bags', 'bag', 'handbag', 'backpack', 'purse', 'clutch')) {
+    const items = getCategoryProducts(products, ['bags', 'bag']);
+    if (items) return `We offer premium luxury bags and clutches! 👜\n\n${items}\n\nClick the **Bags** category on our homepage to see the full designer collection!`;
   }
 
-  // 8. Clothes
-  if (containsAny('clothes', 'clothing', 'suit', 'suits', 'senator', 'wear', 'streetwear', 'outfit', 'outfits', 'native')) {
-    return `We offer impeccably tailored luxury outfits! 👗👔
-Our top trending item is the **Onyx Black Senator Suit** (₦150,000) — tailored from premium Italian wool with traditional accents.
-Select the **Clothes** category on our homepage to browse all our luxury outfits!`;
+  if (containsAny('clothes', 'clothing', 'suit', 'senator', 'wear', 'outfit', 'native')) {
+    const items = getCategoryProducts(products, ['clothes', 'clothing']);
+    if (items) return `We offer impeccably tailored luxury outfits! 👗👔\n\n${items}\n\nSelect the **Clothes** category on our homepage to browse all our luxury outfits!`;
   }
 
-  // 9. Jewelries
-  if (containsAny('jewelries', 'jewelry', 'jewellery', 'gold', 'necklace', 'necklaces', 'ring', 'rings', 'bracelet', 'earrings', 'bead', 'beads')) {
-    return `Add a touch of elegance with our premium jewelry pieces! 💎
-Our popular **Coral Choker Statement** (₦60,000) features authentic Nigerian coral beads modernized into a structural neckpiece.
-Browse the **Jewelries** category on our homepage to see all our gold and traditional items!`;
+  if (containsAny('jewelries', 'jewelry', 'jewellery', 'gold', 'necklace', 'ring', 'bracelet', 'earring', 'bead')) {
+    const items = getCategoryProducts(products, ['jewelry', 'jewel']);
+    if (items) return `Add a touch of elegance with our premium jewelry pieces! 💎\n\n${items}\n\nBrowse the **Jewelries** category on our homepage!`;
   }
 
-  // 10. Cars
-  if (containsAny('cars', 'car', 'vehicle', 'vehicles', 'mercedes', 'suv', 'benz', 'g-class', 'g-wagon')) {
-    return `Looking for luxury on wheels? 🚗
-We feature pristine premium vehicles, including our flagship **2023 Mercedes-Benz G-Class** (₦150,000,000) — foreign used, full options, in Obsidian Black!
-Explore the **Cars** category on our homepage to view our luxury vehicle listings.`;
+  if (containsAny('cars', 'car', 'vehicle', 'mercedes', 'suv', 'benz', 'g-class', 'g-wagon', 'toyota', 'lexus')) {
+    const items = getCategoryProducts(products, ['cars', 'car', 'vehicle']);
+    if (items) return `Looking for luxury on wheels? 🚗\n\n${items}\n\nExplore the **Cars** category on our homepage to view all our luxury vehicle listings.`;
   }
 
-  // 11. Phone Accessories
-  if (containsAny('phone', 'accessories', 'airpods', 'charger', 'cases', 'power bank', 'smartwatch', 'smartwatches', 'gadgets')) {
-    return `Upgrade your tech collection! 🎧
-Our top seller is the **AirPods Pro (2nd Gen)** (₦180,000) featuring Active Noise Cancellation and spatial audio.
-Click the **Phone Accessories** category on our homepage to see all our chargers, power banks, and gadgets!`;
+  if (containsAny('phone', 'accessories', 'airpods', 'charger', 'power bank', 'smartwatch', 'gadget')) {
+    const items = getCategoryProducts(products, ['phone', 'accessories', 'tech']);
+    if (items) return `Upgrade your tech collection! 🎧\n\n${items}\n\nClick the **Phone Accessories** category on our homepage to see all our gadgets!`;
   }
 
-  // 12. Drinks
-  if (containsAny('drinks', 'drink', 'wine', 'wines', 'champagne', 'beverage', 'beverages', 'dom perignon')) {
-    return `Celebrate in high style! 🍾
-We have the iconic **Dom Pérignon Vintage 2012** (₦250,000) in stock — perfect for grand celebrations!
-Click the **Drinks** category on our homepage to explore our complete premium beverage menu.`;
+  if (containsAny('drinks', 'drink', 'wine', 'champagne', 'beverage', 'whiskey', 'spirits')) {
+    const items = getCategoryProducts(products, ['drinks', 'drink', 'beverage']);
+    if (items) return `Celebrate in high style! 🍾\n\n${items}\n\nClick the **Drinks** category on our homepage to explore our complete premium beverage collection.`;
   }
 
-  // 13. Cosmetics
-  if (containsAny('cosmetics', 'cosmetic', 'perfume', 'perfumes', 'fragrance', 'fragrances', 'skincare', 'makeup', 'tom ford')) {
-    return `Smell and feel premium every single day! ✨
-A classic favorite is **Tom Ford Oud Wood (50ml)** (₦220,000) — a rare, exotic, and highly distinctive fragrance.
-View all our luxury fragrances and beauty products under the **Cosmetics** category on our homepage!`;
+  if (containsAny('cosmetics', 'cosmetic', 'perfume', 'fragrance', 'skincare', 'makeup', 'beauty')) {
+    const items = getCategoryProducts(products, ['cosmetics', 'cosmetic', 'beauty']);
+    if (items) return `Smell and feel premium every single day! ✨\n\n${items}\n\nView all our luxury beauty products under the **Cosmetics** category on our homepage!`;
   }
 
-  // 14. Provisions
-  if (containsAny('provisions', 'provision', 'groceries', 'grocery', 'food', 'rice', 'basmati')) {
-    return `Stock up on high-quality kitchen essentials! 🌾
-We stock **Premium Basmati Rice (5kg)** (₦18,500) — premium long-grain, aromatic rice perfect for that special jollof.
-Select the **Provisions** category on our homepage to browse all household groceries.`;
+  if (containsAny('provisions', 'provision', 'groceries', 'grocery', 'food', 'rice')) {
+    const items = getCategoryProducts(products, ['provisions', 'provision', 'grocery']);
+    if (items) return `Stock up on high-quality kitchen essentials! 🌾\n\n${items}\n\nSelect the **Provisions** category on our homepage to browse all household groceries.`;
   }
 
-  // 15. Real Estates
-  if (containsAny('real estate', 'realestates', 'estate', 'property', 'properties', 'apartment', 'apartments', 'house', 'houses', 'duplex', 'duplexes', 'land', 'lands')) {
-    return `Invest in secure, high-yield luxury properties and premium lands! 🏠
-We offer pristine lands and luxury homes in prime, high-demand areas across both **Lagos** and multiple fast-growing locations within **Nigeria**! Our signature listings include a smart **Luxury 5-Bedroom Detached Duplex** (₦350,000,000) in Lagos.
-Click the **Real Estates** category on our homepage to view all our available premium property and land listings and schedule physical inspections.`;
+  if (containsAny('real estate', 'estate', 'property', 'properties', 'apartment', 'house', 'duplex', 'land')) {
+    const items = getCategoryProducts(products, ['real estate', 'property', 'land']);
+    if (items) return `Invest in secure, high-yield luxury properties! 🏠\n\n${items}\n\nClick the **Real Estates** category on our homepage to view all available listings and schedule inspections.`;
   }
 
-  // 16. Categories / products / what do you sell / what do you have / stock
-  if (containsAny('sell', 'have', 'products', 'category', 'categories', 'items', 'inventory', 'what do you do', 'what is this', 'stock')) {
-    return `We offer a curated collection of high-end luxury items and premium investments across these categories:
-- 👟 **Shoes & Bags**: Luxury designer footwear & handcrafted beaded clutches
-- 👗 **Clothes & Jewelries**: Senator suits & authentic structural coral beaded neckpieces
-- 🚗 **Cars**: Premium foreign-used luxury vehicles
-- 🏠 **Real Estates**: Exquisite properties and duplexes in Lagos
-- 🍾 **Drinks & Provisions**: Fine champagnes and premium groceries
-- 🧴 **Cosmetics**: Exquisite designer perfumes and skincare
-- 🎧 **Phone Accessories**: Premium tech gadgets and smart accessories
-
-Feel free to click any category on our homepage to see our full inventory! 🛍️`;
+  // 16. General categories / inventory
+  if (containsAny('sell', 'have', 'products', 'category', 'categories', 'items', 'inventory', 'stock', 'what do you do')) {
+    const cats = [...new Set(products.map(p => p.category).filter(Boolean))];
+    const catList = cats.length > 0
+      ? cats.map(c => `- **${c}**`).join('\n')
+      : `- 👟 Shoes\n- 👜 Bags\n- 👗 Clothes\n- 💎 Jewelries\n- 🚗 Cars\n- 🎧 Phone Accessories\n- 🍾 Drinks\n- 🧴 Cosmetics\n- 🌾 Provisions\n- 🏠 Real Estates`;
+    return `We offer a curated collection of luxury items across these categories:\n\n${catList}\n\nFeel free to click any category on our homepage to see our full inventory! 🛍️`;
   }
 
-  // 17. Hours / times / when are you open / closing / schedule
-  if (containsAny('hours', 'time', 'when are you open', 'opening', 'close', 'schedule', 'open days', 'work days', 'saturday', 'monday', 'weekdays')) {
+  // 17. Hours
+  if (containsAny('hours', 'time', 'when are you open', 'opening', 'close', 'schedule', 'open days', 'saturday', 'monday', 'weekdays')) {
     return `We are open **Monday to Saturday, from 8am to 10pm**! 🕙 
 Please note that we are closed on Sundays. You can still browse our site and add items to your cart anytime, and we will process your WhatsApp order first thing Monday morning!`;
   }
 
-  // 18. Registration number / legal / company number
-  if (containsAny('registration', 'register', 'number', 'legal', 'company', 'licensed')) {
-    return `We are a proudly established and professional organization operating in Nigeria as **Samstones Marketplace**. 
-You can shop with absolute trust and peace of mind!`;
-  }
-
   return null;
 }
+
+
+
 
 export async function sendChatMessage(
   message: string,

@@ -335,7 +335,7 @@ export const AboutView = () => {
                 <div className="w-12 h-12 bg-[#e6f4e8] dark:bg-[#109121]/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#109121] transition-colors">
                   <r.icon size={22} className="text-[#109121] group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="font-bold mb-2 text-[#DFB722]">{r.title}</h3>
+                <h3 className="font-black text-base mb-2 text-[#DFB722]">{r.title}</h3>
                 <p className="text-gray-500 dark:text-gray-400 dark:text-white text-sm leading-relaxed">{r.body}</p>
               </div>
             ))}

@@ -3,15 +3,18 @@ import { supabase } from '../lib/supabase';
 import { products as seedProducts } from '../data';
 
 export function getInitialProductsFromStorage(): Product[] {
-  const STORAGE_KEY = 'samstones_products';
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem('samstones_products');
     if (raw) {
-      const parsed = JSON.parse(raw) as Product[];
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed as Product[];
+      }
     }
-  } catch {}
-  return [...seedProducts];
+  } catch {
+    // If localStorage is unavailable or corrupt, start empty
+  }
+  return [];
 }
 
 export async function fetchProductsFromDB(): Promise<Product[]> {

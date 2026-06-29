@@ -67,7 +67,10 @@ export const Navbar = () => {
                 className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
               />
               <div className="flex flex-col justify-center leading-none">
-                <span className="font-sans text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-[#E8A317] dark:text-yellow-400 transition-colors duration-300">
+                <span
+                  style={{ fontFamily: '"Black Ops One", system-ui' }}
+                  className="text-xl md:text-2xl lg:text-3xl tracking-wide text-[#E8A317] dark:text-yellow-400 transition-colors duration-300 drop-shadow-sm"
+                >
                   Samstones
                 </span>
               </div>
@@ -185,7 +188,10 @@ export const Navbar = () => {
                     className="h-10 md:h-12 w-auto mr-2 md:mr-3 object-contain rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
                   />
                   <div className="flex flex-col justify-center leading-none">
-                    <span className="font-sans text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-yellow-500 dark:text-yellow-400">
+                    <span
+                      style={{ fontFamily: '"Black Ops One", system-ui' }}
+                      className="text-xl md:text-2xl lg:text-3xl tracking-wide text-yellow-500 dark:text-yellow-400 drop-shadow-sm"
+                    >
                       Samstones
                     </span>
                   </div>

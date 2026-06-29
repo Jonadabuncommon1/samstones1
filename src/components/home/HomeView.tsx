@@ -26,7 +26,7 @@ const cardVariants = {
 };
 
 export const HomeView = () => {
-  const { setCurrentView, setActiveCategory, products, submitSearch } = useAppContext();
+  const { setCurrentView, setActiveCategory, products, submitSearch, loadingProducts } = useAppContext();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState<'mission' | 'vision' | 'motto' | null>(null);
 
@@ -64,61 +64,61 @@ export const HomeView = () => {
     {
       id: 'clothes',
       title: 'Luxury Fashion',
-      image: '/cat_clothes_new.jpg',
+      image: '/cat_clothes_new.png',
       icon: Shirt
     },
     {
       id: 'shoes',
       title: 'Premium Footwear',
-      image: '/cat_shoes_new.jpg',
+      image: '/cat_shoes_new.png',
       icon: Footprints
     },
     {
       id: 'bags',
       title: 'Designer Bags',
-      image: '/cat_bags_new.jpg',
+      image: '/cat_bags_new.png',
       icon: Briefcase
     },
     {
       id: 'jewelries',
       title: 'Jewellery & Watches',
-      image: '/cat_jewelries_new.jpg',
+      image: '/cat_jewelries_new.png',
       icon: Gem
     },
     {
       id: 'cars',
       title: 'Cars & Automobiles',
-      image: '/cat_cars_new.jpg',
+      image: '/cat_cars_new.png',
       icon: Car
     },
     {
       id: 'real-estates',
       title: 'Real Estate',
-      image: '/cat_real_estates_new.jpg',
+      image: '/cat_real_estates_new.png',
       icon: Home
     },
     {
       id: 'cosmetics',
       title: 'Cosmetics & Beauty',
-      image: '/cat_cosmetics_new.jpg',
+      image: '/cat_cosmetics_new.png',
       icon: Sparkles
     },
     {
       id: 'drinks',
       title: 'Drinks & Beverages',
-      image: '/cat_drinks_new.jpg',
+      image: '/cat_drinks_new.png',
       icon: Wine
     },
     {
       id: 'phone-accessories',
       title: 'Phone Accessories',
-      image: '/cat_phone_accessories_new.jpg',
+      image: '/cat_phone_accessories_new.png',
       icon: Headphones
     },
     {
       id: 'provisions',
       title: 'Provisions & Essentials',
-      image: '/cat_provisions_new.jpg',
+      image: '/cat_provisions_new.png',
       icon: ShoppingBag
     }
   ];
@@ -142,9 +142,10 @@ export const HomeView = () => {
       });
 
       const mostRecentProduct = categoryProducts[0];
+      // Never fall back to static images — only use real product images
       const dynamicImage = (mostRecentProduct && mostRecentProduct.images && mostRecentProduct.images.length > 0) 
         ? mostRecentProduct.images[0] 
-        : service.image;
+        : null;
 
       return {
         ...service,
@@ -183,47 +184,34 @@ export const HomeView = () => {
     <div className="w-full bg-transparent text-gray-900 dark:text-gray-100 selection:bg-[#109121]/10 overflow-hidden transition-colors duration-500">
 
       <section className="relative pt-24 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div 
-          className="relative grid grid-cols-1 xl:grid-cols-2 gap-12 items-start rounded-3xl p-8 lg:p-12 shadow-2xl overflow-hidden border border-[#DFB722]/30 bg-white min-h-[500px] xl:min-h-[550px]"
-          style={{ 
-            backgroundImage: "url('/premium_marketplace.png')", 
-            backgroundSize: 'cover', 
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
+        <div
+          className="relative grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-12 items-start rounded-3xl p-4 md:p-8 lg:p-12 shadow-2xl overflow-hidden border border-[#DFB722]/30 bg-white min-h-[200px] sm:min-h-[300px] md:min-h-[500px] xl:min-h-[550px] bg-[url('/my_logo.png')] bg-contain md:bg-cover bg-center bg-no-repeat"
         >
-          {/* Subtle overlay to enhance contrast slightly if needed */}
+          {/* Subtle overlay */}
           <div className="absolute inset-0 bg-white/10 pointer-events-none z-0" />
 
-          {/* Left Column - Premium Text overlay pushed to the top left to avoid overlap */}
+          {/* Left Column — text pinned to top-left, small enough to never reach the product pics */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="relative z-20 flex flex-col justify-start text-left max-w-xl"
+            className="relative z-20 flex flex-col justify-start text-left max-w-md -mt-2 md:-mt-8 lg:-mt-12"
           >
-            <motion.div
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center space-x-2 bg-[#109121]/10 px-4 py-2 rounded-full mb-6 w-fit border border-[#109121]/20 hover:border-[#109121]/60 hover:shadow-[0_0_20px_rgba(16,145,33,0.4)] transition-all duration-300 cursor-default animate-shine"
+              className="inline-flex items-center space-x-2 bg-[#109121]/10 px-3 py-2 sm:px-6 sm:py-4 rounded-3xl mb-4 w-fit border border-[#109121]/20 hover:border-[#109121]/60 hover:shadow-[0_0_20px_rgba(16,145,33,0.4)] transition-all duration-300 cursor-default animate-shine"
             >
-              <span className="text-xs font-black uppercase tracking-widest text-[#109121] relative z-10">WE MEET YOUR NEEDS</span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-5xl font-serif font-black text-[#109121] mb-6 leading-tight"
-            >
-              Discover the Finest Assets & Supplies.
+              <span
+                style={{ fontFamily: '"Orbitron", sans-serif' }}
+                className="text-[0.8rem] sm:text-xl md:text-3xl lg:text-4xl font-black uppercase tracking-widest text-[#109121] relative z-10 whitespace-nowrap"
+              >WE MEET YOUR NEEDS</span>
             </motion.h1>
-
           </motion.div>
 
-          {/* Right Column - Kept empty to display the luxury house, car, phones, and brand stripes of the collage background */}
+          {/* Right Column — empty, lets background image show through */}
           <div className="hidden xl:block w-full h-full pointer-events-none" />
 
         </div>
@@ -364,12 +352,23 @@ export const HomeView = () => {
                           }
                         }}
                       >
-                        {/* Slide Category Image */}
-                        <img 
-                          src={service.image} 
-                          alt={service.title} 
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out z-0"
-                        />
+                        {/* Category image: shows cached product image instantly, updates to latest when Supabase loads */}
+                        {service.image ? (
+                          <img 
+                            key={service.image}
+                            src={service.image} 
+                            alt={service.title} 
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out z-0"
+                          />
+                        ) : (
+                          /* Shown only for categories that have never had a product uploaded */
+                          <div className="absolute inset-0 z-0 flex items-center justify-center bg-gradient-to-br from-[#0d2211] via-[#152b18] to-[#0a1a0b]">
+                            <div className="opacity-20 text-[#DFB722]">
+                              <IconComponent size={80} />
+                            </div>
+                          </div>
+                        )}
+
                         {/* Dark Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#031505] via-black/30 to-transparent z-10" />
 
@@ -432,13 +431,22 @@ export const HomeView = () => {
 
           {/* Right Side (40% width) - Text Content & CTAs (lg:col-span-5) */}
           <div className="lg:col-span-5 flex flex-col text-left relative z-10 lg:pl-8">
-            <h2 className="text-3xl md:text-5xl font-serif font-black text-[#DFB722] mb-6 leading-tight">
-              Redefining Modern Commerce & Lifestyle.
+            <h2
+              style={{ fontFamily: '"Bitcount Single Circle", system-ui' }}
+              className="text-3xl md:text-5xl font-black text-[#DFB722] mb-6 leading-tight"
+            >
+              Redefining Modern Commerce &amp; Lifestyle.
             </h2>
-            <p className="text-white font-bold text-sm md:text-base leading-relaxed mb-6 drop-shadow-md">
+            <p
+              style={{ fontFamily: '"Playwrite England Joined", cursive' }}
+              className="text-white text-sm md:text-base leading-relaxed mb-6 drop-shadow-md"
+            >
               At Samstones Marketplace, we provide premium products and reliable services designed to meet modern lifestyle and everyday needs with quality, elegance, and convenience.
             </p>
-            <p className="text-white font-bold text-sm leading-relaxed mb-8 drop-shadow-md">
+            <p
+              style={{ fontFamily: '"Playwrite England Joined", cursive' }}
+              className="text-white text-sm leading-relaxed mb-8 drop-shadow-md"
+            >
               We deliver premium fashion, automobiles, beauty products, lifestyle essentials, and real estate solutions with a commitment to quality, trust, and customer satisfaction. Designed for modern living. Delivered with excellence.
             </p>
 

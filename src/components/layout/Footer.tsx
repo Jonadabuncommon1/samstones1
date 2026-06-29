@@ -43,7 +43,10 @@ export const Footer = () => {
           <div>
             <div className="flex items-center gap-3 md:gap-4 mb-6">
               <img src="/logo.png" alt="Samstones Logo" className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain bg-white p-1 rounded-lg shadow-md" />
-              <h2 className="font-serif text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-yellow-500 mb-0">Samstones</h2>
+              <h2
+                style={{ fontFamily: '"Black Ops One", system-ui' }}
+                className="text-2xl md:text-3xl lg:text-4xl tracking-wide text-yellow-500 mb-0 drop-shadow-sm"
+              >Samstones</h2>
             </div>
             <p className="text-white/80 text-sm leading-relaxed mb-6">
               The premier luxury marketplace converging fashion, real estate, automotive, and lifestyle in one seamless digital marketplace.
@@ -52,7 +55,7 @@ export const Footer = () => {
               <a href="#" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Instagram size={18} /></a>
               <a href="https://www.facebook.com/share/15y5yJ2Xfff/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Facebook size={18} /></a>
               <a href="#" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Twitter size={18} /></a>
-              <a href="#" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><FaTelegramPlane size={18} /></a>
+              <a href="https://t.me/+QPUQUoIWMWwyNzA8" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><FaTelegramPlane size={18} /></a>
             </div>
           </div>
 

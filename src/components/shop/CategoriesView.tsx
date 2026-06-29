@@ -44,7 +44,7 @@ export const CategoriesView = () => {
           </button>
         </div>
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-serif font-bold text-[#FFD700] mb-4">
+          <h1 className="text-3xl md:text-5xl font-bold text-[#FFD700] mb-4" style={{ fontFamily: "'Pacifico', cursive" }}>
             Discover the best <span className="text-[#109121]">Product Collections!</span>
           </h1>
           <p className="text-gray-600 dark:text-white max-w-2xl mx-auto text-lg font-serif italic font-bold">
@@ -80,7 +80,7 @@ export const CategoriesView = () => {
                   alt={category.name}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#109121]/80 via-[#109121]/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 text-[#FFD700] group-hover:text-[#FFE55C] transition-colors flex items-center drop-shadow-[0_0_12px_rgba(255,215,0,0.6)]">
                   {(() => {
                     const IconComp = (LucideIcons as any)[category.icon || 'HelpCircle'];

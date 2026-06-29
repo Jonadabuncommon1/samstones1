@@ -26,6 +26,7 @@ const AIChatWidget = React.lazy(() => import('./components/AIChatWidget').then(m
 import { ThemeProvider } from './components/ThemeContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from 'react-hot-toast';
+import { SplashScreen } from './components/SplashScreen';
 
 function AppContent() {
   const { currentView, isAdminAuthenticated, loadingAuth } = useAppContext();
@@ -104,9 +105,12 @@ function AppContent() {
 }
 
 function App() {
+  const [showSplash, setShowSplash] = React.useState(true);
+
   return (
     <ThemeProvider>
       <AppProvider>
+        {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
         <AppContent />
         <Toaster position="top-right" />
       </AppProvider>

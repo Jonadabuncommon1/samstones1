@@ -40,6 +40,7 @@ interface AppContextProps {
   openAdminPortal: () => void;
   user: User | null;
   loadingAuth: boolean;
+  loadingProducts: boolean;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -123,6 +124,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   useEffect(() => {
     // Check initial Supabase auth session
@@ -147,7 +149,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    fetchProductsFromDB().then((data) => setProducts(data));
+    fetchProductsFromDB().then((data) => {
+      setProducts(data);
+      setLoadingProducts(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -349,6 +354,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         openAdminPortal,
         user,
         loadingAuth,
+        loadingProducts,
       }}
     >
       {children}

@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { useAppContext } from '../../store/AppContext';
 import { ArrowLeft } from 'lucide-react';
 
-export const TermsView = () => {
+export const TermsView = ({ onBack }: { onBack?: () => void }) => {
   const { setCurrentView } = useAppContext();
 
   return (
@@ -49,11 +49,14 @@ export const TermsView = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back button */}
         <button
-          onClick={() => { setCurrentView('home'); window.scrollTo(0, 0); }}
+          onClick={() => { 
+            if (onBack) onBack(); 
+            else { setCurrentView('home'); window.scrollTo(0, 0); }
+          }}
           className="flex items-center space-x-2 text-sm font-semibold text-[#109121] hover:text-[#0a5f15] transition-colors mb-10 group"
         >
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          <span>Back to Home</span>
+          <span>{onBack ? 'Back' : 'Back to Home'}</span>
         </button>
 
         {/* Header */}

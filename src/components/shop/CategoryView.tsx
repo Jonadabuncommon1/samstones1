@@ -29,6 +29,7 @@ export const CategoryView = () => {
     clearSearch,
     searchProductsGlobally,
     goBack,
+    loadingProducts,
   } = useAppContext();
 
   const [sortMode, setSortMode] = useState<string>('default');
@@ -93,7 +94,9 @@ export const CategoryView = () => {
     categoryProducts = products.filter((p) => p.category === categoryData.name);
   }
 
-  if (searchQuery.trim() && !isGlobalSearch) {
+  // Only filter products when the user has actually submitted the search (pressed Enter).
+  // While they are still typing, show the full unfiltered product list.
+  if (searchQuery.trim() && !isGlobalSearch && searchSubmitted) {
     categoryProducts = searchProducts(categoryProducts, searchQuery);
   }
 
@@ -125,7 +128,7 @@ export const CategoryView = () => {
               '/clothes_banner/clothes_banner_img_4.jfif',
               '/clothes_banner/clothes_banner_img_5.jfif',
               '/clothes_banner/clothes_banner_img_6.jfif',
-              '/clothes_banner/clothes_banner_img_7.jfif'
+               '/clothes_banner/clothes_banner_img_7.jfif'
             ].map((imgSrc, idx) => (
               <div
                 key={imgSrc}
@@ -462,12 +465,12 @@ export const CategoryView = () => {
         ) : (
           <>
             <img 
-              src={categoryData?.image || '/cart_laptop.jpg'} 
+              src={categoryData?.image || '/cart.png'} 
               alt=""
               className="absolute inset-0 w-full h-full object-cover opacity-30 blur-xl scale-110"
             />
             <img 
-              src={categoryData?.image || '/cart_laptop.jpg'} 
+              src={categoryData?.image || '/cart.png'} 
               alt={categoryName}
               className="absolute inset-0 w-full h-full object-contain opacity-100"
             />
@@ -580,7 +583,19 @@ export const CategoryView = () => {
 
           {/* Product Grid */}
           <div className="flex-1">
-            {displayProducts.length > 0 ? (
+            {loadingProducts ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-pulse">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="bg-white/5 border border-white/10 rounded-3xl p-4 h-[380px] flex flex-col justify-between">
+                    <div className="w-full h-[240px] bg-gray-200 dark:bg-white/5 rounded-2xl mb-4" />
+                    <div className="space-y-3">
+                      <div className="h-4 bg-gray-200 dark:bg-white/5 rounded w-3/4" />
+                      <div className="h-4 bg-gray-200 dark:bg-white/5 rounded w-1/2" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : displayProducts.length > 0 ? (
               <motion.div 
                 variants={containerVariants}
                 initial="hidden"
@@ -593,7 +608,7 @@ export const CategoryView = () => {
               </motion.div>
             ) : (
               <div className="text-center py-32 rounded-3xl border border-gray-200 bg-[#e6f4e8]/40 shadow-none px-6">
-                {searchQuery.trim() ? (
+                {searchQuery.trim() && searchSubmitted ? (
                   <>
                     <h3 className="text-2xl font-serif text-gray-900 dark:text-white mb-2">Not available at this moment</h3>
                     <p className="text-gray-600 dark:text-white font-medium max-w-md mx-auto">

@@ -29,8 +29,21 @@ export const AIChatWidget = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (suggestionsRef.current && !suggestionsRef.current.contains(e.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (isOpen && !isMinimized) {
@@ -84,10 +97,16 @@ export const AIChatWidget = () => {
 
   const quickPrompts = [
     "What's trending?",
-    "Show me shoes",
-    "How do I order?",
-    "Best under ₦50,000",
+    "Browse by category",
+    "Walk me through ordering",
+    "Best value products",
   ];
+
+  const handlePromptSelect = (prompt: string) => {
+    setInput(prompt);
+    setShowSuggestions(false);
+    setTimeout(() => inputRef.current?.focus(), 50);
+  };
 
   return (
     <>
@@ -184,27 +203,49 @@ export const AIChatWidget = () => {
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* Quick Prompts */}
-              {messages.length === 1 && (
-                <div className="px-3 py-2 flex gap-2 flex-wrap bg-gray-50 dark:bg-[#0d0d0d] border-t border-gray-100 dark:border-gray-800">
-                  {quickPrompts.map((prompt) => (
-                    <button
-                      key={prompt}
-                      onClick={() => {
-                        setInput(prompt);
-                        setTimeout(() => inputRef.current?.focus(), 50);
-                      }}
-                      className="text-xs bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 px-2.5 py-1.5 rounded-full hover:border-[#109121] hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors"
-                    >
-                      {prompt}
-                    </button>
-                  ))}
-                </div>
-              )}
+              {/* Persistent Suggestions Dropdown */}
+              <AnimatePresence>
+                {showSuggestions && (
+                  <motion.div
+                    ref={suggestionsRef}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 6 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute bottom-[72px] left-3 right-3 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700 rounded-xl shadow-xl z-10 overflow-hidden"
+                  >
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 px-3 pt-2.5 pb-1">Suggested questions</p>
+                    {quickPrompts.map((prompt, i) => (
+                      <button
+                        key={prompt}
+                        onClick={() => handlePromptSelect(prompt)}
+                        className={`w-full text-left text-sm px-3 py-2.5 text-gray-700 dark:text-gray-200 hover:bg-[#109121]/10 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors flex items-center gap-2 ${
+                          i < quickPrompts.length - 1 ? 'border-b border-gray-100 dark:border-gray-800' : ''
+                        }`}
+                      >
+                        <span className="text-[#109121] text-xs">✦</span>
+                        {prompt}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* Input */}
-              <div className="px-3 py-3 bg-white dark:bg-[#111] border-t border-gray-100 dark:border-gray-800 flex-shrink-0">
+              <div className="relative px-3 py-3 bg-white dark:bg-[#111] border-t border-gray-100 dark:border-gray-800 flex-shrink-0">
                 <div className="flex items-center gap-2">
+                  {/* Suggestions trigger button */}
+                  <button
+                    onClick={() => setShowSuggestions(prev => !prev)}
+                    title="Suggested questions"
+                    className={`w-9 h-9 flex-shrink-0 rounded-xl flex items-center justify-center transition-all border ${
+                      showSuggestions
+                        ? 'bg-[#109121] text-white border-[#109121]'
+                        : 'bg-gray-50 dark:bg-[#1a1a1a] text-gray-400 border-gray-200 dark:border-gray-700 hover:border-[#109121] hover:text-[#109121]'
+                    }`}
+                  >
+                    <Sparkles size={15} />
+                  </button>
                   <input
                     ref={inputRef}
                     type="text"
