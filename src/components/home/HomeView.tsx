@@ -249,20 +249,25 @@ export const HomeView = () => {
               <motion.div
                 key={category.id}
                 variants={cardVariants}
-                className="snap-start relative bg-white/5 border border-white/10 rounded-2xl p-6 text-center group/card shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+                className="snap-start relative bg-white/5 border border-white/10 rounded-2xl p-6 pb-5 text-center group/card shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col items-center"
               >
                 <button 
                   className="absolute inset-0 w-full h-full z-20 cursor-pointer opacity-0" 
                   onClick={() => { setActiveCategory(category.id); setCurrentView('category'); window.scrollTo(0, 0); }}
                   aria-label={`View ${category.name}`}
                 />
-                <div className="relative z-10 w-24 h-24 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-4 group-hover/card:scale-110 transition-all duration-300 shadow-lg border border-[#109121]/20 text-[#109121] group-hover/card:text-[#0a5f15] group-hover/card:bg-[#109121]/20">
+                <div className="relative z-10 w-24 h-24 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-3 group-hover/card:scale-110 transition-all duration-300 shadow-lg border border-[#109121]/20 text-[#109121] group-hover/card:text-[#16C72E] group-hover/card:bg-[#109121]/20 group-hover/card:shadow-[0_0_20px_rgba(16,145,33,0.5)]">
                   {(() => {
                     const IconComp = (LucideIcons as any)[category.icon || 'HelpCircle'];
                     return <IconComp size={56} />;
                   })()}
-                  <span className="sr-only">{category.name}</span>
                 </div>
+                <span
+                  className="relative z-10 text-[0.7rem] sm:text-xs font-bold uppercase tracking-widest text-[#16C72E] group-hover/card:text-[#FFD700] transition-colors duration-300 leading-tight text-center"
+                  style={{ textShadow: '0 0 8px rgba(22,199,46,0.8), 0 0 20px rgba(22,199,46,0.4)' }}
+                >
+                  {category.name}
+                </span>
               </motion.div>
             ))}
           </motion.div>
