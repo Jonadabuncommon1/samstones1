@@ -88,8 +88,8 @@ export const ContactView = () => {
 
         <div className="border border-gray-200 dark:border-gray-800 bg-[#e6f4e8]/50 dark:bg-[#109121]/5 p-8 flex flex-col items-center hover:border-[#109121] dark:hover:border-[#16C72E] transition-all rounded-2xl shadow-sm">
           <MapPin className="text-[#109121] dark:text-[#16C72E] mb-6" size={32} />
-          <h3 className="font-serif text-xl mb-4 text-gray-900 dark:text-gray-100">Headquarters</h3>
-          <p className="text-gray-600 dark:text-gray-300 text-sm mb-6 flex-1">Visit our Lagos headquarters to explore our exclusive luxury collections and services.</p>
+          <h3 className="font-serif text-xl mb-4 text-gray-900 dark:text-gray-100">Headquarter</h3>
+          <p className="text-gray-600 dark:text-gray-300 text-sm mb-6 flex-1">Visit our Lagos headquarter to explore our exclusive luxury collections and services.</p>
           <span className="text-xs font-semibold text-gray-900 dark:text-gray-100 px-2 leading-relaxed">
             Iledu Bustop Badagry-Express Way, Lagos Nigeria
           </span>
@@ -170,7 +170,7 @@ export const ContactView = () => {
           Samstones Marketplace represents the pinnacle of luxury, converging premium fashion, real estate, automotive, and lifestyle services into one seamless digital marketplace.
         </p>
         <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-          Our headquarters in Lagos serves as the central hub for delivering carefully curated products and services that reflect sophistication, confidence, and modern excellence.
+          Our headquarter in Lagos serves as the central hub for delivering carefully curated products and services that reflect sophistication, confidence, and modern excellence.
         </p>
         
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-8 mb-4">What We Offer</h3>
@@ -225,7 +225,7 @@ export const ContactView = () => {
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mt-8 mb-4">Contact Information</h3>
         <div className="bg-[#e6f4e8]/50 dark:bg-[#109121]/10 p-6 rounded-xl border border-gray-100 dark:border-gray-800 text-gray-600 dark:text-gray-300 space-y-3">
           <p className="font-bold text-gray-900 dark:text-white">Samstones Marketplace</p>
-          <p className="flex items-start gap-2"><MapPin size={18} className="shrink-0 mt-0.5 text-[#109121] dark:text-[#16C72E]" /> <span><strong>Headquarters:</strong> Iledu Bustop Badagry-Express Way, Lagos Nigeria</span></p>
+          <p className="flex items-start gap-2"><MapPin size={18} className="shrink-0 mt-0.5 text-[#109121] dark:text-[#16C72E]" /> <span><strong>Headquarter:</strong> Iledu Bustop Badagry-Express Way, Lagos Nigeria</span></p>
           <p className="flex items-start gap-2"><MapPin size={18} className="shrink-0 mt-0.5 text-[#109121] dark:text-[#16C72E]" /> <span><strong>Branch Office:</strong> Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State, Nigeria</span></p>
           <p className="flex items-start gap-2"><Phone size={18} className="shrink-0 mt-0.5 text-[#109121] dark:text-[#16C72E]" /> <span>Phone/WhatsApp: +234 708 293 0862 / +234 806 517 9554 / +234 703 962 7959</span></p>
           <p className="flex items-start gap-2"><Mail size={18} className="shrink-0 mt-0.5 text-[#109121] dark:text-[#16C72E]" /> <span>Email: <a href="mailto:support@samstonesresources.com" className="hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors font-medium">support@samstonesresources.com</a></span></p>

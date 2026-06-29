@@ -152,9 +152,9 @@ function findPredefinedAnswer(message: string, products: Product[]): string | nu
   }
 
   // 2. Location
-  if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'headquarters')) {
+  if (containsAny('located', 'location', 'address', 'where are you', 'where is', 'office', 'based', 'nigeria', 'lagos', 'headquarter')) {
     return `We are proudly based in **Nigeria**!
-Our headquarters is located at **Iledu Bustop Badagry-Express Way, Lagos Nigeria** and our branch office is at **Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State, Nigeria**.
+Our headquarter is located at **Iledu Bustop Badagry-Express Way, Lagos Nigeria** and our branch office is at **Zone C House 2, Agunmo, Ilogbo Eremi, Olorunda LCDA, Lagos State, Nigeria**.
 Our luxury physical items (shoes, bags, clothes, cosmetics, etc.) are available for prompt nationwide delivery directly to your doorstep.
 For our luxury investments:
 - 🚗 **Premium Cars** are available in **Lagos**.
