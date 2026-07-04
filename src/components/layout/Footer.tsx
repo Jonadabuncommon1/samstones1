@@ -52,7 +52,7 @@ export const Footer = () => {
               The premier luxury marketplace converging fashion, real estate, automotive, and lifestyle in one seamless digital marketplace.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Instagram size={18} /></a>
+              <a href="https://www.instagram.com/samstones001" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Instagram size={18} /></a>
               <a href="https://www.facebook.com/share/15y5yJ2Xfff/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Facebook size={18} /></a>
               <a href="#" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><Twitter size={18} /></a>
               <a href="https://t.me/+QPUQUoIWMWwyNzA8" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white hover:text-[#109121] transition-colors shadow-none"><FaTelegramPlane size={18} /></a>
