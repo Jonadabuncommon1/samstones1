@@ -9,6 +9,7 @@ import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { WhatsAppCart } from './components/WhatsAppCart';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { CookieConsent } from './components/CookieConsent';
 const HomeView = React.lazy(() => import('./components/home/HomeView').then(m => ({ default: m.HomeView })));
 const ProductDetailView = React.lazy(() => import('./components/shop/ProductDetailView').then(m => ({ default: m.ProductDetailView })));
 const WishlistView = React.lazy(() => import('./components/shop/WishlistView').then(m => ({ default: m.WishlistView })));
@@ -100,6 +101,7 @@ function AppContent() {
           </React.Suspense>
         </>
       )}
+      <CookieConsent />
     </div>
   );
 }
