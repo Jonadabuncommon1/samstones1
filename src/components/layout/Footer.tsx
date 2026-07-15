@@ -44,8 +44,8 @@ export const Footer = () => {
             <div className="flex items-center gap-3 md:gap-4 mb-6">
               <img src="/logo.png" alt="Samstones Logo" className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain bg-white p-1 rounded-lg shadow-md" />
               <h2
-                style={{ fontFamily: '"Black Ops One", system-ui' }}
-                className="text-2xl md:text-3xl lg:text-4xl tracking-wide text-yellow-500 mb-0 drop-shadow-sm"
+                style={{ fontFamily: '"Playfair Display", serif' }}
+                className="text-2xl md:text-3xl lg:text-4xl tracking-wide text-yellow-500 mb-0 drop-shadow-sm font-bold"
               >Samstones</h2>
             </div>
             <p className="text-white/80 text-sm leading-relaxed mb-6">

@@ -8,7 +8,7 @@ export const CookieConsent = () => {
 
   useEffect(() => {
     const hasConsented = localStorage.getItem('cookieConsent');
-    if (!hasConsented) {
+    if (hasConsented !== 'true') {
       setIsVisible(true);
     }
   }, []);
@@ -19,7 +19,7 @@ export const CookieConsent = () => {
   };
 
   const handleReject = () => {
-    localStorage.setItem('cookieConsent', 'false');
+    localStorage.removeItem('cookieConsent');
     window.location.href = 'https://www.google.com';
   };
 
