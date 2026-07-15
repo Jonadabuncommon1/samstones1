@@ -20,7 +20,7 @@ export const CookieConsent = () => {
 
   const handleReject = () => {
     localStorage.setItem('cookieConsent', 'false');
-    setIsVisible(false);
+    window.location.href = 'https://www.google.com';
   };
 
   const handlePrivacyClick = (e: React.MouseEvent) => {
