@@ -9,3 +9,6 @@ coverage/
 public/suites/
 src/Suites/
 
+
+.vercel
+.env*

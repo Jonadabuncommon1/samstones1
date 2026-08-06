@@ -2,10 +2,44 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Heart, Menu, X, Search, LogOut, LogIn, ArrowLeft, User } from 'lucide-react';
 import { auth } from '../../lib/firebase';
 import { signOut } from 'firebase/auth';
+import type { User as FirebaseUser } from 'firebase/auth';
 import { useAppContext } from '../../store/AppContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { ThemeToggle } from '../ThemeToggle';
 import toast from 'react-hot-toast';
+
+const getInitials = (name?: string | null, email?: string | null) => {
+  if (name && name.trim()) {
+    const parts = name.trim().split(/\s+/);
+    return parts.length > 1
+      ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+      : parts[0].slice(0, 2).toUpperCase();
+  }
+  if (email) return email[0].toUpperCase();
+  return '?';
+};
+
+const UserAvatar = ({ user, size = 36 }: { user: FirebaseUser; size?: number }) => {
+  if (user.photoURL) {
+    return (
+      <img
+        src={user.photoURL}
+        alt={user.displayName || 'Your account'}
+        referrerPolicy="no-referrer"
+        className="rounded-full object-cover border-2 border-[#109121]/40 group-hover:border-[#109121] transition-colors flex-shrink-0"
+        style={{ width: size, height: size }}
+      />
+    );
+  }
+  return (
+    <span
+      className="rounded-full bg-[#109121] text-white font-bold flex items-center justify-center border-2 border-[#109121]/40 group-hover:border-[#109121] transition-colors flex-shrink-0"
+      style={{ width: size, height: size, fontSize: size * 0.38 }}
+    >
+      {getInitials(user.displayName, user.email)}
+    </span>
+  );
+};
 
 export const Navbar = () => {
   const { cart, wishlist, currentView, setCurrentView, setCartOpen, submitSearch, user, goBack } = useAppContext();
@@ -33,6 +67,16 @@ export const Navbar = () => {
     setCurrentView(view);
     setMobileMenuOpen(false);
     window.scrollTo(0, 0);
+  };
+
+  const handleAuthClick = () => {
+    if (!user) {
+      setCurrentView('auth');
+    } else {
+      signOut(auth).then(() => {
+        toast.success('Successfully signed out');
+      });
+    }
   };
 
   return (
@@ -132,25 +176,34 @@ export const Navbar = () => {
               
               {/* Sign In / Sign Out */}
               <button
-                onClick={() => {
-                  if (!user) {
-                    setCurrentView('auth');
-                  } else {
-                    signOut(auth).then(() => {
-                      toast.success('Successfully signed out');
-                    });
-                  }
-                }}
-                className="btn-primary px-4 py-2 flex items-center space-x-2 text-sm font-semibold"
+                onClick={handleAuthClick}
+                className={user ? 'relative group flex items-center justify-center hover:scale-[1.03] transition-transform duration-200' : 'btn-primary px-4 py-2 flex items-center space-x-2 text-sm font-semibold'}
                 title={user ? 'Sign Out' : 'Sign In'}
               >
-                {user ? <LogOut size={18} strokeWidth={2.25} /> : <User size={18} strokeWidth={2.25} />}
-                <span>{user ? 'Sign Out' : 'Sign In'}</span>
+                {user ? (
+                  <UserAvatar user={user} size={36} />
+                ) : (
+                  <>
+                    <User size={18} strokeWidth={2.25} />
+                    <span>Sign In</span>
+                  </>
+                )}
               </button>
 
               {/* Theme Toggle dropdown */}
               <ThemeToggle />
             </div>
+
+            {/* Mobile: signed-in avatar shown on the right of the bar, next to the menu button */}
+            {user && (
+              <button
+                onClick={handleAuthClick}
+                className="lg:hidden relative group flex items-center justify-center hover:scale-[1.03] transition-transform duration-200"
+                title="Sign Out"
+              >
+                <UserAvatar user={user} size={32} />
+              </button>
+            )}
 
             {/* Mobile Menu Button (Positioned at the far right, styled with brand green icon matching Image 1) */}
             <button
@@ -277,16 +330,11 @@ export const Navbar = () => {
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    if (!user) {
-                      setCurrentView('auth');
-                    } else {
-                      signOut(auth).then(() => {
-                        toast.success('Successfully signed out');
-                      });
-                    }
+                    handleAuthClick();
                   }}
-                  className="text-left text-[12px] font-sans font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors py-1.5 w-full"
+                  className="text-left text-[12px] font-sans font-bold uppercase tracking-widest text-gray-700 dark:text-gray-300 hover:text-[#109121] dark:hover:text-[#16C72E] transition-colors py-1.5 w-full flex items-center gap-2"
                 >
+                  {user && <UserAvatar user={user} size={20} />}
                   {user ? 'Sign Out' : 'Sign In / Register'}
                 </button>
               </div>
