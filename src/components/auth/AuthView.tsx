@@ -275,7 +275,7 @@ export const AuthView = () => {
                 <InputField icon={Lock} type={showPassword ? "text" : "password"} name="password" value={password} onChange={(e: any) => setPassword(e.target.value)} placeholder={isUpdatePassword ? "New Password" : "Password"} showToggle showPassword={showPassword} onTogglePassword={() => setShowPassword(!showPassword)} />
                 {!isUpdatePassword && (
                   <div className="mt-2 text-right">
-                    <button type="button" onClick={() => window.location.hash = 'reset'} className="text-xs text-[#DFB722] hover:underline font-semibold">Forgot Password?</button>
+                    <button type="button" onClick={() => window.location.hash = 'reset'} className="text-xs text-[#C8A96B] hover:underline font-semibold">Forgot Password?</button>
                   </div>
                 )}
               </div>
@@ -297,7 +297,7 @@ export const AuthView = () => {
             )}
           </form>
           {isResetPassword && (
-            <button onClick={() => window.location.hash = 'signin'} className="mt-6 text-sm text-[#DFB722] hover:text-[#cdaf20] font-semibold transition-colors text-center w-full focus-ring">Back to Sign In</button>
+            <button onClick={() => window.location.hash = 'signin'} className="mt-6 text-sm text-[#C8A96B] hover:text-[#B8965A] font-semibold transition-colors text-center w-full focus-ring">Back to Sign In</button>
           )}
         </motion.div>
 
@@ -368,10 +368,10 @@ export const AuthView = () => {
                 transition={{ duration: 0.3 }}
                 className="relative z-10 flex flex-col items-center"
               >
-                <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(255,255,255,0.2)] border-4 border-[#DFB722]">
+                <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(255,255,255,0.2)] border-4 border-[#C8A96B]">
                   <img src="/samstones-logo.jpg" alt="Samstones Logo" className="w-20 h-20 rounded-full object-contain" />
                 </div>
-                <h2 className="text-4xl font-bold mb-4 font-serif text-[#DFB722]">Welcome Back!</h2>
+                <h2 className="text-4xl font-bold mb-4 font-serif text-[#C8A96B]">Welcome Back!</h2>
                 <p className="mb-10 text-white/90 leading-relaxed font-medium px-4">
                   Already a member of the Samstones family? Log in to access your premium dashboard and exclusive collections.
                 </p>
@@ -391,10 +391,10 @@ export const AuthView = () => {
                 transition={{ duration: 0.3 }}
                 className="relative z-10 flex flex-col items-center"
               >
-                <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(255,255,255,0.2)] border-4 border-[#DFB722]">
+                <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(255,255,255,0.2)] border-4 border-[#C8A96B]">
                   <img src="/samstones-logo.jpg" alt="Samstones Logo" className="w-20 h-20 rounded-full object-contain" />
                 </div>
-                <h2 className="text-4xl font-bold mb-4 font-serif text-[#DFB722]">Hello, Friend!</h2>
+                <h2 className="text-4xl font-bold mb-4 font-serif text-[#C8A96B]">Hello, Friend!</h2>
                 <p className="mb-10 text-white/90 leading-relaxed font-medium px-4">
                   Enter your personal details and start your journey with Samstones Marketplace. Discover the finest assets today.
                 </p>
@@ -448,7 +448,7 @@ export const AuthView = () => {
                 <InputField icon={Lock} type={showPassword ? "text" : "password"} name="password" value={password} onChange={(e: any) => setPassword(e.target.value)} placeholder={isUpdatePassword ? "New Password" : "Password"} showToggle showPassword={showPassword} onTogglePassword={() => setShowPassword(!showPassword)} />
                 {!isSignUp && !isUpdatePassword && (
                   <div className="mt-2 text-right">
-                    <button type="button" onClick={() => window.location.hash = 'reset'} className="text-xs text-[#DFB722] hover:underline font-semibold">Forgot Password?</button>
+                    <button type="button" onClick={() => window.location.hash = 'reset'} className="text-xs text-[#C8A96B] hover:underline font-semibold">Forgot Password?</button>
                   </div>
                 )}
               </div>
@@ -491,11 +491,11 @@ export const AuthView = () => {
 
           <div className="mt-8 text-center">
             {isResetPassword ? (
-              <button onClick={() => window.location.hash = 'signin'} className="text-sm text-[#DFB722] hover:text-[#cdaf20] font-semibold transition-colors focus-ring">Back to Sign In</button>
+              <button onClick={() => window.location.hash = 'signin'} className="text-sm text-[#C8A96B] hover:text-[#B8965A] font-semibold transition-colors focus-ring">Back to Sign In</button>
             ) : (
               <button 
                 onClick={() => window.location.hash = isSignUp ? 'signin' : 'signup'}
-                className="text-sm font-semibold text-[#DFB722] hover:text-[#cdaf20] transition-colors focus-ring"
+                className="text-sm font-semibold text-[#C8A96B] hover:text-[#B8965A] transition-colors focus-ring"
               >
                 {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
               </button>

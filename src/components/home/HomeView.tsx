@@ -185,7 +185,7 @@ export const HomeView = () => {
 
       <section className="relative pt-24 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          className="relative grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-12 items-start rounded-3xl p-4 md:p-8 lg:p-12 shadow-2xl overflow-hidden border border-[#DFB722]/30 bg-white min-h-[200px] sm:min-h-[300px] md:min-h-[500px] xl:min-h-[550px] bg-[url('/my_logo.png')] bg-contain md:bg-cover bg-center bg-no-repeat"
+          className="relative grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-12 items-start rounded-3xl p-4 md:p-8 lg:p-12 shadow-2xl overflow-hidden border border-[#C8A96B]/30 bg-white min-h-[200px] sm:min-h-[300px] md:min-h-[500px] xl:min-h-[550px] bg-[url('/my_logo.png')] bg-contain md:bg-cover bg-center bg-no-repeat"
         >
           {/* Subtle overlay */}
           <div className="absolute inset-0 bg-white/10 pointer-events-none z-0" />
@@ -202,7 +202,7 @@ export const HomeView = () => {
               animate={{ opacity: 1, y: 0 }}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center space-x-2 bg-[#109121]/10 px-3 py-2 sm:px-6 sm:py-4 rounded-3xl mb-4 w-fit border border-[#109121]/20 hover:border-[#109121]/60 hover:shadow-[0_0_20px_rgba(16,145,33,0.4)] transition-all duration-300 cursor-default animate-shine"
+              className="inline-flex items-center space-x-2 bg-[#109121]/10 px-3 py-2 sm:px-6 sm:py-4 rounded-3xl mb-4 w-fit border border-[#109121]/20 hover:border-[#109121]/60 hover:shadow-[0_0_10px_rgba(16,145,33,0.15)] transition-all duration-300 cursor-default animate-shine"
             >
               <span
                 style={{ fontFamily: '"Orbitron", sans-serif' }}
@@ -256,15 +256,14 @@ export const HomeView = () => {
                   onClick={() => { setActiveCategory(category.id); setCurrentView('category'); window.scrollTo(0, 0); }}
                   aria-label={`View ${category.name}`}
                 />
-                <div className="relative z-10 w-24 h-24 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-3 group-hover/card:scale-110 transition-all duration-300 shadow-lg border border-[#109121]/20 text-[#109121] group-hover/card:text-[#16C72E] group-hover/card:bg-[#109121]/20 group-hover/card:shadow-[0_0_20px_rgba(16,145,33,0.5)]">
+                <div className="relative z-10 w-24 h-24 mx-auto bg-[#109121]/10 rounded-full flex items-center justify-center mb-3 group-hover/card:scale-110 transition-all duration-300 shadow-lg border border-[#109121]/20 text-[#109121] group-hover/card:text-[#16C72E] group-hover/card:bg-[#109121]/20 group-hover/card:shadow-[0_0_10px_rgba(16,145,33,0.2)]">
                   {(() => {
                     const IconComp = (LucideIcons as any)[category.icon || 'HelpCircle'];
                     return <IconComp size={56} />;
                   })()}
                 </div>
                 <span
-                  className="relative z-10 text-[0.7rem] sm:text-xs font-bold uppercase tracking-widest text-[#16C72E] group-hover/card:text-[#FFD700] transition-colors duration-300 leading-tight text-center"
-                  style={{ textShadow: '0 0 8px rgba(22,199,46,0.8), 0 0 20px rgba(22,199,46,0.4)' }}
+                  className="relative z-10 text-[0.7rem] sm:text-xs font-bold uppercase tracking-widest text-[#16C72E] group-hover/card:text-[#C8A96B] transition-colors duration-300 leading-tight text-center"
                 >
                   {category.name}
                 </span>
@@ -298,7 +297,7 @@ export const HomeView = () => {
         className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20"
       >
         <div 
-          className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center rounded-[2.5rem] p-8 lg:p-16 shadow-2xl overflow-hidden border border-[#DFB722]/30"
+          className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center rounded-[2.5rem] p-8 lg:p-16 shadow-2xl overflow-hidden border border-[#C8A96B]/30"
           style={{ 
             backgroundImage: "url('/footer_bg_new.png')",
             backgroundSize: 'cover',
@@ -306,7 +305,7 @@ export const HomeView = () => {
           }}
         >
           {/* Dynamic Background Blur Effects */}
-          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#DFB722]/10 blur-[120px] rounded-full pointer-events-none -z-10" />
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#C8A96B]/10 blur-[120px] rounded-full pointer-events-none -z-10" />
           <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#109121]/15 blur-[120px] rounded-full pointer-events-none -z-10" />
 
           {/* Left Side (60% width) - Sliding Service Cards (lg:col-span-7) */}
@@ -347,7 +346,7 @@ export const HomeView = () => {
                         key={service.id}
                         whileHover={{ y: -8 }}
                         className={`w-[240px] md:w-[280px] h-[340px] md:h-[420px] flex-shrink-0 relative rounded-3xl overflow-hidden group shadow-xl border transition-all duration-500 cursor-pointer ${
-                          isActive ? 'border-[#DFB722] shadow-[#DFB722]/20' : 'border-white/10 hover:border-[#DFB722]/30'
+                          isActive ? 'border-[#C8A96B] shadow-[#C8A96B]/20' : 'border-white/10 hover:border-[#C8A96B]/30'
                         }`}
                         onClick={() => {
                           if (!isDragging) {
@@ -368,7 +367,7 @@ export const HomeView = () => {
                         ) : (
                           /* Shown only for categories that have never had a product uploaded */
                           <div className="absolute inset-0 z-0 flex items-center justify-center bg-gradient-to-br from-[#0d2211] via-[#152b18] to-[#0a1a0b]">
-                            <div className="opacity-20 text-[#DFB722]">
+                            <div className="opacity-20 text-[#C8A96B]">
                               <IconComponent size={80} />
                             </div>
                           </div>
@@ -382,17 +381,17 @@ export const HomeView = () => {
                           <div className="flex items-end justify-between">
                             <div className="flex flex-col text-left">
                               {/* Service Icon */}
-                              <div className="w-10 h-10 bg-[#DFB722]/25 backdrop-blur-md rounded-full flex items-center justify-center mb-3 text-[#DFB722] border border-[#DFB722]/30 group-hover:bg-[#DFB722] group-hover:text-black transition-colors duration-300">
+                              <div className="w-10 h-10 bg-[#C8A96B]/25 backdrop-blur-md rounded-full flex items-center justify-center mb-3 text-[#C8A96B] border border-[#C8A96B]/30 group-hover:bg-[#C8A96B] group-hover:text-black transition-colors duration-300">
                                 <IconComponent size={20} />
                               </div>
                               {/* Service Title */}
-                              <h4 className="font-sans font-black text-white text-lg md:text-xl tracking-wide group-hover:text-[#DFB722] transition-colors duration-300">
+                              <h4 className="font-sans font-black text-white text-lg md:text-xl tracking-wide group-hover:text-[#C8A96B] transition-colors duration-300">
                                 {service.title}
                               </h4>
                             </div>
 
                             {/* Small Arrow Icon */}
-                            <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/80 group-hover:bg-[#DFB722] group-hover:text-black group-hover:border-[#DFB722] transition-all duration-300">
+                            <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/80 group-hover:bg-[#C8A96B] group-hover:text-black group-hover:border-[#C8A96B] transition-all duration-300">
                               <ArrowUpRight size={18} className="group-hover:rotate-45 transition-transform duration-300" />
                             </div>
                           </div>
@@ -408,7 +407,7 @@ export const HomeView = () => {
                 <button 
                   onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
                   disabled={currentIndex === 0}
-                  className="w-10 h-10 rounded-full border border-white/20 hover:border-[#DFB722] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
+                  className="w-10 h-10 rounded-full border border-white/20 hover:border-[#C8A96B] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
                 >
                   <ArrowLeft size={18} />
                 </button>
@@ -418,7 +417,7 @@ export const HomeView = () => {
                       key={i}
                       onClick={() => setCurrentIndex(i)}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
-                        i === currentIndex ? 'w-6 bg-[#DFB722]' : 'w-1.5 bg-white/30 hover:bg-white/60'
+                        i === currentIndex ? 'w-6 bg-[#C8A96B]' : 'w-1.5 bg-white/30 hover:bg-white/60'
                       }`}
                     />
                   ))}
@@ -426,7 +425,7 @@ export const HomeView = () => {
                 <button 
                   onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, dynamicCoreServices.length - 1))}
                   disabled={currentIndex === dynamicCoreServices.length - 1}
-                  className="w-10 h-10 rounded-full border border-white/20 hover:border-[#DFB722] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
+                  className="w-10 h-10 rounded-full border border-white/20 hover:border-[#C8A96B] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
                 >
                   <ArrowRight size={18} />
                 </button>
@@ -438,7 +437,7 @@ export const HomeView = () => {
           <div className="lg:col-span-5 flex flex-col text-left relative z-10 lg:pl-8">
             <h2
               style={{ fontFamily: '"Bitcount Single Circle", system-ui' }}
-              className="text-3xl md:text-5xl font-black text-[#DFB722] mb-6 leading-tight"
+              className="text-3xl md:text-5xl font-black text-[#C8A96B] mb-6 leading-tight"
             >
               Redefining Modern Commerce &amp; Lifestyle.
             </h2>
@@ -458,13 +457,13 @@ export const HomeView = () => {
             <div className="flex flex-row items-center gap-3 w-full">
               <button
                 onClick={() => { setCurrentView('categories'); window.scrollTo(0, 0); }}
-                className="flex-1 bg-[#DFB722] hover:bg-[#cdaf20] text-black font-extrabold px-3 sm:px-6 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(223,183,34,0.3)] hover:shadow-[0_0_30px_rgba(223,183,34,0.8)] active:scale-95 cursor-pointer text-[10px] sm:text-xs tracking-wider uppercase text-center whitespace-nowrap"
+                className="flex-1 bg-[#C8A96B] hover:bg-[#B8965A] text-black font-extrabold px-3 sm:px-6 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-sm hover:shadow-[0_0_14px_rgba(200,169,107,0.35)] active:scale-95 cursor-pointer text-[10px] sm:text-xs tracking-wider uppercase text-center whitespace-nowrap"
               >
                 Explore Services
               </button>
               <button
                 onClick={() => { setCurrentView('contact'); window.scrollTo(0, 0); }}
-                className="flex-1 border border-[#DFB722]/30 text-[#DFB722] hover:bg-[#DFB722]/10 font-bold px-3 sm:px-6 py-3 sm:py-4 rounded-xl transition-all duration-300 active:scale-95 cursor-pointer text-[10px] sm:text-xs tracking-wider uppercase text-center whitespace-nowrap"
+                className="flex-1 border border-[#C8A96B]/30 text-[#C8A96B] hover:bg-[#C8A96B]/10 font-bold px-3 sm:px-6 py-3 sm:py-4 rounded-xl transition-all duration-300 active:scale-95 cursor-pointer text-[10px] sm:text-xs tracking-wider uppercase text-center whitespace-nowrap"
               >
                 Contact Us
               </button>

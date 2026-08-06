@@ -166,7 +166,7 @@ export const WhatsAppCart = () => {
                         navigator.clipboard.writeText(referralUrl);
                         toast.success('Referral link copied to clipboard!');
                       }}
-                      className="text-xs font-extrabold text-[#DFB722] hover:text-yellow-600 uppercase tracking-widest underline transition-colors"
+                      className="text-xs font-extrabold text-[#C8A96B] hover:text-yellow-600 uppercase tracking-widest underline transition-colors"
                     >
                       Copy My Referral Link
                     </button>

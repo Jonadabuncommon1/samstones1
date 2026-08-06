@@ -109,18 +109,18 @@ export const DashboardHome = ({ onChangeView }: { onChangeView: (view: AdminView
       </div>
 
       {/* ── LIVE VISITOR FEED ── */}
-      <div className={`bg-white dark:bg-[#0a0a0a] p-6 rounded-2xl border shadow-sm transition-all duration-500 ${isNewVisitor ? 'border-[#109121] shadow-[#109121]/20 shadow-lg' : 'dark:border-white/10'}`}>
+      <div className={`bg-white dark:bg-[#0a0a0a] p-6 rounded-2xl border shadow-sm transition-all duration-500 ${isNewVisitor ? 'border-[#109121] shadow-[0_0_10px_rgba(16,145,33,0.15)]' : 'dark:border-white/10'}`}>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
           <div className="flex items-center gap-3">
             <div className="relative">
               <Users size={22} className="text-[#109121]" />
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full animate-ping" />
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#109121] rounded-full animate-ping" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#109121] rounded-full" />
             </div>
             <div>
               <h2 className="text-lg font-bold flex items-center gap-2">
                 Live Visitors
-                <span className="text-[10px] font-black uppercase tracking-widest bg-green-500 text-white px-2 py-0.5 rounded-full animate-pulse">
+                <span className="text-[10px] font-black uppercase tracking-widest bg-[#109121] text-white px-2 py-0.5 rounded-full animate-pulse">
                   LIVE
                 </span>
               </h2>
@@ -153,13 +153,13 @@ export const DashboardHome = ({ onChangeView }: { onChangeView: (view: AdminView
                     key={v.id}
                     className={`border-b dark:border-white/10 last:border-0 transition-colors ${
                       i === 0 && isNewVisitor
-                        ? 'bg-green-50 dark:bg-green-900/10'
+                        ? 'bg-[#e6f4e8] dark:bg-[#109121]/10'
                         : 'hover:bg-gray-50 dark:hover:bg-white/5'
                     }`}
                   >
                     <td className="py-3 pr-4 font-bold text-[#109121]">
                       {i === 0 && (
-                        <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse" />
+                        <span className="inline-block w-2 h-2 rounded-full bg-[#109121] mr-2 animate-pulse" />
                       )}
                       {v.name}
                     </td>

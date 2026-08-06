@@ -76,7 +76,7 @@ export const Footer = () => {
               <li><a href="mailto:support@samstonesresources.com" className="text-white/80 hover:text-white transition-colors">Email Support</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Secure Shipping</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Global Network</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); import('react-hot-toast').then(m => m.default.success('Referral program coming soon!')); }} className="text-[#DFB722] hover:text-yellow-300 font-bold transition-colors">Refer & Earn Program</a></li>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); import('react-hot-toast').then(m => m.default.success('Referral program coming soon!')); }} className="text-[#C8A96B] hover:text-yellow-300 font-bold transition-colors">Refer & Earn Program</a></li>
             </ul>
           </div>
         </div>

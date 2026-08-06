@@ -130,7 +130,7 @@ export const ProductDetailView = () => {
           <div className="w-full lg:w-1/2 lg:py-8 flex flex-col">
             <div className="mb-2 flex items-center space-x-3">
                <span className="text-xs tracking-widest uppercase font-bold text-[#109121]">{product.category}</span>
-               {product.isNew && <span className="text-[10px] uppercase font-bold bg-[#109121]/20 text-[#109121] px-2 py-1 rounded border border-[#109121]/30 shadow-[0_0_10px_rgba(168,85,247,0.2)]">New Arrival</span>}
+               {product.isNew && <span className="text-[10px] uppercase font-bold bg-[#109121]/20 text-[#109121] px-2 py-1 rounded border border-[#109121]/30 shadow-[0_0_8px_rgba(16,145,33,0.15)]">New Arrival</span>}
             </div>
             
             <h1 className="text-3xl lg:text-5xl font-serif text-[#16C72E] mb-4 font-bold tracking-tight">{product.name}</h1>
@@ -205,7 +205,7 @@ export const ProductDetailView = () => {
                           key={color}
                           onClick={() => setSelectedColor(color)}
                           className={`px-3 py-2 text-sm border rounded-lg font-semibold transition-all duration-300 flex items-center space-x-2 ${
-                            selectedColor === color ? 'border-[#109121] bg-[#109121]/10 text-gray-900 dark:text-white shadow-[0_0_15px_rgba(16,145,33,0.2)]' : 'border-gray-200 text-gray-400 dark:text-white hover:border-[#109121]/50 hover:text-[#109121]'
+                            selectedColor === color ? 'border-[#109121] bg-[#109121]/10 text-gray-900 dark:text-white shadow-[0_0_8px_rgba(16,145,33,0.15)]' : 'border-gray-200 text-gray-400 dark:text-white hover:border-[#109121]/50 hover:text-[#109121]'
                           }`}
                         >
                           <span 
@@ -235,7 +235,7 @@ export const ProductDetailView = () => {
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={`min-w-[3rem] h-12 flex items-center justify-center text-sm border font-semibold rounded-lg transition-all duration-300 px-3 ${
-                        selectedSize === size ? 'border-[#109121] bg-[#109121]/10 text-white shadow-[0_0_15px_rgba(236,72,153,0.2)]' : 'border-gray-200 text-gray-400 dark:text-white hover:border-[#109121]/50 hover:text-[#109121]'
+                        selectedSize === size ? 'border-[#109121] bg-[#109121]/10 text-white shadow-[0_0_8px_rgba(16,145,33,0.15)]' : 'border-gray-200 text-gray-400 dark:text-white hover:border-[#109121]/50 hover:text-[#109121]'
                       }`}
                     >
                       {size}
@@ -279,7 +279,7 @@ export const ProductDetailView = () => {
                 <button 
                   onClick={() => toggleWishlist(product.id)}
                   className={`h-14 w-full sm:w-16 rounded-xl border flex items-center justify-center transition-colors ${
-                    isWishlisted ? 'border-[#109121] text-[#109121] bg-[#109121]/10 shadow-[0_0_15px_rgba(236,72,153,0.2)]' : 'border-gray-200 text-gray-400 dark:text-white hover:border-[#109121]/50 hover:text-[#109121] glass'
+                    isWishlisted ? 'border-[#109121] text-[#109121] bg-[#109121]/10 shadow-[0_0_8px_rgba(16,145,33,0.15)]' : 'border-gray-200 text-gray-400 dark:text-white hover:border-[#109121]/50 hover:text-[#109121] glass'
                   }`}
                 >
                   <Heart size={20} className={isWishlisted ? "fill-current" : ""} />
