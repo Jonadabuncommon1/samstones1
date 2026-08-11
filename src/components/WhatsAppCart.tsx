@@ -142,7 +142,10 @@ export const WhatsAppCart = () => {
                   <span className="text-gray-600 dark:text-white text-sm font-bold uppercase tracking-widest">Subtotal</span>
                   <span className="font-serif font-bold text-xl text-[#000000]">{formatPrice(totalAmount)}</span>
                 </div>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                   onClick={() => {
                     if (!user) {
                       setCartOpen(false);
@@ -151,11 +154,11 @@ export const WhatsAppCart = () => {
                       window.open(generateWhatsAppMessage(), '_blank');
                     }
                   }}
-                  className="w-full bg-[#109121] text-white flex items-center justify-center space-x-3 py-4 rounded-xl uppercase text-sm font-bold tracking-widest transition-transform transform active:scale-95 hover:bg-[#0a5f15]"
+                  className="w-full bg-[#109121] text-white flex items-center justify-center space-x-3 py-4 rounded-xl uppercase text-sm font-bold tracking-widest hover:bg-[#0a5f15]"
                 >
                   <MessageCircle size={20} className="text-white" />
                   <span>Checkout on WhatsApp</span>
-                </button>
+                </motion.button>
                 
                 {user && (
                   <div className="mt-5 text-center bg-white/50 dark:bg-black/10 p-3 rounded-lg border border-[#109121]/20">
@@ -166,7 +169,7 @@ export const WhatsAppCart = () => {
                         navigator.clipboard.writeText(referralUrl);
                         toast.success('Referral link copied to clipboard!');
                       }}
-                      className="text-xs font-extrabold text-[#C8A96B] hover:text-yellow-600 uppercase tracking-widest underline transition-colors"
+                      className="text-xs font-extrabold text-[#E8B93D] hover:text-[#C99A26] uppercase tracking-widest underline transition-colors"
                     >
                       Copy My Referral Link
                     </button>

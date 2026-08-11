@@ -269,30 +269,39 @@ export const ProductDetailView = () => {
             {/* Actions */}
             <div className="flex flex-col space-y-4 mb-10">
               <div className="flex flex-col sm:flex-row gap-4">
-                <button 
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                   onClick={handleAddToCart}
                   className="flex-1 bg-[#109121] text-white py-4 px-8 rounded-xl flex items-center justify-center space-x-2 uppercase text-sm tracking-widest font-bold hover:bg-[#0a5f15] transition-colors"
                 >
                   <ShoppingBag size={18} />
                   <span>Add to Cart</span>
-                </button>
-                <button 
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.92 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                   onClick={() => toggleWishlist(product.id)}
                   className={`h-14 w-full sm:w-16 rounded-xl border flex items-center justify-center transition-colors ${
                     isWishlisted ? 'border-[#109121] text-[#109121] bg-[#109121]/10 shadow-[0_0_8px_rgba(16,145,33,0.15)]' : 'border-gray-200 text-gray-400 dark:text-white hover:border-[#109121]/50 hover:text-[#109121] glass'
                   }`}
                 >
                   <Heart size={20} className={isWishlisted ? "fill-current" : ""} />
-                </button>
+                </motion.button>
               </div>
-              
-              <button 
+
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                 onClick={handleDirectWhatsApp}
                 className="w-full bg-[#25D366] text-white py-4 rounded-xl flex justify-center items-center space-x-3 uppercase text-sm tracking-widest font-bold hover:bg-[#128C7E] transition-colors shadow-[0_0_20px_rgba(37,211,102,0.2)]"
               >
                 <MessageCircle size={20} />
                 <span>Order on WhatsApp</span>
-              </button>
+              </motion.button>
             </div>
 
             {/* Guarantees Accordion Info */}

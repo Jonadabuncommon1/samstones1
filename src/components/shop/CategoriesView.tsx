@@ -44,7 +44,7 @@ export const CategoriesView = () => {
           </button>
         </div>
         <div className="text-center mb-16">
-          <h1 className="text-3xl md:text-5xl font-bold text-[#C8A96B] mb-4" style={{ fontFamily: "'Pacifico', cursive" }}>
+          <h1 className="font-serif text-3xl md:text-5xl font-bold text-[#E8B93D] mb-4">
             Discover the best <span className="text-[#109121]">Product Collections!</span>
           </h1>
           <p className="text-gray-600 dark:text-white max-w-2xl mx-auto text-lg font-serif italic font-bold">
@@ -63,6 +63,8 @@ export const CategoriesView = () => {
             <motion.div
               key={category.id}
               variants={cardVariants}
+              whileHover={{ y: -6 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
               className="relative bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-[0_0_14px_rgba(16,145,33,0.15)] hover:border-[#109121]/30 group glass-card transition-all duration-300"
             >
               <button 
@@ -81,7 +83,7 @@ export const CategoriesView = () => {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 text-[#C8A96B] group-hover:text-[#D9C08C] transition-colors flex items-center drop-shadow-[0_0_8px_rgba(200,169,107,0.3)]">
+                <div className="absolute bottom-6 left-6 text-[#E8B93D] group-hover:text-[#F3CE6E] transition-colors flex items-center drop-shadow-[0_0_8px_rgba(232,185,61,0.3)]">
                   {(() => {
                     const IconComp = (LucideIcons as any)[category.icon || 'HelpCircle'];
                     return <IconComp size={72} />;

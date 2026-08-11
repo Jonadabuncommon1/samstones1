@@ -38,11 +38,10 @@ export const SplashScreen: React.FC<{ onDone: () => void }> = ({ onDone }) => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="text-base sm:text-lg tracking-[0.2em] uppercase font-bold text-center px-6"
-            style={{ fontFamily: '"Black Ops One", system-ui' }}
+            className="font-serif text-base sm:text-lg tracking-[0.2em] uppercase font-bold text-center px-6"
           >
             <span className="text-[#109121]">Welcome to </span>
-            <span className="text-[#E8A317]">Samstones</span>
+            <span className="text-[#E8B93D]">Samstones</span>
             <span className="text-[#109121]"> Marketplace</span>
           </motion.p>
         </motion.div>

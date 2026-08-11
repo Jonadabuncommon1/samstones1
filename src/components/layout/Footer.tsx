@@ -45,7 +45,7 @@ export const Footer = () => {
               <img src="/logo.png" alt="Samstones Logo" className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain bg-white p-1 rounded-lg shadow-md" />
               <h2
                 style={{ fontFamily: '"Ralika", serif' }}
-                className="text-2xl md:text-3xl lg:text-4xl tracking-wide text-yellow-500 mb-0 drop-shadow-sm font-bold"
+                className="text-2xl md:text-3xl lg:text-4xl tracking-wide text-[#E8B93D] mb-0 drop-shadow-sm font-bold"
               >Samstones</h2>
             </div>
             <p className="text-white/80 text-sm leading-relaxed mb-6">
@@ -76,7 +76,7 @@ export const Footer = () => {
               <li><a href="mailto:support@samstonesresources.com" className="text-white/80 hover:text-white transition-colors">Email Support</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Secure Shipping</a></li>
               <li><a href="#" className="text-white/80 hover:text-white transition-colors">Global Network</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); import('react-hot-toast').then(m => m.default.success('Referral program coming soon!')); }} className="text-[#C8A96B] hover:text-yellow-300 font-bold transition-colors">Refer & Earn Program</a></li>
+              <li><a href="#" onClick={(e) => { e.preventDefault(); import('react-hot-toast').then(m => m.default.success('Referral program coming soon!')); }} className="text-[#E8B93D] hover:text-[#F3CE6E] font-bold transition-colors">Refer & Earn Program</a></li>
             </ul>
           </div>
         </div>

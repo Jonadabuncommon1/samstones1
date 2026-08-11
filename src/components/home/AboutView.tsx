@@ -148,23 +148,23 @@ export const AboutView = () => {
         {/* Decorative blobs and radial glows */}
         <div className="absolute top-0 left-0 w-96 h-96 bg-white/5 rounded-full -translate-x-1/3 -translate-y-1/3 pointer-events-none filter blur-2xl" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-white/5 rounded-full translate-x-1/4 translate-y-1/4 pointer-events-none filter blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-[#C8A96B]/10 rounded-full pointer-events-none filter blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-[#E8B93D]/10 rounded-full pointer-events-none filter blur-3xl" />
 
         {/* Large, Bolder Family Illustration */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-          className="mb-8 relative z-10 w-44 h-44 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-[#C8A96B] shadow-[0_20px_50px_rgba(0,0,0,0.4)] ring-8 ring-white/10 flex items-center justify-center hover:scale-105 transition-transform duration-300 bg-transparent"
+          className="mb-8 relative z-10 w-44 h-44 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-[#E8B93D] shadow-[0_20px_50px_rgba(0,0,0,0.4)] ring-8 ring-white/10 flex items-center justify-center hover:scale-105 transition-transform duration-300 bg-transparent"
         >
-          <Users className="w-24 h-24 md:w-32 md:h-32 text-[#C8A96B] drop-shadow-[0_0_8px_rgba(200,169,107,0.3)]" strokeWidth={2.5} />
+          <Users className="w-24 h-24 md:w-32 md:h-32 text-[#E8B93D] drop-shadow-[0_0_8px_rgba(232,185,61,0.3)]" strokeWidth={2.5} />
         </motion.div>
 
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-[#C8A96B] text-xs font-bold uppercase tracking-widest mb-3 relative z-10 drop-shadow-sm"
+          className="text-[#E8B93D] text-xs font-bold uppercase tracking-widest mb-3 relative z-10 drop-shadow-sm"
         >
           About Us
         </motion.p>
@@ -176,7 +176,7 @@ export const AboutView = () => {
         >
           Samstones
           <br />
-          <span className="font-medium tracking-wide text-[#C8A96B]">Marketplace</span>
+          <span className="font-medium tracking-wide text-[#E8B93D]">Marketplace</span>
         </motion.h1>
       </div>
 
@@ -335,7 +335,7 @@ export const AboutView = () => {
                 <div className="w-12 h-12 bg-[#e6f4e8] dark:bg-[#109121]/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#109121] transition-colors">
                   <r.icon size={22} className="text-[#109121] group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="font-black text-base mb-2 text-[#C8A96B]">{r.title}</h3>
+                <h3 className="font-black text-base mb-2 text-[#E8B93D]">{r.title}</h3>
                 <p className="text-gray-500 dark:text-gray-400 dark:text-white text-sm leading-relaxed">{r.body}</p>
               </div>
             ))}

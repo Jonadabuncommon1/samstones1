@@ -185,7 +185,7 @@ export const HomeView = () => {
 
       <section className="relative pt-24 pb-12 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
-          className="relative grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-12 items-start rounded-3xl p-4 md:p-8 lg:p-12 shadow-2xl overflow-hidden border border-[#C8A96B]/30 bg-white min-h-[200px] sm:min-h-[300px] md:min-h-[500px] xl:min-h-[550px] bg-[url('/my_logo.png')] bg-contain md:bg-cover bg-center bg-no-repeat"
+          className="relative grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-12 items-start rounded-3xl p-4 md:p-8 lg:p-12 shadow-2xl overflow-hidden border border-[#E8B93D]/30 bg-white min-h-[200px] sm:min-h-[300px] md:min-h-[500px] xl:min-h-[550px] bg-[url('/my_logo.png')] bg-contain md:bg-cover bg-center bg-no-repeat"
         >
           {/* Subtle overlay */}
           <div className="absolute inset-0 bg-white/10 pointer-events-none z-0" />
@@ -205,8 +205,7 @@ export const HomeView = () => {
               className="inline-flex items-center space-x-2 bg-[#109121]/10 px-3 py-2 sm:px-6 sm:py-4 rounded-3xl mb-4 w-fit border border-[#109121]/20 hover:border-[#109121]/60 hover:shadow-[0_0_10px_rgba(16,145,33,0.15)] transition-all duration-300 cursor-default animate-shine"
             >
               <span
-                style={{ fontFamily: '"Orbitron", sans-serif' }}
-                className="text-[0.8rem] sm:text-xl md:text-3xl lg:text-4xl font-black uppercase tracking-widest text-[#109121] relative z-10 whitespace-nowrap"
+                className="font-sans text-[0.8rem] sm:text-xl md:text-3xl lg:text-4xl font-black uppercase tracking-widest text-[#109121] relative z-10 whitespace-nowrap"
               >WE MEET YOUR NEEDS</span>
             </motion.h1>
           </motion.div>
@@ -249,6 +248,8 @@ export const HomeView = () => {
               <motion.div
                 key={category.id}
                 variants={cardVariants}
+                whileHover={{ y: -6 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 className="snap-start relative bg-white/5 border border-white/10 rounded-2xl p-6 pb-5 text-center group/card shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col items-center"
               >
                 <button 
@@ -263,7 +264,7 @@ export const HomeView = () => {
                   })()}
                 </div>
                 <span
-                  className="relative z-10 text-[0.7rem] sm:text-xs font-bold uppercase tracking-widest text-[#16C72E] group-hover/card:text-[#C8A96B] transition-colors duration-300 leading-tight text-center"
+                  className="relative z-10 text-[0.7rem] sm:text-xs font-bold uppercase tracking-widest text-[#16C72E] group-hover/card:text-[#E8B93D] transition-colors duration-300 leading-tight text-center"
                 >
                   {category.name}
                 </span>
@@ -297,7 +298,7 @@ export const HomeView = () => {
         className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20"
       >
         <div 
-          className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center rounded-[2.5rem] p-8 lg:p-16 shadow-2xl overflow-hidden border border-[#C8A96B]/30"
+          className="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-center rounded-[2.5rem] p-8 lg:p-16 shadow-2xl overflow-hidden border border-[#E8B93D]/30"
           style={{ 
             backgroundImage: "url('/footer_bg_new.png')",
             backgroundSize: 'cover',
@@ -305,7 +306,7 @@ export const HomeView = () => {
           }}
         >
           {/* Dynamic Background Blur Effects */}
-          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#C8A96B]/10 blur-[120px] rounded-full pointer-events-none -z-10" />
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#E8B93D]/10 blur-[120px] rounded-full pointer-events-none -z-10" />
           <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#109121]/15 blur-[120px] rounded-full pointer-events-none -z-10" />
 
           {/* Left Side (60% width) - Sliding Service Cards (lg:col-span-7) */}
@@ -346,7 +347,7 @@ export const HomeView = () => {
                         key={service.id}
                         whileHover={{ y: -8 }}
                         className={`w-[240px] md:w-[280px] h-[340px] md:h-[420px] flex-shrink-0 relative rounded-3xl overflow-hidden group shadow-xl border transition-all duration-500 cursor-pointer ${
-                          isActive ? 'border-[#C8A96B] shadow-[#C8A96B]/20' : 'border-white/10 hover:border-[#C8A96B]/30'
+                          isActive ? 'border-[#E8B93D] shadow-[#E8B93D]/20' : 'border-white/10 hover:border-[#E8B93D]/30'
                         }`}
                         onClick={() => {
                           if (!isDragging) {
@@ -367,7 +368,7 @@ export const HomeView = () => {
                         ) : (
                           /* Shown only for categories that have never had a product uploaded */
                           <div className="absolute inset-0 z-0 flex items-center justify-center bg-gradient-to-br from-[#0d2211] via-[#152b18] to-[#0a1a0b]">
-                            <div className="opacity-20 text-[#C8A96B]">
+                            <div className="opacity-20 text-[#E8B93D]">
                               <IconComponent size={80} />
                             </div>
                           </div>
@@ -381,17 +382,17 @@ export const HomeView = () => {
                           <div className="flex items-end justify-between">
                             <div className="flex flex-col text-left">
                               {/* Service Icon */}
-                              <div className="w-10 h-10 bg-[#C8A96B]/25 backdrop-blur-md rounded-full flex items-center justify-center mb-3 text-[#C8A96B] border border-[#C8A96B]/30 group-hover:bg-[#C8A96B] group-hover:text-black transition-colors duration-300">
+                              <div className="w-10 h-10 bg-[#E8B93D]/25 backdrop-blur-md rounded-full flex items-center justify-center mb-3 text-[#E8B93D] border border-[#E8B93D]/30 group-hover:bg-[#E8B93D] group-hover:text-black transition-colors duration-300">
                                 <IconComponent size={20} />
                               </div>
                               {/* Service Title */}
-                              <h4 className="font-sans font-black text-white text-lg md:text-xl tracking-wide group-hover:text-[#C8A96B] transition-colors duration-300">
+                              <h4 className="font-sans font-black text-white text-lg md:text-xl tracking-wide group-hover:text-[#E8B93D] transition-colors duration-300">
                                 {service.title}
                               </h4>
                             </div>
 
                             {/* Small Arrow Icon */}
-                            <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/80 group-hover:bg-[#C8A96B] group-hover:text-black group-hover:border-[#C8A96B] transition-all duration-300">
+                            <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/80 group-hover:bg-[#E8B93D] group-hover:text-black group-hover:border-[#E8B93D] transition-all duration-300">
                               <ArrowUpRight size={18} className="group-hover:rotate-45 transition-transform duration-300" />
                             </div>
                           </div>
@@ -407,7 +408,7 @@ export const HomeView = () => {
                 <button 
                   onClick={() => setCurrentIndex((prev) => Math.max(prev - 1, 0))}
                   disabled={currentIndex === 0}
-                  className="w-10 h-10 rounded-full border border-white/20 hover:border-[#C8A96B] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
+                  className="w-10 h-10 rounded-full border border-white/20 hover:border-[#E8B93D] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
                 >
                   <ArrowLeft size={18} />
                 </button>
@@ -417,7 +418,7 @@ export const HomeView = () => {
                       key={i}
                       onClick={() => setCurrentIndex(i)}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
-                        i === currentIndex ? 'w-6 bg-[#C8A96B]' : 'w-1.5 bg-white/30 hover:bg-white/60'
+                        i === currentIndex ? 'w-6 bg-[#E8B93D]' : 'w-1.5 bg-white/30 hover:bg-white/60'
                       }`}
                     />
                   ))}
@@ -425,7 +426,7 @@ export const HomeView = () => {
                 <button 
                   onClick={() => setCurrentIndex((prev) => Math.min(prev + 1, dynamicCoreServices.length - 1))}
                   disabled={currentIndex === dynamicCoreServices.length - 1}
-                  className="w-10 h-10 rounded-full border border-white/20 hover:border-[#C8A96B] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
+                  className="w-10 h-10 rounded-full border border-white/20 hover:border-[#E8B93D] flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all hover:bg-white/5 active:scale-95"
                 >
                   <ArrowRight size={18} />
                 </button>
@@ -436,37 +437,41 @@ export const HomeView = () => {
           {/* Right Side (40% width) - Text Content & CTAs (lg:col-span-5) */}
           <div className="lg:col-span-5 flex flex-col text-left relative z-10 lg:pl-8">
             <h2
-              style={{ fontFamily: '"Bitcount Single Circle", system-ui' }}
-              className="text-3xl md:text-5xl font-black text-[#C8A96B] mb-6 leading-tight"
+              className="font-serif text-3xl md:text-5xl font-black text-[#E8B93D] mb-6 leading-tight"
             >
               Redefining Modern Commerce &amp; Lifestyle.
             </h2>
             <p
-              style={{ fontFamily: '"Playwrite England Joined", cursive' }}
               className="text-white text-sm md:text-base leading-relaxed mb-6 drop-shadow-md"
             >
               At Samstones Marketplace, we provide premium products and reliable services designed to meet modern lifestyle and everyday needs with quality, elegance, and convenience.
             </p>
             <p
-              style={{ fontFamily: '"Playwrite England Joined", cursive' }}
               className="text-white text-sm leading-relaxed mb-8 drop-shadow-md"
             >
               We deliver premium fashion, automobiles, beauty products, lifestyle essentials, and real estate solutions with a commitment to quality, trust, and customer satisfaction. Designed for modern living. Delivered with excellence.
             </p>
 
             <div className="flex flex-row items-center gap-3 w-full">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.04, boxShadow: '0 0 20px rgba(232,185,61,0.5)' }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                 onClick={() => { setCurrentView('categories'); window.scrollTo(0, 0); }}
-                className="flex-1 bg-[#C8A96B] hover:bg-[#B8965A] text-black font-extrabold px-3 sm:px-6 py-3 sm:py-4 rounded-xl transition-all duration-300 shadow-sm hover:shadow-[0_0_14px_rgba(200,169,107,0.35)] active:scale-95 cursor-pointer text-[10px] sm:text-xs tracking-wider uppercase text-center whitespace-nowrap"
+                className="group flex-1 bg-[#E8B93D] hover:bg-[#C99A26] text-black font-extrabold px-3 sm:px-6 py-3 sm:py-4 rounded-xl shadow-sm cursor-pointer text-[10px] sm:text-xs tracking-wider uppercase text-center whitespace-nowrap flex items-center justify-center gap-1.5"
               >
                 Explore Services
-              </button>
-              <button
+                <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.04, backgroundColor: 'rgba(232,185,61,0.15)' }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 15 }}
                 onClick={() => { setCurrentView('contact'); window.scrollTo(0, 0); }}
-                className="flex-1 border border-[#C8A96B]/30 text-[#C8A96B] hover:bg-[#C8A96B]/10 font-bold px-3 sm:px-6 py-3 sm:py-4 rounded-xl transition-all duration-300 active:scale-95 cursor-pointer text-[10px] sm:text-xs tracking-wider uppercase text-center whitespace-nowrap"
+                className="flex-1 border border-[#E8B93D]/30 text-[#E8B93D] font-bold px-3 sm:px-6 py-3 sm:py-4 rounded-xl cursor-pointer text-[10px] sm:text-xs tracking-wider uppercase text-center whitespace-nowrap"
               >
                 Contact Us
-              </button>
+              </motion.button>
             </div>
           </div>
         </div>
@@ -489,18 +494,21 @@ export const HomeView = () => {
             const isActive = activeTab === sec.id;
             const IconComp = sec.icon;
             return (
-              <button
+              <motion.button
                 key={sec.id}
+                whileHover={{ scale: isActive ? 1.05 : 1.03, y: -3 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
                 onClick={() => setActiveTab(isActive ? null : sec.id as any)}
-                className={`flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border transition-all duration-300 cursor-pointer ${
-                  isActive 
-                    ? 'bg-[#109121] border-[#109121] text-white shadow-lg scale-105' 
+                className={`flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl border transition-colors duration-300 cursor-pointer ${
+                  isActive
+                    ? 'bg-[#109121] border-[#109121] text-white shadow-lg'
                     : 'bg-white dark:bg-[#111] border-gray-200 dark:border-gray-800 text-gray-800 dark:text-gray-100 hover:border-[#109121] hover:shadow-md'
                 }`}
               >
                 <IconComp size={48} strokeWidth={2} className={`mb-3 ${isActive ? 'text-white' : 'text-[#109121]'}`} />
                 <span className="font-bold text-xs sm:text-sm tracking-wider uppercase">{sec.title}</span>
-              </button>
+              </motion.button>
             );
           })}
         </div>

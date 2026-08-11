@@ -113,7 +113,7 @@ export const Navbar = () => {
               <div className="flex flex-col justify-center leading-none">
                 <span
                   style={{ fontFamily: '"Ralika", serif' }}
-                  className="text-xl md:text-2xl lg:text-3xl tracking-wide text-[#E8A317] dark:text-yellow-400 transition-colors duration-300 drop-shadow-sm font-bold"
+                  className="text-xl md:text-2xl lg:text-3xl tracking-wide text-[#E8B93D] dark:text-[#F3CE6E] transition-colors duration-300 drop-shadow-sm font-bold"
                 >
                   Samstones
                 </span>
@@ -243,7 +243,7 @@ export const Navbar = () => {
                   <div className="flex flex-col justify-center leading-none">
                     <span
                       style={{ fontFamily: '"Ralika", serif' }}
-                      className="text-xl md:text-2xl lg:text-3xl tracking-wide text-yellow-500 dark:text-yellow-400 drop-shadow-sm font-bold"
+                      className="text-xl md:text-2xl lg:text-3xl tracking-wide text-[#E8B93D] dark:text-[#F3CE6E] drop-shadow-sm font-bold"
                     >
                       Samstones
                     </span>

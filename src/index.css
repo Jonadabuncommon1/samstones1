@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -14,7 +14,7 @@
   --color-black: #050505;
   --color-cream: #F8F5F0;
   --color-white: #FFFFFF;
-  --color-gold: #C8A96B;
+  --color-gold: #E8B93D;
   --color-offblack: #0a0a0a;
   --color-brand: #109121;
   --color-brand-dark: #0a5f15;
@@ -25,7 +25,7 @@
   --color-dark-border: #262626;
 
   --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
 }
 
 body {
